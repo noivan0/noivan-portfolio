@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>노이반 — AI 엔지니어 & 제품 빌더</title>
+  <meta name="description" content="AI 시스템 설계부터 보안 자동화, 콘텐츠 운영까지. 노이반의 포트폴리오입니다." />
+  <meta property="og:title" content="노이반 — AI 엔지니어 & 제품 빌더" />
+  <meta property="og:description" content="AI QA 플랫폼 KRAYT, 여행 블로그 자동화, Hermes AI 에이전트 운영 등 다양한 프로젝트를 진행합니다." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #12121a;
+      --bg3: #1a1a26;
+      --border: rgba(255,255,255,0.08);
+      --text: #e8e8f0;
+      --muted: #8888aa;
+      --accent: #7c6af7;
+      --accent2: #a78bfa;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --red: #f87171;
+      --r: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(10,10,15,0.8);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent2);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── LAYOUT ── */
+    main { position: relative; z-index: 1; }
+
+    section { padding: 100px 0; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 80px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 64px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: rgba(124,106,247,0.12);
+      border: 1px solid rgba(124,106,247,0.25);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent2);
+      margin-bottom: 24px;
+    }
+
+    .hero-badge .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero-title {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .hero-title .accent { color: var(--accent2); }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--r);
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    .hero-avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #7c6af7 0%, #a78bfa 50%, #34d399 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      box-shadow: 0 32px 64px rgba(124,106,247,0.25);
+      flex-shrink: 0;
+    }
+
+    /* ── STACK PILLS ── */
+    .stack-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 40px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 100px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      margin-top: 56px;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .about-text p strong { color: var(--text); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+    }
+
+    .stat-num {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent2);
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── PROJECTS ── */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .project-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(124,106,247,0.3);
+      transform: translateY(-3px);
+    }
+    .project-card:hover::before { opacity: 1; }
+
+    .project-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .project-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tag-purple { background: rgba(124,106,247,0.15); color: var(--accent2); }
+    .tag-green  { background: rgba(52,211,153,0.12); color: var(--green); }
+    .tag-yellow { background: rgba(251,191,36,0.12); color: var(--yellow); }
+    .tag-red    { background: rgba(248,113,113,0.12); color: var(--red); }
+
+    .project-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+    .status-active { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .status-build  { background: var(--yellow); }
+    .status-parked { background: var(--muted); }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg2); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 56px;
+    }
+
+    .skill-group {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+    }
+
+    .skill-group-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent2);
+      margin-bottom: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.5px;
+    }
+
+    .skill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .skill-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skill-name {
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .skill-bar-wrap {
+      width: 80px;
+      height: 4px;
+      background: var(--bg2);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .skill-bar {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      margin-top: 56px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: rgba(124,106,247,0.3);
+      transform: translateX(4px);
+    }
+
+    .contact-link-icon {
+      font-size: 22px;
+      width: 40px;
+      text-align: center;
+    }
+
+    .contact-link-info {
+      flex: 1;
+    }
+
+    .contact-link-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+
+    .contact-link-value {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .contact-note {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 32px;
+    }
+
+    .contact-note h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .contact-note p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .contact-note .highlight {
+      display: inline-block;
+      background: rgba(124,106,247,0.12);
+      border: 1px solid rgba(124,106,247,0.2);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent2);
+      margin-top: 16px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      section { padding: 80px 0; }
+      .container { padding: 0 20px; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-avatar { width: 100px; height: 100px; font-size: 40px; border-radius: 16px; order: -1; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="#hero">noivan.dev</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero">
+      <div class="container">
+        <div class="hero-inner">
+          <div class="hero-content">
+            <div class="hero-badge">
+              <span class="dot"></span>
+              AI Engineer & Builder
+            </div>
+            <h1 class="hero-title">
+              안녕하세요,<br>
+              저는 <span class="accent">노이반</span>입니다.
+            </h1>
+            <p class="hero-sub">
+              AI 에이전트 설계, 보안 자동화, 콘텐츠 시스템 구축.<br>
+              아이디어를 실제로 돌아가는 시스템으로 만듭니다.
+            </p>
+            <div class="hero-cta">
+              <a href="#projects" class="btn btn-primary">프로젝트 보기 →</a>
+              <a href="#contact" class="btn btn-ghost">연락하기</a>
+            </div>
+            <div class="stack-row">
+              <span class="pill">Python</span>
+              <span class="pill">AI/LLM</span>
+              <span class="pill">Security QA</span>
+              <span class="pill">Cloudflare</span>
+              <span class="pill">Telegram Bot</span>
+              <span class="pill">Astro</span>
+            </div>
+          </div>
+          <div class="hero-avatar">🧑‍💻</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <div class="section-label">// About</div>
+        <h2 class="section-title">직접 만들고, 직접 운영합니다.</h2>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              <strong>AI 시스템과 자동화 인프라</strong>를 설계합니다.
+              단순 프로토타입이 아닌, 실제로 24시간 돌아가는 프로덕션 시스템을 만드는 것에 집중합니다.
+            </p>
+            <p>
+              <strong>KRAYT</strong>는 웹 취약점 탐지부터 AI 모델 보안, 규제 준수까지 자동으로 검증하는 AI QA 플랫폼입니다.
+              578개 모듈, OWASP 40/40 커버리지를 달성했습니다.
+            </p>
+            <p>
+              <strong>Hermes</strong>는 제가 직접 운영하는 이중화 AI 에이전트 시스템입니다.
+              블로그 자동 발행, 보안 리서치, 실시간 모니터링을 24시간 자율로 수행합니다.
+            </p>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-num">578</div>
+              <div class="stat-label">KRAYT QA 모듈</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">40/40</div>
+              <div class="stat-label">OWASP 커버리지</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">200+</div>
+              <div class="stat-label">블로그 포스트 자동 발행</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">24/7</div>
+              <div class="stat-label">AI 에이전트 운영 중</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="container">
+        <div class="section-label">// Projects</div>
+        <h2 class="section-title">진행 중인 프로젝트</h2>
+        <p class="section-desc">아이디어 → 실제 서비스. 직접 설계하고 운영합니다.</p>
+        <div class="projects-grid">
+
+          <div class="project-card">
+            <div class="project-icon">🦅</div>
+            <div class="project-name">KRAYT — AI QA Platform</div>
+            <div class="project-desc">
+              웹 보안, LLM 취약점, 규제 준수를 자동 검증하는 AI QA 플랫폼.
+              578개 모듈로 OWASP Web/LLM/API Top10 및 MITRE ATLAS, ISO 42001, GDPR 커버.
+            </div>
+            <div class="project-tags">
+              <span class="tag tag-purple">Python</span>
+              <span class="tag tag-red">Security</span>
+              <span class="tag tag-green">AI Agents</span>
+              <span class="tag tag-yellow">OWASP</span>
+            </div>
+            <div class="project-status">
+              <span class="status-dot status-active"></span>
+              <span style="color: var(--green); font-size:12px;">Active — Pre-Seed $300K</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-icon">🤖</div>
+            <div class="project-name">Hermes — Dual AI Agent System</div>
+            <div class="project-desc">
+              이중화 AI 에이전트 시스템. Active-Standby HA 구조로 블로그 자동 발행,
+              보안 리서치, IPC 협업, Confluence 자동화를 24시간 수행.
+            </div>
+            <div class="project-tags">
+              <span class="tag tag-purple">Python</span>
+              <span class="tag tag-green">Automation</span>
+              <span class="tag tag-yellow">Telegram</span>
+              <span class="tag tag-purple">Claude API</span>
+            </div>
+            <div class="project-status">
+              <span class="status-dot status-active"></span>
+              <span style="color: var(--green); font-size:12px;">Active — 24/7 운영 중</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-icon">✈️</div>
+            <div class="project-name">Allsweep — 여행 블로그 자동화</div>
+            <div class="project-desc">
+              triptong / triptwotwo 여행 블로그. AI 콘텐츠 생성부터 SEO 최적화,
+              자동 발행, 애드센스 최적화까지 전 파이프라인 자동화.
+            </div>
+            <div class="project-tags">
+              <span class="tag tag-yellow">Blogger</span>
+              <span class="tag tag-green">SEO</span>
+              <span class="tag tag-purple">AI Content</span>
+              <span class="tag tag-yellow">AdSense</span>
+            </div>
+            <div class="project-status">
+              <span class="status-dot status-active"></span>
+              <span style="color: var(--green); font-size:12px;">Active — 200+ 포스트 발행</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-icon">🎭</div>
+            <div class="project-name">김두시 — AI 캐릭터 콘텐츠</div>
+            <div class="project-desc">
+              비숑 캐릭터 김두시(@im.doosi)의 숏폼 콘텐츠 자동화.
+              AI 스크립트 생성 → TTS → 영상 합성 → 멀티채널 발행.
+            </div>
+            <div class="project-tags">
+              <span class="tag tag-purple">TTS</span>
+              <span class="tag tag-green">Video</span>
+              <span class="tag tag-yellow">Instagram</span>
+              <span class="tag tag-yellow">YouTube</span>
+            </div>
+            <div class="project-status">
+              <span class="status-dot status-build"></span>
+              <span style="color: var(--yellow); font-size:12px;">In Progress</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-icon">📖</div>
+            <div class="project-name">Unlearning — 노이반 성장 블로그</div>
+            <div class="project-desc">
+              배움을 다시 배우는 과정. unlearning.allsweep.xyz.
+              AI 자동화 운영 경험과 개발 인사이트를 기록합니다.
+            </div>
+            <div class="project-tags">
+              <span class="tag tag-yellow">Blogger</span>
+              <span class="tag tag-green">Writing</span>
+              <span class="tag tag-purple">AI</span>
+            </div>
+            <div class="project-status">
+              <span class="status-dot status-active"></span>
+              <span style="color: var(--green); font-size:12px;">Active — 40+ 포스트</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-icon">🧪</div>
+            <div class="project-name">NOVA — AI 운영 패러다임</div>
+            <div class="project-desc">
+              Hermes의 최상위 운영 철학. AI 에이전트가 스스로 학습·판단·실행하는
+              자율 운영 프레임워크. 오픈소스 공개 준비 중.
+            </div>
+            <div class="project-tags">
+              <span class="tag tag-purple">Framework</span>
+              <span class="tag tag-green">Open Source</span>
+              <span class="tag tag-yellow">AI Ops</span>
+            </div>
+            <div class="project-status">
+              <span class="status-dot status-build"></span>
+              <span style="color: var(--yellow); font-size:12px;">Building — OSS 공개 예정</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-label">// Skills</div>
+        <h2 class="section-title">기술 스택</h2>
+        <p class="section-desc">설계부터 배포까지 전 과정을 직접 다룹니다.</p>
+        <div class="skills-grid">
+
+          <div class="skill-group">
+            <div class="skill-group-title">AI / LLM</div>
+            <div class="skill-list">
+              <div class="skill-item">
+                <span class="skill-name">Claude API / Anthropic</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">AI Agent 설계</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">LLM 프롬프트 엔지니어링</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">RAG / 벡터 검색</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-title">보안 / QA</div>
+            <div class="skill-list">
+              <div class="skill-item">
+                <span class="skill-name">OWASP Top 10 (Web/LLM/API)</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Security Automation</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Burp Suite / DAST</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Bug Bounty (HackerOne)</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-title">개발 / 인프라</div>
+            <div class="skill-list">
+              <div class="skill-item">
+                <span class="skill-name">Python</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Docker / Linux</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Cloudflare (CDN/Pages/Workers)</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Telegram Bot API</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="skill-group">
+            <div class="skill-group-title">콘텐츠 / 마케팅</div>
+            <div class="skill-list">
+              <div class="skill-item">
+                <span class="skill-name">SEO 자동화</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">AI 콘텐츠 파이프라인</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">Google AdSense / 애널리틱스</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div>
+              </div>
+              <div class="skill-item">
+                <span class="skill-name">숏폼 콘텐츠 제작</span>
+                <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-label">// Contact</div>
+        <h2 class="section-title">같이 만들어볼까요?</h2>
+        <p class="section-desc">AI 시스템, 보안 자동화, 콘텐츠 파이프라인 관련 협업이라면 언제든지 연락주세요.</p>
+        <div class="contact-inner">
+          <div class="contact-links">
+            <a href="mailto:noivan000@gmail.com" class="contact-link">
+              <div class="contact-link-icon">📧</div>
+              <div class="contact-link-info">
+                <div class="contact-link-label">Email</div>
+                <div class="contact-link-value">noivan000@gmail.com</div>
+              </div>
+              <span style="color:var(--muted)">→</span>
+            </a>
+            <a href="https://x.com/noivan" target="_blank" rel="noopener" class="contact-link">
+              <div class="contact-link-icon">𝕏</div>
+              <div class="contact-link-info">
+                <div class="contact-link-label">X (Twitter)</div>
+                <div class="contact-link-value">@noivan</div>
+              </div>
+              <span style="color:var(--muted)">→</span>
+            </a>
+            <a href="https://t.me/nothink_ivan" target="_blank" rel="noopener" class="contact-link">
+              <div class="contact-link-icon">✈️</div>
+              <div class="contact-link-info">
+                <div class="contact-link-label">Telegram</div>
+                <div class="contact-link-value">@nothink_ivan</div>
+              </div>
+              <span style="color:var(--muted)">→</span>
+            </a>
+          </div>
+          <div class="contact-note">
+            <h3>현재 관심 있는 영역</h3>
+            <p>
+              AI QA 자동화 솔루션 도입을 검토 중인 팀, 보안 시스템 구축 협업,
+              AI 에이전트 기반 콘텐츠 자동화에 관심 있으신 분들의 연락을 환영합니다.
+            </p>
+            <p style="margin-top:12px;">
+              KRAYT AI QA 플랫폼에 관심 있으신 투자자·파트너분도 이메일로 연락주세요.
+            </p>
+            <div class="highlight">Pre-Seed $300K · SAFE $2M Cap</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 노이반 · Built with ☕ &amp; AI · <a href="https://allsweep.xyz">allsweep.xyz</a></p>
+  </footer>
+
+  <script>
+    // 스크롤 시 네비게이션 활성화
+    const sections = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav-links a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.style.color = '');
+          const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+          if (active) active.style.color = 'var(--text)';
+        }
+      });
+    }, { threshold: 0.5 });
+    sections.forEach(s => observer.observe(s));
+
+    // 카드 등장 애니메이션
+    const cards = document.querySelectorAll('.project-card, .skill-group, .stat-card');
+    const cardObserver = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => {
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'translateY(0)';
+          }, i * 60);
+          cardObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    cards.forEach(c => {
+      c.style.opacity = '0';
+      c.style.transform = 'translateY(20px)';
+      c.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.2s, transform 0.2s';
+      cardObserver.observe(c);
+    });
+  </script>
+</body>
+</html>
