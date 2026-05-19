@@ -1026,13 +1026,15 @@ h1{
       <span class="pitch-modal-title">KRAYT — Pitch Deck</span>
       <button class="pitch-modal-close" onclick="closePitch()">✕ Close</button>
     </div>
-    <iframe src="krayt-pitch.html" class="pitch-modal-iframe" title="KRAYT Pitch Deck"></iframe>
+    <iframe id="pitchFrame" src="" class="pitch-modal-iframe" title="KRAYT Pitch Deck"></iframe>
   </div>
 </div>
 
 <script>
 /* ── LANG — DOM direct (no CSS class toggle, no layout breakage) ── */
+var _NV_LANG = 'ko';
 function setLang(l) {
+  _NV_LANG = l;
   var inlineTags = ['span','a','strong','em','b','i','label','time'];
   document.querySelectorAll('.nv-ko, .nv-en').forEach(function(el) {
     var show = l === 'ko' ? el.classList.contains('nv-ko') : el.classList.contains('nv-en');
@@ -1081,11 +1083,14 @@ try{
 
 /* ── PITCH MODAL ── */
 function openPitch(){
+  var lang = _NV_LANG || 'ko';
+  document.getElementById('pitchFrame').src = 'krayt-pitch-en.html?lang=' + lang;
   document.getElementById('pitchModal').style.display='flex';
   document.body.style.overflow='hidden';
 }
 function closePitch(){
   document.getElementById('pitchModal').style.display='none';
+  document.getElementById('pitchFrame').src='';
   document.body.style.overflow='';
 }
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closePitch();});

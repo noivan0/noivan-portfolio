@@ -1,0 +1,1324 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KRAYT — AI QA Platform | Pitch Deck v8 2026</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#07080C; --s1:#0F1118; --s2:#161922; --s3:#1C2030; --s4:#242840;
+  --hr:#222638; --hr2:#2E3455;
+  --ink:#F5F7FF; --im:#B8C0E0; --is:#606888; --ig:#2A2E45;
+  --cy:#00E5CC; --cy2:rgba(0,229,204,.12); --cy3:rgba(0,229,204,.06);
+  --pu:#7B5CFA; --pu2:rgba(123,92,250,.12);
+  --gn:#00D68F; --gn2:rgba(0,214,143,.12);
+  --rd:#FF4D6D; --rd2:rgba(255,77,109,.12);
+  --am:#F5A623; --am2:rgba(245,166,35,.10);
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Space Grotesk',system-ui,sans-serif;
+  --r:10px;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--sans);color:var(--ink);}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden;}
+.slide{position:absolute;inset:0;display:none;overflow:hidden;}
+.slide.active{display:flex;flex-direction:column;}
+
+/* PROGRESS */
+.prog{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.05);z-index:999;}
+.prog-f{height:100%;background:linear-gradient(90deg,var(--cy),var(--pu));transition:width .5s cubic-bezier(.16,1,.3,1);}
+
+/* NAV */
+.nav{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;z-index:998;
+  background:rgba(7,8,12,.95);backdrop-filter:blur(24px);border:1px solid var(--hr2);border-radius:9999px;
+  padding:8px 18px;box-shadow:0 8px 32px rgba(0,0,0,.6);}
+.nb{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:var(--im);border-radius:50%;
+  width:32px;height:32px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.nb:hover{background:var(--cy2);border-color:rgba(0,229,204,.4);color:var(--cy);}
+.sno{font-family:var(--mono);font-size:12px;color:var(--is);min-width:44px;text-align:center;}
+.dots{display:flex;gap:5px;}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:all .35s;}
+.dot.on{background:var(--cy);width:18px;border-radius:3px;}
+
+/* BG */
+.bg-g{position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:32px 32px;pointer-events:none;}
+.glow{position:absolute;border-radius:50%;pointer-events:none;}
+.gcy{background:radial-gradient(circle,rgba(0,229,204,.08) 0%,transparent 70%);}
+.gpu{background:radial-gradient(circle,rgba(123,92,250,.08) 0%,transparent 70%);}
+@keyframes sc{0%{top:-2px}100%{top:100vh}}
+.sc{position:absolute;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,229,204,.3),transparent);
+  animation:sc 10s linear infinite;pointer-events:none;z-index:1;}
+
+/* LOGO */
+.logo{font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:.05em;color:var(--ink);}
+.logo span{color:var(--cy);}
+.lbl{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--is);}
+
+/* INNER */
+.in{flex:1;display:flex;flex-direction:column;padding:36px 56px 56px;z-index:2;position:relative;}
+
+/* MARQUEE */
+.mq{overflow:hidden;border-top:1px solid var(--hr);}
+.mq-t{display:flex;animation:mq 36s linear infinite;white-space:nowrap;}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mq-i{display:inline-flex;align-items:center;gap:8px;padding:9px 28px;font-family:var(--mono);font-size:12px;color:var(--is);}
+.mq-i .v{color:var(--cy);font-weight:700;}
+
+/* TYPOGRAPHY — 충분히 크게 */
+.h0{font-size:clamp(44px,5.5vw,68px);font-weight:800;letter-spacing:-2.5px;line-height:1.0;}
+.h1{font-size:clamp(32px,4vw,50px);font-weight:700;letter-spacing:-1.5px;line-height:1.05;}
+.h2{font-size:clamp(22px,2.8vw,34px);font-weight:700;letter-spacing:-.8px;line-height:1.1;}
+.body{font-size:17px;color:var(--im);line-height:1.7;}
+.sm{font-size:14px;color:var(--im);line-height:1.65;}
+.xs{font-size:12px;color:var(--is);line-height:1.6;}
+.g-cy{background:linear-gradient(135deg,var(--cy),#00B8FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.g-pu{background:linear-gradient(135deg,var(--pu),#B388FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.g-hot{background:linear-gradient(135deg,var(--cy),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* KPI — 매우 크게 */
+.kn{font-family:var(--mono);font-weight:800;letter-spacing:-1.5px;line-height:1;}
+.kn-hero{font-size:clamp(64px,8vw,96px);}
+.kn-xl{font-size:clamp(48px,6vw,72px);}
+.kn-lg{font-size:clamp(36px,4.5vw,52px);}
+.kn-md{font-size:clamp(28px,3.5vw,40px);}
+.kl{font-size:13px;color:var(--is);margin-top:4px;}
+
+/* TAGS */
+.t{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:9999px;font-size:11px;font-weight:700;font-family:var(--mono);}
+.tcy{background:var(--cy2);border:1px solid rgba(0,229,204,.3);color:var(--cy);}
+.tpu{background:var(--pu2);border:1px solid rgba(123,92,250,.3);color:var(--pu);}
+.tgn{background:var(--gn2);border:1px solid rgba(0,214,143,.3);color:var(--gn);}
+.tam{background:var(--am2);border:1px solid rgba(245,166,35,.3);color:var(--am);}
+.trd{background:var(--rd2);border:1px solid rgba(255,77,109,.3);color:var(--rd);}
+.tis{background:rgba(255,255,255,.06);border:1px solid var(--hr2);color:var(--im);}
+
+/* CARDS */
+.c{background:var(--s1);border:1px solid var(--hr);border-radius:var(--r);}
+.ccy{background:var(--cy3);border:1px solid rgba(0,229,204,.2);border-radius:var(--r);}
+.cpu{background:var(--pu2);border:1px solid rgba(123,92,250,.2);border-radius:var(--r);}
+.cgn{background:var(--gn2);border:1px solid rgba(0,214,143,.2);border-radius:var(--r);}
+.crd{background:var(--rd2);border:1px solid rgba(255,77,109,.2);border-radius:var(--r);}
+.cam{background:var(--am2);border:1px solid rgba(245,166,35,.2);border-radius:var(--r);}
+.p14{padding:14px 18px;}.p18{padding:18px 24px;}.p22{padding:22px 28px;}
+
+/* STATUS */
+.qb{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;}
+.qpass{background:rgba(0,214,143,.15);color:var(--gn);border:1px solid rgba(0,214,143,.3);}
+.qwarn{background:rgba(245,166,35,.12);color:var(--am);border:1px solid rgba(245,166,35,.3);}
+.qfail{background:rgba(255,77,109,.12);color:var(--rd);border:1px solid rgba(255,77,109,.3);}
+
+/* DIVIDER */
+.dv{height:1px;background:var(--hr);}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;}
+th{background:var(--s2);color:var(--is);font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 14px;text-align:left;border-bottom:1px solid var(--hr2);}
+td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;color:var(--im);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+.tdc{color:var(--cy);font-family:var(--mono);font-weight:600;font-size:14px;}
+.tdg{color:var(--gn);font-weight:700;}
+.tdp{color:var(--pu);}  .tda{color:var(--am);} .tdr{color:var(--rd);}
+
+/* PROGRESS BAR */
+.pb{height:5px;background:var(--hr2);border-radius:9999px;overflow:hidden;}
+.pf{height:100%;border-radius:9999px;}
+.pcy{background:linear-gradient(90deg,#00B8A3,var(--cy));}
+.ppu{background:linear-gradient(90deg,#5A3DD4,var(--pu));}
+.pgn{background:var(--gn);} .pam{background:var(--am);}
+
+/* EVIDENCE */
+.ev{border-radius:var(--r);padding:14px 18px;display:flex;align-items:flex-start;gap:12px;}
+.ev-sc{font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:1px;}
+.ev-ti{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.ev-de{font-size:12px;color:var(--is);line-height:1.6;}
+
+/* CODE */
+.cd{background:#05060A;border:1px solid var(--hr2);border-radius:var(--r);padding:14px 18px;
+  font-family:var(--mono);font-size:12px;color:#C8D2F0;line-height:2;}
+.cd .cy{color:var(--cy);}.cd .gn{color:var(--gn);}.cd .am{color:var(--am);}.cd .pu{color:#A78BFA;}.cd .is{color:var(--is);}
+
+/* TIMELINE */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);position:relative;}
+.tl::before{content:'';position:absolute;top:16px;left:12.5%;right:12.5%;height:2px;
+  background:linear-gradient(90deg,var(--cy),var(--pu),var(--am),var(--gn));}
+.tli{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.tl-d{width:14px;height:14px;border-radius:50%;border:2px solid;z-index:1;position:relative;margin-top:9px;}
+.done{background:var(--cy);border-color:var(--cy);box-shadow:0 0 12px rgba(0,229,204,.5);}
+.now{background:var(--pu);border-color:var(--pu);box-shadow:0 0 14px rgba(123,92,250,.6);}
+.soon{background:var(--bg);border-color:var(--am);}
+.later{background:var(--bg);border-color:var(--gn);}
+.tl-b{text-align:center;padding:0 8px;}
+.tl-ph{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--is);}
+.tl-ti{font-size:15px;font-weight:700;margin:4px 0;}
+.tl-it{font-size:12px;color:var(--is);line-height:2;}
+
+/* LAYOUT */
+.row{display:flex;gap:18px;}.col{flex:1;display:flex;flex-direction:column;gap:12px;}
+.f1{flex:1;}.f12{flex:1.2;}.f14{flex:1.4;}.f16{flex:1.6;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;}
+.fill{flex:1;}.oh{overflow:hidden;}
+.mt4{margin-top:4px;}.mt8{margin-top:8px;}.mt10{margin-top:10px;}.mt12{margin-top:12px;}.mt16{margin-top:16px;}.mt20{margin-top:20px;}
+
+/* PILLAR */
+.pillar{border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;}
+.pi{display:inline-block;background:var(--s3);border:1px solid var(--hr2);border-radius:4px;
+  padding:3px 8px;font-family:var(--mono);font-size:10px;color:var(--cy);font-weight:600;margin:2px;}
+
+/* GATE ROW */
+.gate-row{display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(255,255,255,.03);border-radius:8px;margin-bottom:4px;}
+.gate-num{font-family:var(--mono);font-size:11px;font-weight:700;min-width:50px;}
+.gate-name{font-size:13px;color:var(--im);flex:1;}
+.gate-pts{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--rd);}
+
+/* TOOL ROW */
+.tool-r{display:flex;align-items:flex-start;gap:10px;padding:7px 12px;background:rgba(255,255,255,.025);border-radius:6px;margin-bottom:4px;}
+.tool-id{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--am);min-width:30px;}
+.tool-name{font-family:var(--mono);font-size:10px;color:var(--cy);min-width:160px;}
+.tool-role{font-size:11px;color:var(--is);}
+
+/* PRICE */
+.price-box{flex:1;border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;}
+
+@keyframes pp{0%,100%{opacity:1}50%{opacity:.4}}
+.pp{animation:pp 2s ease-in-out infinite;}
+::-webkit-scrollbar{width:3px;} ::-webkit-scrollbar-thumb{background:var(--hr2);border-radius:2px;}
+.nv-en{display:none;}
+</style></head><body><div class="deck"><section class="slide" style="background:radial-gradient(ellipse 70% 70% at 15% 55%,rgba(0,229,204,.09),transparent 60%),radial-gradient(ellipse 60% 60% at 85% 20%,rgba(123,92,250,.09),transparent 55%),#07080C;">
+<div class="bg-g"></div><div class="sc"></div>
+<div class="in" style="justify-content:space-between;">
+  <div style="display:flex;align-items:center;justify-content:space-between;">
+    <div class="logo">KR<span>A</span>YT</div>
+    <div style="display:flex;gap:8px;">
+      <span class="t tcy">AI QA Platform</span>
+      <span class="t tpu">Pre-Seed 2026</span>
+    </div>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px;">
+    <div>
+      <p style="font-family:var(--mono);font-size:13px;color:var(--cy);letter-spacing:.2em;margin-bottom:16px;">&#9654; THE AI THAT HUNTS AI</p>
+      <h1 class="h0" style="max-width:900px;"><span class="nv-ko">AI 서비스의 품질과 보안을<br><span class="g-cy">배포 전에 완전히 검증</span>합니다.</span><span class="nv-en" style="display:none">Fully validate the quality and security of AI services<br><span class="g-cy">before deployment.</span></span></h1>
+      <p class="body" style="max-width:620px;margin-top:18px;">
+        KRAYT는 22개 자율 QA 에이전트, 546개 검증 모듈, 5-Gate 파이프라인으로
+        AI·Web·Web3 서비스를 자동 검사하고 PoC 리포트를 즉시 생성합니다.
+      </p>
+    </div>
+
+    <div style="display:flex;gap:0;border:1px solid var(--hr2);border-radius:12px;overflow:hidden;">
+      <div style="flex:1;padding:18px 22px;border-right:1px solid var(--hr2);text-align:center;">
+        <div class="kn kn-xl" style="color:var(--cy);">546</div>
+        <div class="kl">QA &amp; Security Modules</div>
+      </div>
+      <div style="flex:1;padding:18px 22px;border-right:1px solid var(--hr2);text-align:center;">
+        <div class="kn kn-xl" style="color:var(--pu);">22</div>
+        <div class="kl">Autonomous QA Agents</div>
+      </div>
+      <div style="flex:1;padding:18px 22px;border-right:1px solid var(--hr2);text-align:center;">
+        <div class="kn kn-xl" style="color:var(--gn);">281x</div>
+        <div class="kl">Faster than Human Expert</div>
+      </div>
+      <div style="flex:1;padding:18px 22px;text-align:center;">
+        <div class="kn kn-xl" style="color:var(--am);">100%</div>
+        <div class="kl">Pass Rate · 36 Benchmark Runs</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mq" style="margin:0 -56px;"><div class="mq-t"><div class="mq-i"><span>AI QA Platform</span><span class="v">핵심 정체성</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Security Modules</span><span class="v">546개</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>QA Agents</span><span class="v">22개</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>OWASP LLM</span><span class="v">10/10 Full</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Scan Speed</span><span class="v">68초</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Benchmark</span><span class="v">55/55 · 36 runs · 100%</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>External Targets</span><span class="v">20개 검증</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>BB Submissions</span><span class="v">8건</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Gate Pipeline</span><span class="v">Gate 1~5 자동화</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>WHY Analysis</span><span class="v">5단계 근본원인</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Packages</span><span class="v">SCAN $299 · BENCHMARK $999 · LAB Custom</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>BB Add-on</span><span class="v">$149/report</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>AI QA Platform</span><span class="v">핵심 정체성</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Security Modules</span><span class="v">546개</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>QA Agents</span><span class="v">22개</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>OWASP LLM</span><span class="v">10/10 Full</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Scan Speed</span><span class="v">68초</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Benchmark</span><span class="v">55/55 · 36 runs · 100%</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>External Targets</span><span class="v">20개 검증</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>BB Submissions</span><span class="v">8건</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Gate Pipeline</span><span class="v">Gate 1~5 자동화</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>WHY Analysis</span><span class="v">5단계 근본원인</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>Packages</span><span class="v">SCAN $299 · BENCHMARK $999 · LAB Custom</span><span style="color:var(--ig);">/</span></div><div class="mq-i"><span>BB Add-on</span><span class="v">$149/report</span><span style="color:var(--ig);">/</span></div></div></div>
+</div>
+</section><section class="slide" style="background:radial-gradient(ellipse 55% 65% at 85% 60%,rgba(255,77,109,.07),transparent 55%),#07080C;">
+<div class="bg-g"></div>
+<div class="in">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">01 — Problem</span>
+  </div>
+
+  <h2 class="h1" style="margin-bottom:12px;"><span class="nv-ko">AI가 배포됩니다.<br><span class="g-cy">QA 기준은 없습니다.</span></span><span class="nv-en" style="display:none">AI ships.<br><span class="g-cy">Without a QA standard.</span></span></h2>
+  <p class="body" style="max-width:720px;margin-bottom:28px;"><span class="nv-ko">기존 보안 도구(WAF·SAST·DAST)는 LLM·에이전트·RAG의 결함을 탐지하지 못합니다.<br>수동 감사는 $20K·6주가 걸립니다. 자동화 솔루션은 존재하지 않습니다.</span><span class="nv-en" style="display:none">Enterprises ship AI fast, but have no standard to measure quality and security.<br>Manual audits cost $20K and take 6 weeks. No automated solution exists.</span></p>
+
+  <div class="g3 fill" style="gap:16px;">
+    <div class="crd p22" style="display:flex;flex-direction:column;gap:16px;">
+      <div>
+        <div class="kn kn-lg" style="color:var(--rd);">340%</div>
+        <div style="font-size:15px;font-weight:600;color:var(--ink);margin-top:6px;">AI 보안 사고 급증</div>
+        <div class="xs" style="margin-top:4px;">전년 대비 (IBM Security 2024)</div>
+      </div>
+      <div class="dv"></div>
+      <div class="sm" style="color:var(--im);">기존 보안 도구가 AI 취약점을 탐지하지 못해 배포 후 피해 발생</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="xs">&#x2022; 삼성전자: AI 도구 통해 코드 유출</div>
+        <div class="xs">&#x2022; Air Canada: 챗봇 오류 → 법적 패소</div>
+        <div class="xs">&#x2022; Bybit 2025: $1.5B 스마트컨트랙트 해킹</div>
+      </div>
+    </div>
+
+    <div class="c p22" style="display:flex;flex-direction:column;gap:16px;">
+      <div>
+        <div class="kn kn-lg" style="color:var(--am);">$3.8B</div>
+        <div style="font-size:15px;font-weight:600;color:var(--ink);margin-top:6px;">Web3 연간 피해액</div>
+        <div class="xs" style="margin-top:4px;">2024년 DeFi 익스플로잇 피해</div>
+      </div>
+      <div class="dv"></div>
+      <div class="sm" style="color:var(--im);">Reentrancy·Flash Loan·Oracle 조작 — 배포 전 자동 QA로 예방 가능</div>
+      <div style="padding:12px 16px;background:var(--s2);border-radius:8px;">
+        <div class="xs">수동 스마트컨트랙트 감사</div>
+        <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--am);margin-top:4px;">$20K–$50K · 3–6주 대기</div>
+      </div>
+    </div>
+
+    <div class="c p22" style="display:flex;flex-direction:column;gap:16px;">
+      <div>
+        <div class="kn kn-lg" style="color:var(--pu);">8%</div>
+        <div style="font-size:15px;font-weight:600;color:var(--ink);margin-top:6px;">AI 보안 인지 기업</div>
+        <div class="xs" style="margin-top:4px;">OWASP LLM Top 10 이해율</div>
+      </div>
+      <div class="dv"></div>
+      <div class="sm" style="color:var(--im);">Prompt Injection·Agent Hijacking·RAG Poisoning — 새로운 QA 기준 필요</div>
+      <div style="padding:12px 16px;background:var(--s2);border-radius:8px;">
+        <div class="xs">AI 보안 전문가 연봉</div>
+        <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--pu);margin-top:4px;">$180K–$250K / 년</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding:14px 22px;background:var(--s1);border-left:3px solid var(--cy);border-radius:0 10px 10px 0;">
+    <p class="sm"><strong style="color:var(--cy);font-size:15px;">결론:</strong> KRAYT = Stripe for AI security measurement. Precise · API-first · CI/CD-integrated · Automated.</p>
+  </div>
+</div>
+</section><section class="slide" style="background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(0,229,204,.06),transparent 60%),#07080C;">
+<div class="bg-g"></div>
+<div class="in">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">02 — Solution</span>
+  </div>
+
+  <h2 class="h1" style="margin-bottom:8px;"><span class="nv-ko">하나의 플랫폼. <span class="g-hot">Web2 + AI + Web3.</span></span><span class="nv-en" style="display:none">One Platform. <span class="g-hot">Web2 + AI + Web3.</span></span></h2>
+  <p class="body" style="margin-bottom:20px;max-width:720px;">QA가 핵심입니다. 보안 취약점 탐지는 QA 방법론의 일부입니다. Automated · Repeatable · Auditable.</p>
+
+  <div class="row fill" style="gap:14px;">
+    <!-- WEB -->
+    <div class="pillar cpu" style="flex:1;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--pu);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;">WEB APPLICATION QA</div>
+          <div style="font-size:18px;font-weight:700;color:var(--ink);">웹 앱 전체 QA</div>
+        </div>
+        <div style="text-align:right;"><div class="kn kn-md" style="color:var(--pu);">54</div><div class="kl">modules</div></div>
+      </div>
+      <div class="dv" style="background:rgba(123,92,250,.25);"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:3px;">
+        <span class="pi" style="color:var(--pu);">IDOR-001</span><span class="pi" style="color:var(--pu);">SQLI-001</span>
+        <span class="pi" style="color:var(--pu);">XSS-001</span><span class="pi" style="color:var(--pu);">SSRF-001</span>
+        <span class="pi" style="color:var(--pu);">JWT-001</span><span class="pi" style="color:var(--pu);">CORS-001</span>
+        <span class="pi" style="color:rgba(123,92,250,.45);">+48 more</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;flex:1;font-size:13px;">
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+          <span style="color:var(--im);">OWASP Web Top 10</span><span class="qb qpass">FULL</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+          <span style="color:var(--im);">SQLi · XSS · SSRF · JWT · OAuth</span><span class="qb qpass">✓</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;">
+          <span style="color:var(--im);">Race Condition · Business Logic</span><span class="qb qpass">✓</span>
+        </div>
+      </div>
+      <div style="padding:10px 14px;background:rgba(0,0,0,.4);border-radius:8px;font-family:var(--mono);font-size:11px;color:var(--pu);text-align:center;">
+        실증: ginandjuice.shop Stored XSS CVSS 8.0
+      </div>
+    </div>
+
+    <!-- AI/LLM -->
+    <div class="pillar ccy" style="flex:1.35;border-width:2px;border-color:rgba(0,229,204,.3);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--cy);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;">AI / LLM QA &nbsp;<span style="padding:2px 7px;background:var(--cy2);border-radius:4px;font-size:10px;">CORE</span></div>
+          <div style="font-size:18px;font-weight:700;color:var(--ink);">AI 서비스 전체 QA</div>
+        </div>
+        <div style="text-align:right;"><div class="kn kn-md" style="color:var(--cy);">413</div><div class="kl">modules</div></div>
+      </div>
+      <div class="dv" style="background:rgba(0,229,204,.25);"></div>
+      <div style="padding:8px 12px;background:rgba(0,0,0,.3);border-radius:8px;margin-bottom:6px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:13px;color:var(--cy);font-weight:700;">OWASP LLM Top 10 v2025</span>
+          <span class="qb qpass">10/10 FULL</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;flex:1;font-size:13px;">
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+          <span style="color:var(--im);">Prompt Injection (직접/간접/Crescendo)</span><span class="qb qpass">✓</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+          <span style="color:var(--im);">Agent Hijacking · Tool Poisoning · RAG</span><span class="qb qpass">✓</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;">
+          <span style="color:var(--im);">한국어 특화 4종 (금융·의료·인코딩)</span><span class="qb qpass">✓</span>
+        </div>
+      </div>
+      <div style="padding:10px 14px;background:rgba(0,0,0,.4);border-radius:8px;font-family:var(--mono);font-size:11px;color:var(--cy);text-align:center;">
+        55/55 Exact Match · 36 runs · 100% Pass Rate
+      </div>
+    </div>
+
+    <!-- WEB3 -->
+    <div class="pillar cgn" style="flex:1;border-style:dashed;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:10px;right:10px;"><span class="t tgn pp" style="font-size:10px;">EXPANDING</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--gn);letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px;">WEB3 / DEFI QA</div>
+          <div style="font-size:18px;font-weight:700;color:var(--ink);">스마트컨트랙트 QA</div>
+        </div>
+        <div style="text-align:right;"><div class="kn kn-md" style="color:var(--gn);">9<span style="font-size:16px;color:var(--is);">→50+</span></div><div class="kl">modules</div></div>
+      </div>
+      <div class="dv" style="background:rgba(0,214,143,.25);"></div>
+      <div style="display:flex;flex-direction:column;gap:6px;flex:1;font-size:13px;">
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+          <span style="color:var(--im);">Reentrancy · Flash Loan · MEV</span><span class="qb qpass">✓</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+          <span style="color:var(--im);">Oracle Manipulation · SWC-101~107</span><span class="qb qpass">✓</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:4px 0;">
+          <span style="color:rgba(0,214,143,.45);">SWC-100~136 Full</span><span class="qb qwarn">Q3 →</span>
+        </div>
+      </div>
+      <div style="padding:10px 14px;background:rgba(0,0,0,.4);border-radius:8px;font-family:var(--mono);font-size:11px;color:var(--gn);text-align:center;">
+        실증: Monetrix H-01 Fund Lock CVSS 9.4
+      </div>
+    </div>
+  </div>
+
+  <!-- Total bar -->
+  <div style="margin-top:14px;display:flex;align-items:center;gap:16px;padding:12px 20px;background:var(--s1);border-radius:10px;border:1px solid var(--hr2);">
+    <div style="flex:1;">
+      <div style="display:flex;height:6px;border-radius:9999px;overflow:hidden;gap:1px;">
+        <div style="width:10%;background:var(--pu);"></div>
+        <div style="width:75%;background:var(--cy);"></div>
+        <div style="width:9%;background:var(--am);"></div>
+        <div style="width:6%;background:var(--gn);opacity:.5;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;font-family:var(--mono);font-size:11px;">
+        <span style="color:var(--pu);">Web (54)</span>
+        <span style="color:var(--cy);">AI/LLM (413)</span>
+        <span style="color:var(--am);">QA Ops (47)</span>
+        <span style="color:var(--gn);">Web3 (9+)</span>
+      </div>
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div style="font-family:var(--mono);font-size:28px;font-weight:800;color:var(--ink);">546</div>
+      <div class="kl">total modules</div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" style="background:#07080C;">
+<div class="bg-g"></div>
+<div class="in" style="padding:28px 52px 48px;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">03 — Architecture &amp; Methodology</span>
+  </div>
+
+  <h2 class="h2" style="margin-bottom:10px;">D-1~D-10 도구 + 22 에이전트 + 5-Gate QA.</h2>
+
+  <div class="row fill" style="gap:14px;">
+
+    <!-- 왼쪽: D-1~D-10 -->
+    <div class="c p14" style="flex:1.1;display:flex;flex-direction:column;">
+      <div style="font-family:var(--mono);font-size:10px;color:var(--am);letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;">D-1~D-10 핵심 도구</div>
+      <div style="display:flex;flex-direction:column;gap:3px;flex:1;">
+        <div class="tool-r"><span class="tool-id">D-1</span><span class="tool-name">krayt_scanner.py</span><span class="tool-role">통합 진입점 · MasterOrchestrator 래핑</span></div>
+        <div class="tool-r"><span class="tool-id">D-2</span><span class="tool-name">krayt_probe_v28.py</span><span class="tool-role">L3 동적 탐지 · 페이로드 주입·응답 분석</span></div>
+        <div class="tool-r"><span class="tool-id">D-3</span><span class="tool-name">krayt_taint_tracker.py</span><span class="tool-role">AST 정적 분석 · LLM→sink 오염 경로</span></div>
+        <div class="tool-r"><span class="tool-id">D-4</span><span class="tool-name">krayt_chain_finder.py</span><span class="tool-role">취약점 체이닝 · 공격 체인 자동 구성</span></div>
+        <div class="tool-r"><span class="tool-id">D-5</span><span class="tool-name">krayt_report_scorer.py</span><span class="tool-role">보고서 채점 · 100점 기준 감점 시스템</span></div>
+        <div class="tool-r"><span class="tool-id">D-6</span><span class="tool-name">krayt_race_benchmark.py</span><span class="tool-role">Race Condition · 동시 N개 HTTP 탐지</span></div>
+        <div class="tool-r"><span class="tool-id">D-7</span><span class="tool-name">krayt_severity_boundary.py</span><span class="tool-role">심각도 경계 · CRITICAL/HIGH/MED/LOW 판정</span></div>
+        <div class="tool-r"><span class="tool-id">D-8</span><span class="tool-name">krayt_no_issue_filter.py</span><span class="tool-role">No-Issue 필터 · 보고 가치 없는 항목 차단</span></div>
+        <div class="tool-r"><span class="tool-id">D-9</span><span class="tool-name">krayt_qa_pipeline.py</span><span class="tool-role">5-Gate QA 파이프라인 · 순차 검증</span></div>
+        <div class="tool-r"><span class="tool-id">D-10</span><span class="tool-name">krayt_sandbox_manager.py</span><span class="tool-role">Sandbox 환경 관리 · 격리 실행</span></div>
+      </div>
+    </div>
+
+    <!-- 오른쪽: E2E 상단 + Gate·WHY 2열 하단 -->
+    <div style="flex:1.9;display:flex;flex-direction:column;gap:10px;">
+
+      <!-- E2E 아키텍처 흐름 — 노드 균등 분배 -->
+      <div class="ccy" style="padding:12px 16px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--cy);letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;">E2E 아키텍처 흐름</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:nowrap;">
+          <div style="flex:1;padding:10px 8px;background:var(--s3);border-radius:8px;text-align:center;">
+            <div style="font-size:12px;font-weight:600;color:var(--im);">Target</div>
+            <div style="font-size:10px;color:var(--is);margin-top:2px;">AI System</div>
+          </div>
+          <div style="color:rgba(0,229,204,.4);font-size:18px;flex-shrink:0;">→</div>
+          <div style="flex:1.6;padding:10px 8px;background:rgba(0,229,204,.1);border:1px solid rgba(0,229,204,.25);border-radius:8px;text-align:center;">
+            <div style="font-size:12px;font-weight:700;color:var(--cy);">MasterOrchestrator</div>
+            <div style="font-size:10px;color:var(--is);margin-top:2px;">scan() · 22 agents</div>
+          </div>
+          <div style="color:rgba(0,229,204,.4);font-size:18px;flex-shrink:0;">→</div>
+          <div style="flex:1;padding:10px 8px;background:var(--s2);border:1px solid var(--hr2);border-radius:8px;text-align:center;">
+            <div style="font-size:12px;font-weight:600;color:var(--im);">546 Probes</div>
+            <div style="font-size:10px;color:var(--is);margin-top:2px;">parallel</div>
+          </div>
+          <div style="color:rgba(0,229,204,.4);font-size:18px;flex-shrink:0;">→</div>
+          <div style="flex:1;padding:10px 8px;background:rgba(0,214,143,.1);border:1px solid rgba(0,214,143,.2);border-radius:8px;text-align:center;">
+            <div style="font-size:12px;font-weight:600;color:var(--gn);">Evidence</div>
+            <div style="font-size:10px;color:var(--is);margin-top:2px;">SHA-256</div>
+          </div>
+          <div style="color:rgba(0,229,204,.4);font-size:18px;flex-shrink:0;">→</div>
+          <div style="flex:1;padding:10px 8px;background:rgba(123,92,250,.1);border:1px solid rgba(123,92,250,.2);border-radius:8px;text-align:center;">
+            <div style="font-size:12px;font-weight:600;color:var(--pu);">Gate 1~5</div>
+            <div style="font-size:10px;color:var(--is);margin-top:2px;">QA Pipeline</div>
+          </div>
+          <div style="color:rgba(0,229,204,.4);font-size:18px;flex-shrink:0;">→</div>
+          <div style="flex:1;padding:10px 8px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.2);border-radius:8px;text-align:center;">
+            <div style="font-size:12px;font-weight:600;color:var(--am);">Report</div>
+            <div style="font-size:10px;color:var(--is);margin-top:2px;">PDF + JSON</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 하단: Gate + WHY 2열 -->
+      <div style="display:flex;gap:10px;flex:1;">
+
+        <!-- Gate 1~5 — 콤팩트 -->
+        <div class="c" style="flex:1.2;padding:12px 14px;display:flex;flex-direction:column;gap:0;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--pu);letter-spacing:.12em;text-transform:uppercase;">5-Gate QA Pipeline</span>
+            <span class="qb qpass" style="font-size:9px;">PASS ≥ 80pts</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(0,229,204,.06);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--cy);min-width:42px;">Gate 1</span>
+                <span style="font-size:11px;color:var(--im);flex:1;font-weight:600;">채점기 점수 ≥ 70점</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--rd);">-30pts fail</span>
+              </div>
+              <div style="font-size:10px;color:var(--is);padding-left:50px;">PoC·OWASP매핑·재현단계·증거 8항목 감점제 · ReportScorer 자동 채점</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(123,92,250,.06);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--pu);min-width:42px;">Gate 2</span>
+                <span style="font-size:11px;color:var(--im);flex:1;font-weight:600;">PoC 재현 필수</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--is);">Grade C 상한</span>
+              </div>
+              <div style="font-size:10px;color:var(--is);padding-left:50px;">curl / python 명령어 첨부 · 재현 불가 시 등급 강제 강등</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(0,214,143,.08);border:1px solid rgba(0,214,143,.2);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--gn);min-width:42px;">Gate 3</span>
+                <span style="font-size:11px;color:var(--gn);flex:1;font-weight:600;">심각도 OVERESTIMATE 탐지</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--gn);">자동 ✓</span>
+              </div>
+              <div style="font-size:10px;color:rgba(0,214,143,.55);padding-left:50px;">SeverityBoundary · CVSS 범위 이탈 시 자동 조정 · FP 방지</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(245,166,35,.06);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--am);min-width:42px;">Gate 4</span>
+                <span style="font-size:11px;color:var(--im);flex:1;font-weight:600;">No-Issue 필터 정제</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--is);">SUPPRESS</span>
+              </div>
+              <div style="font-size:10px;color:var(--is);padding-left:50px;">LOW 재현불가·정보성 헤더 단독 발견 자동 차단 · 보고서 노이즈 제거</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(255,77,109,.06);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--rd);min-width:42px;">Gate 5</span>
+                <span style="font-size:11px;color:var(--im);flex:1;font-weight:600;">소스코드 접근 의무화</span>
+                <span style="font-family:var(--mono);font-size:10px;color:var(--rd);">FAIL</span>
+              </div>
+              <div style="font-size:10px;color:var(--is);padding-left:50px;">화이트박스 필수 · 블랙박스 스캔 시 명시 의무 · L4~L5 QA 기준</div>
+            </div>
+          </div>
+          <div style="margin-top:8px;padding:6px 10px;background:rgba(0,0,0,.35);border-radius:6px;display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:10px;color:var(--is);">krayt_qa_pipeline.py · QualityGate 8항목 (CVSS 기반)</span>
+            <span class="qb qpass" style="font-size:9px;">자동화 완료</span>
+          </div>
+        </div>
+
+        <!-- WHY 5단계 -->
+        <div class="c" style="flex:1;padding:12px 14px;display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--cy);letter-spacing:.12em;text-transform:uppercase;">WHY 5단계 근본원인 분석</span>
+            <span style="font-size:10px;color:var(--is);">모든 발견 의무</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(255,77,109,.06);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--rd);background:var(--rd2);padding:1px 6px;border-radius:3px;flex-shrink:0;">현상</span>
+                <span style="font-size:11px;color:var(--im);font-weight:600;">취약점·결함 표면 발견</span>
+              </div>
+              <div style="font-size:10px;color:var(--is);padding-left:46px;">CVSS 점수 측정 · 영향 범위 식별 · 재현 확인</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(245,166,35,.05);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--am);background:var(--am2);padding:1px 6px;border-radius:3px;flex-shrink:0;">WHY 1</span>
+                <span style="font-size:11px;color:var(--im);font-weight:600;">직접 원인 — 코드 라인 인용</span>
+              </div>
+              <div style="font-size:10px;color:var(--is);padding-left:46px;">취약한 함수·파라미터·로직 정확히 지목</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(245,166,35,.04);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--am);background:var(--am2);padding:1px 6px;border-radius:3px;flex-shrink:0;">WHY 2</span>
+                <span style="font-size:11px;color:var(--im);font-weight:600;">구조적 원인 — 설계 결함</span>
+              </div>
+              <div style="font-size:10px;color:var(--is);padding-left:46px;">인증·검증·권한 로직 누락 구조 분석</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(245,166,35,.03);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--am);background:var(--am2);padding:1px 6px;border-radius:3px;flex-shrink:0;">WHY 3~4</span>
+                <span style="font-size:11px;color:var(--im);font-weight:600;">트리거 경로 · 방어 우회</span>
+              </div>
+              <div style="font-size:10px;color:var(--is);padding-left:46px;">공격자 진입 벡터 · WAF·필터 우회 가능성 검증</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;padding:7px 10px;background:rgba(0,229,204,.07);border:1px solid rgba(0,229,204,.15);border-radius:6px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--cy);background:var(--cy2);padding:1px 6px;border-radius:3px;flex-shrink:0;">WHY 5</span>
+                <span style="font-size:11px;color:var(--cy);font-weight:700;">근본 원인 + 비즈니스 임팩트</span>
+              </div>
+              <div style="font-size:10px;color:rgba(0,229,204,.6);padding-left:46px;">해결책·우선순위·비용 추정 → 실행 가능한 리포트</div>
+            </div>
+          </div>
+          <div style="margin-top:8px;padding:6px 10px;background:rgba(0,229,204,.05);border:1px solid rgba(0,229,204,.15);border-radius:6px;">
+            <span style="font-size:10px;color:var(--is);">예: Stored XSS → 입력 미검증(WHY1) → CSP 부재(WHY2) → 관리자 페이지 노출(WHY3~4) → 전체 세션 탈취 가능(WHY5)</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+</section><section class="slide" style="background:radial-gradient(ellipse 55% 65% at 20% 60%,rgba(123,92,250,.08),transparent 55%),#07080C;">
+<div class="bg-g"></div>
+<div class="in">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">04 — Real Proof</span>
+  </div>
+
+  <h2 class="h1" style="margin-bottom:10px;"><span class="nv-ko">실제 외부 타겟. <span class="g-cy">실제 발견.</span></span><span class="nv-en" style="display:none">Real Targets. <span class="g-cy">Real Findings.</span></span></h2>
+  <p class="body" style="margin-bottom:20px;max-width:680px;">20개 외부 타겟 검증. 8건 BB 제출. 샌드박스 내부 순환 검증이 아닙니다.</p>
+
+  <div class="row fill" style="gap:16px;">
+    <div class="col f14">
+      <div class="ev crd">
+        <div class="ev-sc" style="background:rgba(255,77,109,.2);color:var(--rd);">CVSS 8.0</div>
+        <div>
+          <div class="ev-ti">ginandjuice.shop — Stored XSS</div>
+          <div class="ev-de">SOCKS5 프록시 우회 · 외부 타겟 직접 스캔 · XSS 익스플로잇 실행 · PoC curl 재현 완료 · WebPentestAgent + APIQAAgent 공동 탐지</div>
+        </div>
+      </div>
+      <div class="ev c" style="background:var(--s2);">
+        <div class="ev-sc" style="background:rgba(0,214,143,.18);color:var(--gn);">CVSS 9.4</div>
+        <div>
+          <div class="ev-ti">Monetrix Protocol — Fund Lock (H-01)</div>
+          <div class="ev-de">Code4rena Web3 · cancelRedeem() 미구현 → 자금 영구 동결 · CRITICAL · $22K 프로그램 · Web3 QA 실증</div>
+        </div>
+      </div>
+      <div class="ev c" style="background:var(--s2);">
+        <div class="ev-sc" style="background:rgba(0,214,143,.18);color:var(--gn);">CVSS 5.3</div>
+        <div>
+          <div class="ev-ti">HuggingFace — Org Membership Exposure</div>
+          <div class="ev-de">/api/users/{username}/overview 무인증 조직 노출 · Rate Limit 없음 · HackerOne 제출</div>
+        </div>
+      </div>
+      <div class="ev c" style="background:var(--s2);">
+        <div class="ev-sc" style="background:rgba(123,92,250,.18);color:var(--pu);">H1 ✓×2</div>
+        <div>
+          <div class="ev-ti">ConcreteCMS — Stored XSS (#3730278, #3731638)</div>
+          <div class="ev-de">PHP base64_decode 미검증 · 모든 방문자 XSS · WHY 5단계 완성 · PoC curl 포함</div>
+        </div>
+      </div>
+      <div class="ev c" style="background:var(--s2);">
+        <div class="ev-sc" style="background:rgba(123,92,250,.18);color:var(--pu);">BB×2</div>
+        <div>
+          <div class="ev-ti">Anthropic — Security Headers (KR-BB-002/003)</div>
+          <div class="ev-de">HackerOne · CSP/HSTS 누락 · Claude API 플랫폼 · WebPentestAgent 자동 탐지</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="ccy p18">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--cy);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;">Benchmark — 측정된 성능</div>
+        <div class="g2" style="gap:10px;margin-bottom:14px;">
+          <div style="text-align:center;padding:14px;background:rgba(0,0,0,.4);border-radius:10px;">
+            <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--cy);">55/55</div>
+            <div class="xs" style="margin-top:4px;">Exact Match Cases</div>
+          </div>
+          <div style="text-align:center;padding:14px;background:rgba(0,0,0,.4);border-radius:10px;">
+            <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--gn);">100%</div>
+            <div class="xs" style="margin-top:4px;">Pass Rate (전체 실행)</div>
+          </div>
+          <div style="text-align:center;padding:14px;background:rgba(0,0,0,.4);border-radius:10px;">
+            <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--pu);">36</div>
+            <div class="xs" style="margin-top:4px;">Benchmark Runs</div>
+          </div>
+          <div style="text-align:center;padding:14px;background:rgba(0,0,0,.4);border-radius:10px;">
+            <div style="font-family:var(--mono);font-size:30px;font-weight:800;color:var(--am);">662</div>
+            <div class="xs" style="margin-top:4px;">Cumulative Cases (99%)</div>
+          </div>
+        </div>
+        <div style="padding:12px 16px;background:rgba(0,0,0,.4);border-radius:8px;">
+          <span style="font-size:14px;font-weight:700;color:var(--cy);">3×100% Blind Benchmark</span>
+          <div class="xs" style="margin-top:3px;">독립 블라인드 3회 전부 100% 통과. Suite 24→55 케이스로 성장.</div>
+        </div>
+      </div>
+
+      <div class="c p18 fill">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--is);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;">Human vs KRAYT</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--hr);">
+            <span style="font-size:14px;color:var(--im);">속도</span>
+            <div style="text-align:right;">
+              <div style="font-family:var(--mono);font-size:12px;color:var(--is);text-decoration:line-through;">30–60s / probe</div>
+              <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--gn);">281× Faster</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+            <span style="font-size:14px;color:var(--im);">정확도 우위</span>
+            <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--gn);">+0.033</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px;">
+          <div style="text-align:center;flex:1;padding:10px;background:var(--s2);border-radius:8px;">
+            <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--cy);">20</div><div class="xs">검증 타겟</div>
+          </div>
+          <div style="text-align:center;flex:1;padding:10px;background:var(--s2);border-radius:8px;">
+            <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--pu);">8건</div><div class="xs">BB 제출</div>
+          </div>
+          <div style="text-align:center;flex:1;padding:10px;background:var(--s2);border-radius:8px;">
+            <div style="font-family:var(--mono);font-size:18px;font-weight:700;color:var(--am);">68s</div><div class="xs">전체 스캔</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" style="background:radial-gradient(ellipse 55% 60% at 80% 30%,rgba(0,229,204,.07),transparent 55%),#07080C;">
+<div class="bg-g"></div>
+<div class="in">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">05 — Market</span>
+  </div>
+
+  <h2 class="h1" style="margin-bottom:10px;"><span class="nv-ko"><span class="g-hot">$66B+ TAM.</span><br>규제가 수요를 만들고 있습니다.</span><span class="nv-en" style="display:none"><span class="g-hot">$66B+ TAM.</span><br>Regulation is creating demand.</span></h2>
+
+  <div class="row fill" style="gap:16px;">
+    <div class="col f14">
+      <div class="c oh fill" style="padding:0;">
+        <table>
+          <thead><tr>
+            <th>QA 세그먼트</th><th>2024</th><th>2026E</th><th>2030E</th><th style="text-align:center;">CAGR</th>
+          </tr></thead>
+          <tbody>
+            <tr><td style="font-weight:700;color:var(--pu);font-size:14px;">Web App Security</td><td style="color:var(--is);">$6.8B</td><td style="color:var(--is);">$9.5B</td><td class="tdp">$22B</td><td class="tdg" style="text-align:center;font-size:15px;">+25%</td></tr>
+            <tr><td style="font-weight:700;color:var(--cy);font-size:14px;">AI/LLM Security QA</td><td style="color:var(--is);">$1.2B</td><td style="color:var(--is);">$3.5B</td><td class="tdc">$18B</td><td class="tdg" style="text-align:center;font-size:15px;">+55%</td></tr>
+            <tr><td style="font-weight:700;color:var(--gn);font-size:14px;">Web3/DeFi Audit</td><td style="color:var(--is);">$1.1B</td><td style="color:var(--is);">$3.2B</td><td style="color:var(--gn);font-size:14px;">$14B</td><td class="tdg" style="text-align:center;font-size:15px;">+52%</td></tr>
+            <tr><td style="font-weight:700;color:var(--am);font-size:14px;">AI Agent Security</td><td style="color:var(--is);">$0.3B</td><td style="color:var(--is);">$1.8B</td><td class="tda">$12B</td><td class="tdg" style="text-align:center;font-size:15px;">+80%</td></tr>
+            <tr style="background:rgba(0,229,204,.07);">
+              <td style="font-weight:800;color:var(--cy);font-size:15px;">Total TAM</td>
+              <td style="color:var(--is);font-weight:700;">$9.4B</td>
+              <td class="tdc" style="font-weight:700;font-size:15px;">$18B</td>
+              <td class="tdc" style="font-weight:800;font-size:18px;">$66B+</td>
+              <td class="tdg" style="text-align:center;font-weight:800;font-size:15px;">+45%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="g3" style="gap:10px;">
+        <div class="c" style="text-align:center;padding:14px;">
+          <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--cy);">$66B+</div>
+          <div class="kl">TAM 2030</div>
+        </div>
+        <div class="c" style="text-align:center;padding:14px;">
+          <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--pu);">$4B</div>
+          <div class="kl">SAM (SaaS)</div>
+        </div>
+        <div class="c" style="text-align:center;padding:14px;">
+          <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--gn);">$400M</div>
+          <div class="kl">SOM Korea</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="ccy p18">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--cy);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;">규제 드라이버 — 2026년 전면 시행</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:12px;"><span style="color:var(--cy);font-weight:700;font-size:14px;min-width:100px;">EU AI Act</span><span class="sm">High-risk AI 의무 QA · 위반 최대 <strong style="color:var(--rd);">$35M</strong></span></div>
+          <div style="display:flex;gap:12px;"><span style="color:var(--cy);font-weight:700;font-size:14px;min-width:100px;">Korea AI Act</span><span class="sm">Art.22 금융·의료·교통 AI QA 의무화</span></div>
+          <div style="display:flex;gap:12px;"><span style="color:var(--cy);font-weight:700;font-size:14px;min-width:100px;">NIST AI RMF</span><span class="sm">연방 조달 AI 보안 검증 필수</span></div>
+          <div style="display:flex;gap:12px;"><span style="color:var(--cy);font-weight:700;font-size:14px;min-width:100px;">사이버보험</span><span class="sm">AI QA 결과 없으면 보험 거절 시작</span></div>
+        </div>
+      </div>
+      <div class="c p18 fill">
+        <div style="font-family:var(--mono);font-size:12px;color:var(--is);margin-bottom:12px;">KRAYT = AI 시대의 Snyk</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--s2);border-radius:8px;">
+            <div><div style="font-size:15px;font-weight:700;">Snyk</div><div class="xs">OSS security → IPO</div></div>
+            <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--cy);">$8.6B</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--s2);border-radius:8px;">
+            <div><div style="font-size:15px;font-weight:700;">Wiz</div><div class="xs">Cloud security</div></div>
+            <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--cy);">$32B</div>
+          </div>
+          <div style="padding:10px 14px;background:var(--cy3);border-radius:8px;border:1px solid rgba(0,229,204,.22);">
+            <div style="font-size:15px;font-weight:700;color:var(--cy);">KRAYT = Snyk for AI QA</div>
+            <div class="xs" style="margin-top:3px;">Web2 + AI/LLM + Web3 통합 · 자동화 · SaaS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" style="background:#07080C;">
+<div class="bg-g"></div>
+<div class="in">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">06 — Differentiation</span>
+  </div>
+
+  <h2 class="h1" style="margin-bottom:10px;"><span class="nv-ko">Web2 + Web3 + AI를<br><span class="g-hot">동시에 다루는 플랫폼은 없습니다.</span></span><span class="nv-en" style="display:none">No platform handles<br><span class="g-hot">Web2 + Web3 + AI simultaneously.</span></span></h2>
+
+  <div class="row fill" style="gap:16px;">
+    <div class="col f16">
+      <div class="c oh fill">
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr 1fr;background:var(--s2);border-bottom:1px solid var(--hr2);">
+          <div style="padding:10px 14px;font-family:var(--mono);font-size:10px;color:var(--is);letter-spacing:.1em;text-transform:uppercase;">플랫폼</div>
+          <div style="padding:10px 8px;font-family:var(--mono);font-size:10px;color:var(--pu);text-align:center;">Web QA</div>
+          <div style="padding:10px 8px;font-family:var(--mono);font-size:10px;color:var(--cy);text-align:center;">AI/LLM</div>
+          <div style="padding:10px 8px;font-family:var(--mono);font-size:10px;color:var(--gn);text-align:center;">Web3</div>
+          <div style="padding:10px 8px;font-family:var(--mono);font-size:10px;color:var(--am);text-align:center;">자동화</div>
+          <div style="padding:10px 8px;font-family:var(--mono);font-size:10px;color:var(--is);text-align:center;">PoC</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid rgba(255,255,255,.04);padding:10px 0;">
+          <div style="padding:0 14px;font-size:13px;font-weight:600;color:var(--im);">garak (NVIDIA)</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--am);">△ 일부</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+          <div style="padding:0 8px;text-align:center;font-size:13px;color:var(--am);">△ CLI</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+        </div><div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid rgba(255,255,255,.04);padding:10px 0;">
+          <div style="padding:0 14px;font-size:13px;font-weight:600;color:var(--im);">Lakera Guard</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--am);">△ 방어만</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+          <div style="padding:0 8px;text-align:center;font-size:13px;color:var(--am);">△ 런타임</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+        </div><div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid rgba(255,255,255,.04);padding:10px 0;">
+          <div style="padding:0 14px;font-size:13px;font-weight:600;color:var(--im);">HiddenLayer</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--am);">△ ML만</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+          <div style="padding:0 8px;text-align:center;font-size:13px;color:var(--am);">△ 부분</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+        </div><div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid rgba(255,255,255,.04);padding:10px 0;">
+          <div style="padding:0 14px;font-size:13px;font-weight:600;color:var(--im);">Cyfrin/Spearbit</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--am);">△ 수동</div>
+          <div style="padding:0 8px;text-align:center;font-size:13px;color:var(--rd);">✗</div>
+          <div style="padding:0 8px;text-align:center;font-size:14px;color:var(--rd);">✗</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr 1fr 1fr;background:rgba(0,229,204,.07);border-top:1px solid rgba(0,229,204,.25);padding:12px 0;">
+          <div style="padding:0 14px;font-size:15px;font-weight:800;color:var(--cy);">KRAYT ✓</div>
+          <div style="padding:0 8px;text-align:center;font-size:15px;font-weight:700;color:var(--gn);">54</div>
+          <div style="padding:0 8px;text-align:center;font-size:15px;font-weight:700;color:var(--gn);">413</div>
+          <div style="padding:0 8px;text-align:center;font-size:15px;font-weight:700;color:var(--gn);">9→50+</div>
+          <div style="padding:0 8px;text-align:center;font-size:13px;font-weight:700;color:var(--gn);">22 agents</div>
+          <div style="padding:0 8px;text-align:center;font-size:15px;font-weight:700;color:var(--gn);">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="ccy p18">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--cy);letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;">KRAYT 차별화</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:10px;"><span style="color:var(--cy);font-size:18px;flex-shrink:0;">✓</span><div><strong style="color:var(--ink);font-size:14px;">유일한 3-in-1 QA 플랫폼</strong><br><span class="xs">Web+AI+Web3 단일 스캔 · D-1~D-10 도구</span></div></div>
+          <div style="display:flex;gap:10px;"><span style="color:var(--cy);font-size:18px;flex-shrink:0;">✓</span><div><strong style="color:var(--ink);font-size:14px;">Gate 1~5 자동화 QA</strong><br><span class="xs">채점·PoC·심각도·NI필터·소스코드 5단 검증</span></div></div>
+          <div style="display:flex;gap:10px;"><span style="color:var(--cy);font-size:18px;flex-shrink:0;">✓</span><div><strong style="color:var(--ink);font-size:14px;">281× 속도 · 1/10 비용</strong><br><span class="xs">수동 $20K·6주 → KRAYT $299·2시간</span></div></div>
+          <div style="display:flex;gap:10px;"><span style="color:var(--cy);font-size:18px;flex-shrink:0;">✓</span><div><strong style="color:var(--ink);font-size:14px;">한국어 특화 + Korea AI Act</strong><br><span class="xs">경쟁사 없음 · 내장 규제 매핑</span></div></div>
+        </div>
+      </div>
+      <div class="c p18 fill">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--is);margin-bottom:12px;">QA 속도·비용 비교</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--hr);">
+            <span style="font-size:14px;color:var(--im);">소요 시간</span>
+            <div style="text-align:right;"><div style="font-family:var(--mono);font-size:12px;color:var(--is);text-decoration:line-through;">3–6 weeks</div>
+              <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--gn);">~2 hours</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--hr);">
+            <span style="font-size:14px;color:var(--im);">비용</span>
+            <div style="text-align:right;"><div style="font-family:var(--mono);font-size:12px;color:var(--is);text-decoration:line-through;">$20K–$50K</div>
+              <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--gn);">$299/mo</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;">
+            <span style="font-size:14px;color:var(--im);">커버리지</span>
+            <div style="font-family:var(--mono);font-size:20px;font-weight:700;color:var(--gn);">3 영역</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" style="background:#07080C;">
+<div class="bg-g"></div>
+<div class="in">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">07 — Business Model</span>
+  </div>
+
+  <h2 class="h1" style="margin-bottom:8px;"><span class="nv-ko">무료 QA로 시작. <span class="g-cy">엔터프라이즈로 확장.</span></span><span class="nv-en" style="display:none">Start free. <span class="g-cy">Scale to enterprise.</span></span></h2>
+  <p class="body" style="margin-bottom:20px;">Usage-based SaaS + Annual Contract. Bug Bounty Add-on $149/report.</p>
+
+  <div class="row fill" style="gap:14px;">
+    <div class="price-box c" style="display:flex;flex-direction:column;gap:12px;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--is);letter-spacing:.14em;text-transform:uppercase;">Community</div>
+      <div><div style="font-family:var(--mono);font-size:34px;font-weight:800;color:var(--is);">$0</div><div class="kl">무료 · 영구</div></div>
+      <div class="dv"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--im);">
+        <div>&#10003; OWASP LLM 3개 카테고리</div>
+        <div>&#10003; CLI + GitHub Actions</div>
+        <div>&#10003; 월 1회 스캔</div>
+        <div style="color:var(--ig);">&#215; Full QA / PDF 리포트</div>
+      </div>
+      <div class="xs">목표: GitHub Stars · 개발자 채택</div>
+    </div>
+
+    <div class="price-box ccy" style="display:flex;flex-direction:column;gap:12px;border-width:2px;border-color:rgba(0,229,204,.38);">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--cy);letter-spacing:.14em;text-transform:uppercase;">Professional — BENCHMARK</div>
+        <span class="t tcy">Most Popular</span>
+      </div>
+      <div><div style="font-family:var(--mono);font-size:34px;font-weight:800;color:var(--cy);">$999<span style="font-size:16px;font-weight:400;color:var(--is);">/mo</span></div><div class="kl">무제한 스캔</div></div>
+      <div class="dv" style="background:rgba(0,229,204,.2);"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--im);">
+        <div>&#10003; <strong style="color:var(--cy);">Unlimited scans</strong></div>
+        <div>&#10003; CI/CD webhook · Trend dashboard</div>
+        <div>&#10003; <strong style="color:var(--cy);">Regression tracking</strong></div>
+        <div>&#10003; Custom probe library</div>
+        <div>&#10003; Slack/Teams alerts</div>
+        <div>&#10003; Web3 QA (Q3 2026)</div>
+      </div>
+      <div style="text-align:center;padding:10px;background:rgba(0,0,0,.4);border-radius:8px;">
+        <div style="font-family:var(--mono);font-size:20px;font-weight:800;color:var(--cy);">LTV/CAC = 22.5x</div>
+      </div>
+    </div>
+
+    <div class="price-box cpu" style="display:flex;flex-direction:column;gap:12px;">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--pu);letter-spacing:.14em;text-transform:uppercase;">Enterprise — LAB</div>
+      <div><div style="font-family:var(--mono);font-size:34px;font-weight:800;color:var(--pu);">Custom</div><div class="kl">annual contract</div></div>
+      <div class="dv" style="background:rgba(123,92,250,.2);"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--im);">
+        <div>&#10003; On-premise deployment</div>
+        <div>&#10003; Custom probe development</div>
+        <div>&#10003; <strong style="color:var(--pu);">SOC 2 audit package</strong></div>
+        <div>&#10003; White-label reports</div>
+        <div>&#10003; Dedicated security engineer</div>
+        <div>&#10003; Web3 스마트컨트랙트 풀 감사</div>
+      </div>
+      <div class="xs">타겟: 금융·의료·공공기관</div>
+    </div>
+  </div>
+
+  <!-- BB Add-on + Unit Economics -->
+  <div style="margin-top:14px;display:flex;gap:12px;">
+    <div style="flex:1.5;display:flex;align-items:center;gap:14px;padding:12px 20px;background:var(--s1);border-radius:10px;border:1px solid rgba(245,166,35,.3);">
+      <div class="cam p18" style="border-radius:8px;flex-shrink:0;text-align:center;padding:12px 18px;">
+        <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--am);">$149</div>
+        <div class="xs" style="color:var(--am);">/report</div>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--am);">Bug Bounty Add-on</div>
+        <div class="sm">공식 BB 공개 보고서 자동 생성. 외부 타겟 지속 모니터링.</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;gap:0;background:var(--s1);border-radius:10px;border:1px solid var(--hr2);overflow:hidden;">
+      <div style="flex:1;padding:12px 14px;text-align:center;border-right:1px solid var(--hr);">
+        <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--cy);">85%</div><div class="kl">Gross Margin</div>
+      </div>
+      <div style="flex:1;padding:12px 14px;text-align:center;border-right:1px solid var(--hr);">
+        <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--pu);">$800</div><div class="kl">Target CAC</div>
+      </div>
+      <div style="flex:1;padding:12px 14px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:22px;font-weight:800;color:var(--am);">22.5x</div><div class="kl">LTV/CAC</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" style="background:radial-gradient(ellipse 55% 60% at 80% 70%,rgba(0,229,204,.07),transparent 55%),#07080C;">
+<div class="bg-g"></div>
+<div class="in">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">08 — Roadmap</span>
+  </div>
+
+  <h2 class="h1" style="margin-bottom:8px;"><span class="nv-ko">QA 커버리지 확대.<br><span class="g-hot">546 → 1,000+ 모듈.</span></span><span class="nv-en" style="display:none">Expanding QA coverage.<br><span class="g-hot">546 → 1,000+ modules.</span></span></h2>
+
+  <div class="tl" style="margin-bottom:20px;">
+    <div class="tli">
+      <div class="tl-d done"></div>
+      <div class="tl-b"><div class="tl-ph">Now · Q2 2026</div>
+        <div class="tl-ti" style="color:var(--cy);">기술 증명 ✓</div>
+        <div class="tl-it">546 QA 모듈<br>22 에이전트<br>OWASP LLM 10/10<br>20개 외부 실증</div>
+      </div>
+    </div>
+    <div class="tli">
+      <div class="tl-d now"></div>
+      <div class="tl-b"><div class="tl-ph">Q3 2026</div>
+        <div class="tl-ti" style="color:var(--pu);">첫 매출</div>
+        <div class="tl-it">Web3SecurityAgent<br>SWC 50+ 확장<br>BENCHMARK GA<br>MRR $5K 목표</div>
+      </div>
+    </div>
+    <div class="tli">
+      <div class="tl-d soon"></div>
+      <div class="tl-b"><div class="tl-ph">Q4 2026</div>
+        <div class="tl-ti" style="color:var(--am);">Korea PMF</div>
+        <div class="tl-it">LAB tier + Web3<br>CloudSecurityAgent<br>B2B 3개사<br>MRR $20K</div>
+      </div>
+    </div>
+    <div class="tli">
+      <div class="tl-d later"></div>
+      <div class="tl-b"><div class="tl-ph">2027 H1</div>
+        <div class="tl-ti" style="color:var(--gn);">Seed Round</div>
+        <div class="tl-it">1,000+ 모듈<br>ARR $200K<br>B2B 20개사<br>Seed $2M</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c p18 fill">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--is);letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;">QA 커버리지 확대 로드맵</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="t tcy" style="min-width:80px;justify-content:center;font-size:12px;">지금</span>
+        <div style="flex:1;"><div class="pb"><div class="pf pcy" style="width:55%;"></div></div></div>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cy);min-width:68px;">546 mod</span>
+        <span style="font-size:13px;color:var(--is);flex:1;">Web2(54) + AI/LLM(413) + Agent(21) + QA Ops(47) + Web3(9)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="t tgn" style="min-width:80px;justify-content:center;font-size:12px;">Q3 2026</span>
+        <div style="flex:1;"><div class="pb"><div class="pf pgn" style="width:64%;"></div></div></div>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--gn);min-width:68px;">~640+</span>
+        <span style="font-size:13px;color:var(--is);flex:1;">+ Web3 Full(SWC-100~136) + LLM04/06/08/09 구현</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="t tam" style="min-width:80px;justify-content:center;font-size:12px;">Q4 2026</span>
+        <div style="flex:1;"><div class="pb"><div class="pf pam" style="width:72%;"></div></div></div>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--am);min-width:68px;">~730+</span>
+        <span style="font-size:13px;color:var(--is);flex:1;">+ Cloud(AWS/GCP/Azure) + Mobile QA Full</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="t tpu" style="min-width:80px;justify-content:center;font-size:12px;">2027</span>
+        <div style="flex:1;"><div class="pb"><div class="pf" style="width:100%;background:linear-gradient(90deg,var(--cy),var(--pu));"></div></div></div>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--pu);min-width:68px;">1,000+</span>
+        <span style="font-size:13px;color:var(--is);flex:1;">+ Multi-chain + IoT + Zero-day AI Discovery</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" style="background:radial-gradient(ellipse 55% 60% at 20% 50%,rgba(0,229,204,.08),transparent 55%),#07080C;">
+<div class="bg-g"></div>
+<div class="in">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">09 — Founder</span>
+  </div>
+
+  <h2 class="h1" style="margin-bottom:28px;">Founder-market fit.<br><span class="g-cy"><span class="nv-ko">기술 + 보안 + 실행력.</span><span class="nv-en" style="display:none">Tech + Security + Execution.</span></span></h2>
+
+  <div class="row fill" style="gap:20px;">
+    <div class="ccy p22 fill" style="display:flex;flex-direction:column;gap:18px;">
+      <div style="display:flex;align-items:center;gap:18px;">
+        <div style="width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--cy),var(--pu));
+          display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#000;font-family:var(--mono);">N</div>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:var(--ink);">Noivan</div>
+          <div style="font-size:14px;color:var(--is);margin-top:3px;">Founder &amp; CEO · demo@krayt.ai</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:12px;">
+          <span style="color:var(--cy);font-size:18px;flex-shrink:0;margin-top:2px;">&#x2192;</span>
+          <div><strong style="color:var(--ink);font-size:15px;">9 스프린트 · 30일</strong><br><span style="font-size:13px;color:var(--im);">546 QA 모듈 + 22 에이전트 + D-1~D-10 도구 + Gate 1~5 파이프라인 직접 구축</span></div>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <span style="color:var(--cy);font-size:18px;flex-shrink:0;margin-top:2px;">&#x2192;</span>
+          <div><strong style="color:var(--ink);font-size:15px;">OWASP LLM Top 10 v2025 완전 구현</strong><br><span style="font-size:13px;color:var(--im);">55/55 Exact Match · 36 runs · 100% Pass Rate · Blind Benchmark 3×100%</span></div>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <span style="color:var(--cy);font-size:18px;flex-shrink:0;margin-top:2px;">&#x2192;</span>
+          <div><strong style="color:var(--ink);font-size:15px;">실전 BB 검증 완료</strong><br><span style="font-size:13px;color:var(--im);">HackerOne · Bugcrowd · Code4rena — 8건 제출 · 20개 외부 타겟 · 134 재현 발견</span></div>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <span style="color:var(--cy);font-size:18px;flex-shrink:0;margin-top:2px;">&#x2192;</span>
+          <div><strong style="color:var(--ink);font-size:15px;">방법론 완전 문서화</strong><br><span style="font-size:13px;color:var(--im);">KRAYT_QA_METHODOLOGY.md 658줄 · Korea AI Act + EU AI Act + NIST AI RMF 매핑</span></div>
+        </div>
+        <div style="display:flex;gap:12px;">
+          <span style="color:var(--cy);font-size:18px;flex-shrink:0;margin-top:2px;">&#x2192;</span>
+          <div><strong style="color:var(--ink);font-size:15px;">Web3 + DeFi 보안 전문성</strong><br><span style="font-size:13px;color:var(--im);">SWC · Flash Loan · Oracle Manipulation · MEV · Solidity AST 분석</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col" style="flex:.8;gap:14px;">
+      <div class="c p22">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--is);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;">왜 이 팀이 이깁니까</div>
+        <p style="font-size:15px;color:var(--im);line-height:1.7;">
+          KRAYT는 AI 에이전트로 구축되었고, AI 에이전트를 QA합니다.
+          자기 자신을 테스트하는 유일한 AI QA 플랫폼 — QA First · Security as Method.
+          경쟁사가 복제할 수 없는 실증입니다.
+        </p>
+      </div>
+
+      <div class="c p22 fill">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--is);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;">Key Stats</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--hr);">
+            <span style="font-size:14px;color:var(--im);">구축 기간</span>
+            <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--cy);">30일</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--hr);">
+            <span style="font-size:14px;color:var(--im);">스프린트</span>
+            <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--cy);">9회 완료</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--hr);">
+            <span style="font-size:14px;color:var(--im);">실증 외부 타겟</span>
+            <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--pu);">20개</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;">
+            <span style="font-size:14px;color:var(--im);">BB 제출</span>
+            <span style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--gn);">8건</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cam p18">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--am);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Co-founder / Advisor 모집</div>
+        <div style="font-size:14px;color:var(--im);">CISO 백그라운드 보안 전문가 또는 Korea AI 시장 GTM 파트너. 지분 기반. demo@krayt.ai</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" style="background:#07080C;">
+<div class="bg-g"></div>
+<div class="in">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">10 — Go-To-Market</span>
+  </div>
+
+  <h2 class="h1" style="margin-bottom:8px;">Korea First. <span class="g-hot">Global Next.</span></h2>
+  <p class="body" style="margin-bottom:20px;">규제 의무화(2026) + AI Agent 폭발 + Web3 급증 — 세 시장이 동시에 열립니다.</p>
+
+  <div class="g3" style="gap:14px;margin-bottom:16px;">
+    <div class="ccy p18">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--cy);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Phase 0 — 즉시</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--im);">
+        <div style="display:flex;gap:8px;"><span style="color:var(--cy);">&#9654;</span>LinkedIn DM 100건/월 → 무료 QA 스캔</div>
+        <div style="display:flex;gap:8px;"><span style="color:var(--cy);">&#9654;</span>OWASP 체크리스트 OSS → GitHub Stars</div>
+        <div style="display:flex;gap:8px;"><span style="color:var(--cy);">&#9654;</span>krayt.ai 도메인 · demo@krayt.ai</div>
+        <div style="display:flex;gap:8px;"><span style="color:var(--cy);">&#9654;</span>BB 첫 보상 달성</div>
+      </div>
+      <div style="margin-top:12px;padding:10px 14px;background:rgba(0,0,0,.4);border-radius:8px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--cy);">MRR $3K 목표</div>
+      </div>
+    </div>
+    <div class="c p18">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--pu);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Phase 1 — 3~6개월</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--im);">
+        <div style="display:flex;gap:8px;"><span style="color:var(--pu);">&#9654;</span>Korea AI 스타트업 B2B 3건</div>
+        <div style="display:flex;gap:8px;"><span style="color:var(--pu);">&#9654;</span>AI Act 규제 대상 금융·의료 집중</div>
+        <div style="display:flex;gap:8px;"><span style="color:var(--pu);">&#9654;</span>AWS/GCP Marketplace 등록</div>
+        <div style="display:flex;gap:8px;"><span style="color:var(--pu);">&#9654;</span>엔젤 $300K 확보</div>
+      </div>
+      <div style="margin-top:12px;padding:10px 14px;background:rgba(0,0,0,.4);border-radius:8px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--pu);">MRR $20K 목표</div>
+      </div>
+    </div>
+    <div class="c p18">
+      <div style="font-family:var(--mono);font-size:11px;color:var(--gn);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Phase 2 — 6~12개월</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--im);">
+        <div style="display:flex;gap:8px;"><span style="color:var(--gn);">&#9654;</span>LAB tier + Web3 Full 출시</div>
+        <div style="display:flex;gap:8px;"><span style="color:var(--gn);">&#9654;</span>SOC 2 audit package</div>
+        <div style="display:flex;gap:8px;"><span style="color:var(--gn);">&#9654;</span>EU 시장 진출</div>
+        <div style="display:flex;gap:8px;"><span style="color:var(--gn);">&#9654;</span>Seed $2M 준비</div>
+      </div>
+      <div style="margin-top:12px;padding:10px 14px;background:rgba(0,0,0,.4);border-radius:8px;text-align:center;">
+        <div style="font-family:var(--mono);font-size:16px;font-weight:700;color:var(--gn);">ARR $200K 목표</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="c p18">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--is);letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;">Revenue 성장 경로</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="t tcy" style="min-width:56px;justify-content:center;">Y1</span>
+        <div style="flex:1;"><div class="pb"><div class="pf pcy" style="width:20%;"></div></div></div>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cy);min-width:80px;">ARR $200K</span>
+        <span style="font-size:13px;color:var(--is);">B2B 20개사 · SCAN+BENCHMARK tier</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="t tpu" style="min-width:56px;justify-content:center;">Y2</span>
+        <div style="flex:1;"><div class="pb"><div class="pf ppu" style="width:50%;"></div></div></div>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--pu);min-width:80px;">ARR $2M</span>
+        <span style="font-size:13px;color:var(--is);">LAB tier · Web3 · 글로벌</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;">
+        <span class="t tgn" style="min-width:56px;justify-content:center;">Y3</span>
+        <div style="flex:1;"><div class="pb"><div class="pf pgn" style="width:100%;"></div></div></div>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--gn);min-width:80px;">ARR $10M</span>
+        <span style="font-size:13px;color:var(--is);">1,000+ 모듈 · Multi-chain · Series A</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section><section class="slide" style="background:radial-gradient(ellipse 70% 70% at 15% 55%,rgba(0,229,204,.09),transparent 60%),radial-gradient(ellipse 60% 60% at 85% 20%,rgba(123,92,250,.09),transparent 55%),#07080C;">
+<div class="bg-g"></div><div class="sc"></div>
+<div class="in" style="justify-content:space-between;">
+  <div style="display:flex;align-items:center;justify-content:space-between;">
+    <div class="logo">KR<span>A</span>YT</div><span class="lbl">11 — The Ask</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px;">
+    <div>
+      <p style="font-family:var(--mono);font-size:13px;color:var(--cy);letter-spacing:.2em;margin-bottom:14px;">&#9654; PRE-SEED RAISE</p>
+      <h1 class="h0"><span class="g-cy">$300K</span> <span class="nv-ko">투자 요청.</span><span class="nv-en" style="display:none">Proving Product-Market Fit with $300K.</span></h1>
+      <p class="body" style="max-width:640px;margin-top:16px;">
+        546 QA 모듈 · 22 에이전트 · D-1~D-10 도구 · Gate 1~5 파이프라인 · 20개 외부 타겟 실증.
+        6개월 내 B2B 3건 + MRR $5K → Seed $1M으로 확장합니다.
+      </p>
+    </div>
+
+    <div style="display:flex;gap:14px;">
+      <div class="ccy p22 fill">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--cy);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Round</div>
+        <div style="font-size:22px;font-weight:800;color:var(--ink);">Angel / Pre-Seed</div>
+        <div style="font-size:14px;color:var(--is);margin-top:6px;">SAFE Note · $2M Cap · 20% Discount</div>
+        <div style="margin-top:14px;padding:12px 16px;background:rgba(0,0,0,.4);border-radius:8px;">
+          <div style="font-size:14px;color:var(--im);">왜 $300K: 기술 완전 증명 완료. 첫 매출 달성 후 Seed $1M@$5M cap으로 확장. ARR $0에서 과도한 투자 지양.</div>
+        </div>
+      </div>
+      <div class="c p22 fill">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--is);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Use of Funds</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--im);">
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--hr);">
+            <span>GTM · Korea Sales</span><span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cy);">35%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--hr);">
+            <span>Engineering · Web3 확장</span><span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cy);">30%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--hr);">
+            <span>Infrastructure · SOC 2</span><span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cy);">20%</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;">
+            <span>Legal · Compliance</span><span style="font-family:var(--mono);font-size:15px;font-weight:700;color:var(--cy);">15%</span>
+          </div>
+        </div>
+      </div>
+      <div class="c p22 fill">
+        <div style="font-family:var(--mono);font-size:11px;color:var(--is);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px;">Seed Gate (6mo)</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;">
+          <div style="display:flex;gap:8px;"><span style="color:var(--cy);">&#10003;</span><span style="color:var(--im);">B2B 첫 계약 3건</span></div>
+          <div style="display:flex;gap:8px;"><span style="color:var(--cy);">&#10003;</span><span style="color:var(--im);">MRR $5K 달성</span></div>
+          <div style="display:flex;gap:8px;"><span style="color:var(--cy);">&#10003;</span><span style="color:var(--im);">Web3 QA Full 출시</span></div>
+          <div style="display:flex;gap:8px;"><span style="color:var(--cy);">&#10003;</span><span style="color:var(--im);">Gate 1~5 완전 자동화</span></div>
+          <div style="display:flex;gap:8px;"><span style="color:var(--cy);">&#10003;</span><span style="color:var(--im);">BB 보상 $5K+</span></div>
+          <div style="display:flex;gap:8px;margin-top:8px;padding-top:10px;border-top:1px solid var(--hr);">
+            <span style="color:var(--pu);">&#9658;</span><span style="color:var(--pu);font-weight:700;font-size:15px;">Seed $1M @ $5M cap</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:16px 24px;background:var(--s1);border-radius:12px;border:1px solid rgba(0,229,204,.2);">
+      <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:15px;font-weight:700;color:var(--cy);margin-bottom:4px;">왜 지금인가</div>
+          <p class="sm">규제 의무화 2026 + AI Agent 폭발 + Web3 급증 — 세 시장이 동시에 열리는 타이밍. KRAYT가 유일한 통합 솔루션.</p>
+        </div>
+        <div style="width:1px;background:var(--hr2);height:44px;"></div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:15px;font-weight:700;color:var(--pu);margin-bottom:4px;">타겟 투자자</div>
+          <p class="sm">Y Combinator · Kakao Ventures · Softbank Ventures Korea · Altos Ventures · Greylock</p>
+        </div>
+        <div style="width:1px;background:var(--hr2);height:44px;"></div>
+        <div style="flex:.8;min-width:180px;text-align:center;display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+            <svg width="14" height="14" viewBox="0 0 1200 1227" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;opacity:.6;fill:#606888;"><path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.163 519.284ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.828Z"/></svg>
+            <div style="display:flex;flex-direction:column;align-items:flex-start;">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--is);letter-spacing:.08em;text-transform:uppercase;">X (Twitter)</span>
+              <span style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--cy);">@noivan</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;opacity:.6;fill:#606888;"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.06 13.125l-2.94-.916c-.64-.203-.653-.64.135-.954l11.49-4.43c.532-.194.998.131.149 1.396z"/></svg>
+            <div style="display:flex;flex-direction:column;align-items:flex-start;">
+              <span style="font-size:9px;font-family:var(--mono);color:var(--is);letter-spacing:.08em;text-transform:uppercase;">Telegram</span>
+              <span style="font-family:var(--mono);font-size:14px;font-weight:700;color:var(--cy);">@nothink_ivan</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid var(--hr);">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--is);">
+      546 modules · 22 agents · D-1~D-10 · Gate 1~5 · OWASP LLM 10/10 · Web2+AI+Web3 · 20 targets
+    </div>
+    <div class="logo">KR<span>A</span>YT</div>
+  </div>
+</div>
+</section></div>
+<div class="prog"><div class="prog-f" id="pf"></div></div>
+<div class="nav">
+  <button class="nb" onclick="prev()">&#8592;</button>
+  <div class="dots" id="dots"></div>
+  <span class="sno" id="sno">1 / 12</span>
+  <button class="nb" onclick="next()">&#8594;</button>
+</div>
+<script>
+var cur=0,slides,total;
+function init(){
+  slides=document.querySelectorAll('.slide');total=slides.length;
+  slides.forEach(s=>{s.style.display='none';s.classList.remove('active');});
+  slides[0].style.display='flex';slides[0].classList.add('active');
+  mk();upd();
+}
+function mk(){
+  var dc=document.getElementById('dots');if(!dc)return;
+  for(var i=0;i<total;i++){
+    var d=document.createElement('div');d.className='dot'+(i===0?' on':'');
+    d.dataset.i=i;d.addEventListener('click',function(){showSlide(+this.dataset.i);});dc.appendChild(d);
+  }
+}
+function showSlide(n){
+  slides[cur].classList.remove('active');slides[cur].style.display='none';
+  cur=((n%total)+total)%total;slides[cur].classList.add('active');slides[cur].style.display='flex';upd();
+}
+function upd(){
+  var el=document.getElementById('sno');if(el)el.textContent=(cur+1)+' / '+total;
+  var pb=document.getElementById('pf');if(pb)pb.style.width=((cur+1)/total*100)+'%';
+  document.querySelectorAll('.dot').forEach((d,i)=>d.className='dot'+(i===cur?' on':''));
+}
+function next(){showSlide(cur+1);}function prev(){showSlide(cur-1);}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();next();}
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();prev();}
+  if(e.key==='Home')showSlide(0);if(e.key==='End')showSlide(total-1);
+});
+var tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{var dx=e.changedTouches[0].clientX-tx;if(dx>50)prev();if(dx<-50)next();});
+document.addEventListener('DOMContentLoaded',init);
+function setDeckLang(l){
+  document.querySelectorAll('.nv-ko,.nv-en').forEach(function(el){
+    var show=l==='ko'?el.classList.contains('nv-ko'):el.classList.contains('nv-en');
+    el.style.display=show?'inline':'none';
+  });
+}
+var _deckLang=new URLSearchParams(window.location.search).get('lang')||'ko';
+setDeckLang(_deckLang);
+</script></body></html>
