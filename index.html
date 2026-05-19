@@ -674,7 +674,7 @@ h1{
           <div class="hero-cta-block">
             <a href="mailto:noivan000@gmail.com?subject=Collaboration" class="btn btn-red">
               <span class="nv-ko">협업 문의하기</span>
-              <span class="nv-en">Get in Touch</span>
+              <span class="nv-en">Collaboration Inquiry</span>
             </a>
             <a href="mailto:noivan000@gmail.com?subject=Project" class="btn btn-outline">
               <span class="nv-ko">프로젝트 상담</span>
@@ -771,8 +771,10 @@ h1{
           </div>
           <div class="project-tags-row">
             <span class="tag tag-red">Blogger</span>
-            <span class="tag">네이버</span>
-            <span class="tag">티스토리</span>
+            <span class="tag nv-ko">네이버</span>
+            <span class="tag nv-en">Naver</span>
+            <span class="tag nv-ko">티스토리</span>
+            <span class="tag nv-en">Tistory</span>
           </div>
         </div>
         <div class="project-metric-col">
@@ -808,13 +810,13 @@ h1{
       </div>
 
       <!-- 04 NOVA OSS -->
-      <div class="project-row reveal reveal-d3">
+      <a href="https://github.com/noivan0/NOVA" target="_blank" rel="noopener" class="project-row reveal reveal-d3" style="text-decoration:none;color:inherit;">
         <div class="project-num">04.</div>
         <div class="project-body">
           <div class="project-name">NOVA OSS</div>
           <div class="project-oneliner">
-            <span class="nv-ko">AI 에이전트 자율 운영 프레임워크. <a href="https://github.com/noivan0/NOVA" target="_blank" rel="noopener">오픈소스 공개 완료</a>. LLM·Publisher·Notifier 전체 추상화, 단일 에이전트로 연구부터 블로그 파이프라인까지.</span>
-            <span class="nv-en">Autonomous AI operations framework. <a href="https://github.com/noivan0/NOVA" target="_blank" rel="noopener">Published open source</a> (MIT). Fully abstracted LLM/Publisher/Notifier providers — from research harnesses to blog pipelines.</span>
+            <span class="nv-ko">AI 에이전트 자율 운영 프레임워크. <strong>오픈소스 공개 완료</strong>. LLM·Publisher·Notifier 전체 추상화, 단일 에이전트로 연구부터 블로그 파이프라인까지.</span>
+            <span class="nv-en">Autonomous AI operations framework. <strong>Published open source</strong> (MIT). Fully abstracted LLM/Publisher/Notifier providers — from research harnesses to blog pipelines.</span>
           </div>
           <div class="project-tags-row">
             <span class="tag tag-red">AI Framework</span>
@@ -826,8 +828,8 @@ h1{
           <div class="metric-val">MIT</div>
           <div class="metric-label"><span class="nv-ko">오픈소스</span><span class="nv-en">license</span></div>
         </div>
-        <div class="project-arrow">→</div>
-      </div>
+        <div class="project-arrow">↗</div>
+      </a>
 
     </div>
   </div>
@@ -941,7 +943,7 @@ h1{
           </div>
           <a href="mailto:noivan000@gmail.com?subject=Project" class="btn btn-outline">
             <span class="nv-ko">프로젝트 개발 문의</span>
-            <span class="nv-en">프로젝트 개발 문의</span>
+            <span class="nv-en">Project Development Inquiry</span>
           </a>
         </div>
       </div>
@@ -1035,7 +1037,12 @@ function setLang(l) {
   document.querySelectorAll('.nv-ko, .nv-en').forEach(function(el) {
     var show = l === 'ko' ? el.classList.contains('nv-ko') : el.classList.contains('nv-en');
     if (show) {
-      el.style.display = inlineTags.indexOf(el.tagName.toLowerCase()) !== -1 ? 'inline' : 'block';
+      // .tag 클래스 있으면 inline-block 유지
+      if (el.classList.contains('tag')) {
+        el.style.display = 'inline-block';
+      } else {
+        el.style.display = inlineTags.indexOf(el.tagName.toLowerCase()) !== -1 ? 'inline' : 'block';
+      }
     } else {
       el.style.display = 'none';
     }
