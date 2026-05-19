@@ -1,1099 +1,1098 @@
-     1|<!DOCTYPE html>
-     2|<html lang="ko">
-     3|<head>
-     4|<meta charset="UTF-8"/>
-     5|<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-     6|<title>noivan — AI Engineer</title>
-     7|<link rel="preconnect" href="https://fonts.googleapis.com"/>
-     8|<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet"/>
-     9|<style>
-    10|*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    11|:root{
-    12|  --red:#e63329;
-    13|  --black:#0a0a0a;
-    14|  --text:#0a0a0a;
-    15|  --muted:#6b7280;
-    16|  --light:#f5f5f5;
-    17|  --border:#0a0a0a;
-    18|  --bg:#ffffff;
-    19|  --nav-bg:#ffffff;
-    20|  --card-hover:#f5f5f5;
-    21|}
-    22|
-    23|/* ── DARK MODE ── */
-    24|[data-theme="dark"]{
-    25|  --text:#e8e4df;
-    26|  --muted:#888880;
-    27|  --light:#1a1a1a;
-    28|  --border:#333333;
-    29|  --bg:#0a0a0a;
-    30|  --black:#e8e4df;
-    31|  --nav-bg:#0a0a0a;
-    32|  --card-hover:#111111;
-    33|}
-    34|[data-theme="dark"] nav{background:var(--nav-bg);border-bottom-color:#333;}
-    35|[data-theme="dark"] .masthead{background:#111111;}
-    36|[data-theme="dark"] body{background:#0a0a0a;color:#e8e4df;}
-    37|[data-theme="dark"] .nav-links a{color:var(--text);border-left-color:#333;}
-    38|[data-theme="dark"] .nav-links a:hover{background:var(--text);color:#0a0a0a;}
-    39|[data-theme="dark"] .lang-sw{border-left-color:#333;}
-    40|[data-theme="dark"] .lang-sw button{border-right-color:#333;color:var(--muted);}
-    41|[data-theme="dark"] .lang-sw button.on{background:var(--red);color:#fff;}
-    42|[data-theme="dark"] .lang-sw button:hover:not(.on){background:var(--text);color:#0a0a0a;}
-    43|[data-theme="dark"] .theme-sw{border-left-color:#333;}
-    44|[data-theme="dark"] .theme-sw button{color:var(--muted);}
-    45|[data-theme="dark"] .theme-sw button:hover{background:var(--text);color:#0a0a0a;}
-    46|[data-theme="dark"] .hero{border-bottom-color:#333;}
-    47|[data-theme="dark"] .hero-inner{border-left-color:#333;}
-    48|[data-theme="dark"] .hero-num{border-right-color:#333;}
-    49|[data-theme="dark"] .hero-main{border-right-color:#333;}
-    50|[data-theme="dark"] .hero-tagline{border-top-color:#333;}
-    51|[data-theme="dark"] .meta-item{border-bottom-color:#333;}
-    52|[data-theme="dark"] .meta-item:first-child{border-top-color:#333;}
-    53|[data-theme="dark"] .btn-outline{background:#0a0a0a;color:var(--text);border-color:var(--text);}
-    54|[data-theme="dark"] .btn-outline:hover{background:var(--text);color:#0a0a0a;}
-    55|[data-theme="dark"] .section-header{border-bottom-color:#333;border-left-color:#333;}
-    56|[data-theme="dark"] .stats-inner{border-left-color:#333;}
-    57|[data-theme="dark"] .stat-col{border-right-color:#333;}
-    58|[data-theme="dark"] .stat-col:hover{background:var(--card-hover);}
-    59|[data-theme="dark"] .projects-inner{border-left-color:#333;}
-    60|[data-theme="dark"] .project-row{border-bottom-color:#333;}
-    61|[data-theme="dark"] .project-row:hover{background:var(--card-hover);}
-    62|[data-theme="dark"] .project-num{border-right-color:#333;}
-    63|[data-theme="dark"] .project-body{border-right-color:#333;}
-    64|[data-theme="dark"] .tag{border-color:var(--text);color:var(--text);}
-    65|[data-theme="dark"] .process-inner{border-left-color:#333;}
-    66|[data-theme="dark"] .process-step{border-right-color:#333;}
-    67|[data-theme="dark"] .cta-inner{border-left-color:#333;}
-    68|[data-theme="dark"] .cta-left{border-right-color:#333;}
-    69|[data-theme="dark"] .cta-col{border-bottom-color:#333;}
-    70|[data-theme="dark"] .contact-inner{border-left-color:#333;}
-    71|[data-theme="dark"] .contact-heading-left{border-right-color:#333;}
-    72|[data-theme="dark"] .contact-heading-left,.contact-heading-row{border-bottom-color:#333;}
-    73|[data-theme="dark"] .clink{border-bottom-color:#333;color:var(--text);}
-    74|[data-theme="dark"] .clink:hover{background:var(--text);color:#0a0a0a;}
-    75|[data-theme="dark"] .clink:hover .ctype{color:rgba(10,10,10,.5);}
-    76|[data-theme="dark"] .footer-wrapper{border-top-color:#333;}
-    77|[data-theme="dark"] .footer-inner{border-left-color:#333;}
-    78|[data-theme="dark"] .pitch-modal-box{background:#0a0a0a;}
-    79|
-    80|/* ── LANG ── (JS-controlled: do NOT use CSS class toggling) */
-    81|.nv-ko, .nv-en { }  /* no default hide — JS sets visibility on load */
-    82|
-    83|html{scroll-behavior:smooth;}
-    84|body{
-    85|  font-family:'Inter',sans-serif;
-    86|  background:var(--bg);
-    87|  color:var(--text);
-    88|  font-weight:300;
-    89|  -webkit-font-smoothing:antialiased;
-    90|  transition:background .25s,color .25s;
-    91|}
-    92|
-    93|/* ── 12-COL GRID SYSTEM ── */
-    94|.grid-12{
-    95|  display:grid;
-    96|  grid-template-columns:repeat(12,1fr);
-    97|  max-width:1440px;margin:0 auto;
-    98|  position:relative;
-    99|}
-   100|
-   101|/* ── NAV ── */
-   102|nav{
-   103|  border-bottom:2px solid var(--black);
-   104|  position:sticky;top:0;z-index:200;
-   105|  background:var(--nav-bg);
-   106|  transition:background .25s,border-color .25s;
-   107|}
-   108|.nav-inner{
-   109|  grid-column:1/-1;
-   110|  display:flex;align-items:center;justify-content:space-between;
-   111|  padding:0 2rem;height:56px;
-   112|}
-   113|.nav-logo{
-   114|  font-size:.78rem;font-weight:900;letter-spacing:.14em;
-   115|  text-transform:uppercase;color:var(--red);
-   116|}
-   117|.nav-links{display:flex;gap:0;align-items:stretch;}
-   118|.nav-links a{
-   119|  color:var(--black);font-size:.68rem;text-decoration:none;
-   120|  font-weight:700;letter-spacing:.12em;text-transform:uppercase;
-   121|  padding:.5rem 1.2rem;border-left:1px solid var(--black);
-   122|  display:flex;align-items:center;
-   123|  transition:background .15s,color .15s;
-   124|}
-   125|.nav-links a:hover{background:var(--black);color:#fff;}
-   126|.lang-sw{display:flex;border-left:1px solid var(--black);}
-   127|.lang-sw button{
-   128|  background:transparent;border:none;border-right:1px solid var(--black);
-   129|  color:var(--muted);font-size:.68rem;font-weight:700;
-   130|  padding:.5rem 1rem;cursor:pointer;height:56px;
-   131|  transition:all .15s;font-family:'Inter',sans-serif;
-   132|  letter-spacing:.1em;text-transform:uppercase;
-   133|}
-   134|.lang-sw button:last-child{border-right:none;}
-   135|.lang-sw button.on{background:var(--red);color:#fff;}
-   136|.lang-sw button:hover:not(.on){background:var(--black);color:#fff;}
-   137|/* Theme toggle */
-   138|.theme-sw{display:flex;border-left:1px solid var(--black);}
-   139|.theme-sw button{
-   140|  background:transparent;border:none;
-   141|  color:var(--muted);font-size:1rem;
-   142|  padding:.5rem 1rem;cursor:pointer;height:56px;
-   143|  transition:all .15s;font-family:'Inter',sans-serif;
-   144|  display:flex;align-items:center;
-   145|}
-   146|.theme-sw button:hover{background:var(--black);color:#fff;}
-   147|
-   148|/* ── MASTHEAD / RUNNING HEADER ── */
-   149|.masthead{
-   150|  border-bottom:1px solid var(--black);
-   151|  background:var(--light);
-   152|  transition:background .25s;
-   153|}
-   154|.masthead-inner{
-   155|  grid-column:1/-1;
-   156|  display:flex;align-items:center;justify-content:center;
-   157|  padding:.55rem 2rem;
-   158|}
-   159|.masthead-center{
-   160|  font-size:.6rem;font-weight:700;letter-spacing:.2em;
-   161|  text-transform:uppercase;color:var(--red);
-   162|}
-   163|
-   164|/* ── HERO ── */
-   165|.hero{border-bottom:2px solid var(--black);}
-   166|.hero-inner{
-   167|  grid-column:1/-1;
-   168|  border-left:2px solid var(--black);
-   169|}
-   170|
-   171|/* Red top rule */
-   172|.hero-red-rule{
-   173|  height:4px;background:var(--red);
-   174|  margin:0;
-   175|}
-   176|
-   177|.hero-layout{
-   178|  display:grid;
-   179|  grid-template-columns:2fr 5fr 5fr;
-   180|}
-   181|
-   182|.hero-num{
-   183|  padding:3rem 2rem;
-   184|  border-right:1px solid var(--black);
-   185|  display:flex;flex-direction:column;justify-content:flex-end;
-   186|  grid-column:1/2;
-   187|}
-   188|.hero-num-text{
-   189|  font-size:7rem;font-weight:900;line-height:1;
-   190|  color:var(--red);letter-spacing:-0.06em;
-   191|}
-   192|.hero-num-label{
-   193|  font-size:.6rem;font-weight:700;letter-spacing:.16em;
-   194|  text-transform:uppercase;color:var(--muted);
-   195|  margin-top:.6rem;
-   196|}
-   197|
-   198|.hero-main{
-   199|  padding:3rem;border-right:1px solid var(--black);
-   200|  grid-column:2/3;
-   201|}
-   202|.hero-eyebrow{
-   203|  font-size:.62rem;font-weight:700;letter-spacing:.22em;
-   204|  text-transform:uppercase;color:var(--red);
-   205|  margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;
-   206|}
-   207|.hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--red);flex-shrink:0;}
-   208|
-   209|h1{
-   210|  font-size:clamp(2.8rem,6.5vw,5.5rem);
-   211|  font-weight:900;letter-spacing:-0.05em;
-   212|  line-height:.93;color:var(--black);
-   213|  text-transform:uppercase;
-   214|  margin-bottom:2rem;
-   215|}
-   216|
-   217|.hero-tagline{
-   218|  font-size:clamp(.95rem,1.8vw,1.2rem);
-   219|  font-weight:300;color:var(--muted);
-   220|  line-height:1.55;
-   221|  padding-top:1.5rem;
-   222|  border-top:1px solid var(--black);
-   223|}
-   224|
-   225|.hero-sidebar{
-   226|  padding:3rem;
-   227|  display:flex;flex-direction:column;justify-content:space-between;
-   228|  grid-column:3/4;
-   229|}
-   230|.hero-meta{margin-bottom:2rem;}
-   231|.meta-item{
-   232|  padding:.9rem 0;
-   233|  border-bottom:1px solid #e5e7eb;
-   234|}
-   235|.meta-item:first-child{border-top:1px solid #e5e7eb;}
-   236|.meta-key{
-   237|  font-size:.58rem;font-weight:700;letter-spacing:.2em;
-   238|  text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;
-   239|}
-   240|.meta-val{font-size:.88rem;font-weight:500;}
-   241|.hero-cta-block{display:flex;flex-direction:column;gap:.75rem;}
-   242|
-   243|/* ── BUTTONS ── */
-   244|.btn{
-   245|  display:block;text-align:center;
-   246|  padding:.9rem 1.5rem;
-   247|  font-size:.72rem;font-weight:700;letter-spacing:.1em;
-   248|  text-decoration:none;text-transform:uppercase;
-   249|  transition:all .15s;cursor:pointer;
-   250|  font-family:'Inter',sans-serif;
-   251|  border:2px solid transparent;
-   252|}
-   253|.btn-red{background:var(--red);color:#fff;border-color:var(--red);}
-   254|.btn-red:hover{background:#fff;color:var(--red);}
-   255|.btn-outline{background:#fff;color:var(--black);border-color:var(--black);}
-   256|.btn-outline:hover{background:var(--black);color:#fff;}
-   257|
-   258|/* ── SECTION HEADER ── */
-   259|.section-header{
-   260|  grid-column:1/-1;
-   261|  display:flex;align-items:center;
-   262|  padding:1.4rem 2rem;
-   263|  border-bottom:1px solid var(--black);
-   264|  border-left:2px solid var(--black);
-   265|  gap:1.5rem;
-   266|}
-   267|.section-num{
-   268|  font-size:.72rem;font-weight:900;color:var(--red);letter-spacing:.12em;
-   269|}
-   270|.section-title{
-   271|  font-size:.72rem;font-weight:700;letter-spacing:.15em;
-   272|  text-transform:uppercase;flex:1;
-   273|}
-   274|.section-rule{flex:1;height:1px;background:var(--black);}
-   275|
-   276|/* ── STATS / METRICS ── */
-   277|.stats-row{border-bottom:2px solid var(--black);}
-   278|.stats-inner{
-   279|  grid-column:1/-1;
-   280|  display:grid;grid-template-columns:repeat(4,1fr);
-   281|  border-left:2px solid var(--black);
-   282|}
-   283|.stat-col{
-   284|  padding:2.5rem 2rem;
-   285|  border-right:1px solid var(--black);
-   286|  border-top:3px solid transparent;
-   287|  transition:border-top-color .2s,background .2s;
-   288|  cursor:default;
-   289|}
-   290|.stat-col:last-child{border-right:none;}
-   291|.stat-col:hover{border-top-color:var(--red);background:var(--light);}
-   292|.stat-eyebrow{
-   293|  font-size:.58rem;font-weight:700;letter-spacing:.2em;
-   294|  text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;
-   295|}
-   296|.stat-number{
-   297|  font-size:clamp(2.5rem,4.5vw,4rem);
-   298|  font-weight:800;color:var(--red);line-height:1;
-   299|  letter-spacing:-0.04em;margin-bottom:.3rem;
-   300|  transition:transform .2s;
-   301|}
-   302|.stat-col:hover .stat-number{transform:scale(1.04);}
-   303|.stat-desc{
-   304|  font-size:.78rem;font-weight:500;color:var(--black);
-   305|}
-   306|
-   307|/* ── PROJECTS ── */
-   308|.projects-wrapper{border-bottom:2px solid var(--black);}
-   309|.projects-inner{
-   310|  grid-column:1/-1;
-   311|  border-left:2px solid var(--black);
-   312|}
-   313|
-   314|.project-row{
-   315|  display:grid;
-   316|  grid-template-columns:80px 1fr auto;
-   317|  border-bottom:1px solid var(--black);
-   318|  transition:background .15s;
-   319|  position:relative;
-   320|}
-   321|.project-row:last-child{border-bottom:none;}
-   322|.project-row:hover{background:var(--light);}
-   323|.project-row:hover .project-num{color:var(--red);}
-   324|.project-row:hover .project-arrow{opacity:1;transform:translateX(0);}
-   325|
-   326|.project-num{
-   327|  padding:2.5rem 2rem;
-   328|  font-size:2rem;font-weight:900;font-style:italic;
-   329|  color:var(--muted);letter-spacing:-0.05em;
-   330|  border-right:1px solid var(--black);
-   331|  display:flex;align-items:flex-start;justify-content:center;
-   332|  transition:color .15s;
-   333|  font-family:'Inter',sans-serif;
-   334|}
-   335|
-   336|.project-body{
-   337|  padding:2.5rem 2.5rem;
-   338|  border-right:1px solid var(--black);
-   339|}
-   340|.project-name{
-   341|  font-size:1.2rem;font-weight:800;letter-spacing:-0.03em;
-   342|  text-transform:uppercase;margin-bottom:.5rem;
-   343|}
-   344|.project-oneliner{
-   345|  font-size:.85rem;color:var(--muted);font-weight:400;
-   346|  line-height:1.65;max-width:500px;margin-bottom:1rem;
-   347|}
-   348|.project-oneliner a{color:var(--red);text-decoration:none;}
-   349|.project-oneliner a:hover{text-decoration:underline;}
-   350|.project-tags-row{display:flex;gap:.5rem;flex-wrap:wrap;}
-   351|.tag{
-   352|  display:inline-block;
-   353|  font-size:.6rem;font-weight:700;letter-spacing:.12em;
-   354|  text-transform:uppercase;padding:.22rem .6rem;
-   355|  border:1px solid var(--black);
-   356|}
-   357|.tag-red{border-color:var(--red);color:var(--red);}
-   358|
-   359|.project-metric-col{
-   360|  padding:2.5rem 2.5rem;
-   361|  display:flex;flex-direction:column;align-items:flex-end;justify-content:center;
-   362|  min-width:160px;
-   363|}
-   364|.metric-val{
-   365|  font-size:2.2rem;font-weight:900;letter-spacing:-0.04em;
-   366|  color:var(--black);line-height:1;text-align:right;
-   367|}
-   368|.metric-label{
-   369|  font-size:.6rem;font-weight:700;letter-spacing:.12em;
-   370|  text-transform:uppercase;color:var(--muted);
-   371|  margin-top:.3rem;text-align:right;
-   372|}
-   373|
-   374|.project-arrow{
-   375|  position:absolute;right:1.5rem;top:50%;
-   376|  transform:translateX(-8px) translateY(-50%);
-   377|  color:var(--red);font-size:1.3rem;
-   378|  opacity:0;transition:opacity .15s,transform .15s;
-   379|  pointer-events:none;
-   380|}
-   381|
-   382|/* ── PROCESS SECTION ── */
-   383|.process-wrapper{border-bottom:2px solid var(--black);}
-   384|.process-inner{
-   385|  grid-column:1/-1;
-   386|  display:grid;grid-template-columns:repeat(3,1fr);
-   387|  border-left:2px solid var(--black);
-   388|}
-   389|.process-step{
-   390|  padding:3rem 2.5rem;
-   391|  border-right:1px solid var(--black);
-   392|}
-   393|.process-step:last-child{border-right:none;}
-   394|.process-step-num{
-   395|  font-size:.6rem;font-weight:700;letter-spacing:.18em;
-   396|  text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;
-   397|}
-   398|.process-step-title{
-   399|  font-size:1.1rem;font-weight:800;letter-spacing:-0.02em;
-   400|  margin-bottom:.75rem;
-   401|}
-   402|.process-step-desc{
-   403|  font-size:.83rem;font-weight:300;color:var(--muted);
-   404|  line-height:1.7;
-   405|}
-   406|
-   407|/* ── CTA ── */
-   408|.cta-wrapper{border-bottom:2px solid var(--black);}
-   409|.cta-inner{
-   410|  grid-column:1/-1;
-   411|  display:grid;grid-template-columns:1fr 1fr;
-   412|  border-left:2px solid var(--black);
-   413|}
-   414|.cta-left{
-   415|  padding:4rem 3rem;
-   416|  border-right:1px solid var(--black);
-   417|  display:flex;flex-direction:column;justify-content:flex-end;
-   418|}
-   419|.cta-editorial{
-   420|  font-size:clamp(1.8rem,3.5vw,3rem);
-   421|  font-weight:900;letter-spacing:-0.05em;
-   422|  line-height:.95;text-transform:uppercase;
-   423|  margin-bottom:.75rem;
-   424|}
-   425|.cta-editorial em{
-   426|  font-style:italic;font-weight:300;
-   427|  letter-spacing:-0.03em;
-   428|}
-   429|.cta-sub{
-   430|  font-size:.83rem;font-weight:300;color:var(--muted);
-   431|  line-height:1.65;
-   432|}
-   433|
-   434|.cta-right{
-   435|  display:grid;grid-template-rows:1fr 1fr;
-   436|}
-   437|.cta-col{
-   438|  padding:3rem;border-bottom:1px solid var(--black);
-   439|}
-   440|.cta-col:last-child{border-bottom:none;}
-   441|.cta-eyebrow{
-   442|  font-size:.6rem;font-weight:700;letter-spacing:.18em;
-   443|  text-transform:uppercase;color:var(--red);margin-bottom:1rem;
-   444|}
-   445|.cta-heading{
-   446|  font-size:1.4rem;font-weight:800;letter-spacing:-0.03em;
-   447|  line-height:1.1;margin-bottom:1rem;text-transform:uppercase;
-   448|}
-   449|.cta-body{
-   450|  font-size:.83rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;
-   451|}
-   452|
-   453|/* ── CONTACT ── */
-   454|.contact-wrapper{border-bottom:2px solid var(--black);}
-   455|.contact-inner{
-   456|  grid-column:1/-1;
-   457|  border-left:2px solid var(--black);
-   458|}
-   459|.contact-heading-row{
-   460|  display:grid;grid-template-columns:1fr 1fr;
-   461|  border-bottom:1px solid var(--black);
-   462|}
-   463|.contact-heading-left{
-   464|  padding:2.5rem 2.5rem;
-   465|  border-right:1px solid var(--black);
-   466|}
-   467|.contact-heading-label{
-   468|  font-size:.6rem;font-weight:700;letter-spacing:.18em;
-   469|  text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;
-   470|}
-   471|.contact-heading-title{
-   472|  font-size:clamp(1.6rem,3vw,2.5rem);
-   473|  font-weight:900;letter-spacing:-0.04em;line-height:.95;
-   474|  text-transform:uppercase;
-   475|}
-   476|.contact-heading-right{
-   477|  padding:2.5rem 2.5rem;
-   478|  font-size:.85rem;font-weight:300;color:var(--muted);line-height:1.65;
-   479|  display:flex;align-items:center;
-   480|}
-   481|.contact-list{}
-   482|.clink{
-   483|  display:flex;align-items:center;justify-content:space-between;
-   484|  padding:1.4rem 2.5rem;
-   485|  border-bottom:1px solid var(--black);
-   486|  text-decoration:none;color:var(--text);
-   487|  transition:background .15s,color .15s;
-   488|}
-   489|.clink:last-child{border-bottom:none;}
-   490|.clink:hover{background:var(--black);color:#fff;}
-   491|.clink:hover .ctype{color:rgba(255,255,255,.5);}
-   492|.clink:hover .carr{color:var(--red);}
-   493|.ctype{
-   494|  font-size:.58rem;font-weight:700;letter-spacing:.18em;
-   495|  text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;
-   496|  transition:color .15s;
-   497|}
-   498|.cval{font-size:.92rem;font-weight:700;}
-   499|.carr{color:var(--muted);transition:color .15s;font-size:.9rem;}
-   500|
-   501|/* ── FOOTER ── */
-   502|.footer-wrapper{
-   503|  border-top:2px solid var(--black);
-   504|}
-   505|.footer-inner{
-   506|  grid-column:1/-1;
-   507|  display:flex;align-items:center;justify-content:space-between;
-   508|  padding:1.4rem 2rem;
-   509|  border-left:2px solid var(--black);
-   510|}
-   511|.footer-logo{
-   512|  font-size:.72rem;font-weight:900;letter-spacing:.12em;
-   513|  text-transform:uppercase;
-   514|}
-   515|.footer-copy{
-   516|  font-size:.72rem;font-weight:300;color:var(--muted);
-   517|}
-   518|.footer-link{
-   519|  font-size:.72rem;font-weight:700;letter-spacing:.1em;
-   520|  text-transform:uppercase;color:var(--red);text-decoration:none;
-   521|  transition:opacity .15s;
-   522|}
-   523|.footer-link:hover{opacity:.7;}
-   524|
-   525|/* ── REVEAL ── */
-   526|.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease;}
-   527|.reveal.visible{opacity:1;transform:translateY(0);}
-   528|.reveal-d1{transition-delay:.06s;}
-   529|.reveal-d2{transition-delay:.13s;}
-   530|.reveal-d3{transition-delay:.2s;}
-   531|.reveal-d4{transition-delay:.28s;}
-   532|
-   533|/* ── PITCH MODAL ── */
-   534|.pitch-modal{
-   535|  position:fixed;inset:0;z-index:9999;
-   536|  display:flex;align-items:center;justify-content:center;
-   537|}
-   538|.pitch-modal-overlay{
-   539|  position:absolute;inset:0;background:rgba(0,0,0,.88);
-   540|  backdrop-filter:blur(3px);
-   541|}
-   542|.pitch-modal-box{
-   543|  position:relative;width:92vw;height:90vh;max-width:1280px;
-   544|  background:#fff;
-   545|  border:2px solid var(--red);
-   546|  display:flex;flex-direction:column;
-   547|  animation:pitchIn .2s ease;
-   548|}
-   549|@keyframes pitchIn{from{transform:scale(.96);opacity:0;}to{transform:scale(1);opacity:1;}}
-   550|.pitch-modal-topbar{
-   551|  display:flex;align-items:center;justify-content:space-between;
-   552|  padding:.6rem 1rem;background:var(--red);flex-shrink:0;
-   553|}
-   554|.pitch-modal-title{
-   555|  font-size:.68rem;font-weight:700;letter-spacing:.12em;
-   556|  text-transform:uppercase;color:#fff;
-   557|}
-   558|.pitch-modal-close{
-   559|  background:transparent;border:2px solid rgba(255,255,255,.6);color:#fff;
-   560|  padding:.3rem .9rem;font-size:.68rem;font-weight:700;
-   561|  letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
-   562|  font-family:'Inter',sans-serif;transition:background .15s;
-   563|}
-   564|.pitch-modal-close:hover{background:rgba(255,255,255,.2);}
-   565|.pitch-modal-iframe{
-   566|  flex:1;border:none;width:100%;
-   567|}
-   568|
-   569|/* ── RESPONSIVE ── */
-   570|@media(max-width:900px){
-   571|  .hero-layout{grid-template-columns:1fr;}
-   572|  .hero-num{display:none;}
-   573|  .hero-main,.hero-sidebar{border-right:none;border-bottom:1px solid var(--black);}
-   574|  .hero-main{grid-column:1/-1;}
-   575|  .hero-sidebar{grid-column:1/-1;}
-   576|  .stats-inner{grid-template-columns:repeat(2,1fr);}
-   577|  .stat-col:nth-child(even){border-right:none;}
-   578|  .stat-col:nth-child(n+3){border-top:1px solid var(--black);}
-   579|  .project-row{grid-template-columns:60px 1fr;}
-   580|  .project-metric-col{display:none;}
-   581|  .project-arrow{display:none;}
-   582|  .cta-inner{grid-template-columns:1fr;}
-   583|  .cta-left{border-right:none;border-bottom:1px solid var(--black);}
-   584|  .cta-right{grid-template-rows:auto auto;}
-   585|  .contact-heading-row{grid-template-columns:1fr;}
-   586|  .contact-heading-left{border-right:none;border-bottom:1px solid var(--black);}
-   587|  .process-inner{grid-template-columns:1fr;}
-   588|  .process-step{border-right:none;border-bottom:1px solid var(--black);}
-   589|  .process-step:last-child{border-bottom:none;}
-   590|  .nav-links a[href="#stats"],.nav-links a[href="#process"]{display:none;}
-   591|  h1{font-size:clamp(2.4rem,10vw,3.5rem);}
-   592|  .pitch-modal-box{width:98vw;height:96vh;}
-   593|}
-   594|</style>
-   595|</head>
-   596|<body>
-   597|
-   598|<!-- NAV -->
-   599|<nav>
-   600|  <div class="grid-12">
-   601|    <div class="nav-inner">
-   602|      <span class="nav-logo">noivan</span>
-   603|      <div class="nav-links">
-   604|        <a href="#stats"><span class="nv-ko">성과</span><span class="nv-en">Stats</span></a>
-   605|        <a href="#projects"><span class="nv-ko">프로젝트</span><span class="nv-en">Projects</span></a>
-   606|        <a href="#process"><span class="nv-ko">프로세스</span><span class="nv-en">Process</span></a>
-   607|        <a href="#contact"><span class="nv-ko">연락처</span><span class="nv-en">Contact</span></a>
-   608|        <div class="lang-sw">
-   609|          <button id="bko" class="on" onclick="setLang('ko')">KO</button>
-   610|          <button id="ben" onclick="setLang('en')">EN</button>
-   611|        </div>
-   612|        <div class="theme-sw">
-   613|          <button id="btheme" onclick="toggleTheme()" title="라이트/다크 전환">☾</button>
-   614|        </div>
-   615|      </div>
-   616|    </div>
-   617|  </div>
-   618|</nav>
-   619|
-   620|<!-- MASTHEAD -->
-   621|<div class="masthead">
-   622|  <div class="grid-12">
-   623|    <div class="masthead-inner">
-   624|      <span class="masthead-center">
-   625|        <span class="nv-ko">AI 엔지니어 · Portfolio</span>
-   626|        <span class="nv-en">AI Engineer · Portfolio</span>
-   627|      </span>
-   628|    </div>
-   629|  </div>
-   630|</div>
-   631|
-   632|<!-- HERO -->
-   633|<div class="hero">
-   634|  <div class="grid-12">
-   635|    <div class="hero-inner">
-   636|      <div class="hero-red-rule"></div>
-   637|      <div class="hero-layout">
-   638|
-   639|        <div class="hero-num reveal">
-   640|          <div class="hero-num-text">01</div>
-   641|          <div class="hero-num-label">
-   642|            <span class="nv-ko">포트폴리오</span>
-   643|            <span class="nv-en">Portfolio</span>
-   644|          </div>
-   645|        </div>
-   646|
-   647|        <div class="hero-main reveal reveal-d1">
-   648|          <div class="hero-eyebrow">
-   649|            <span class="nv-ko">AI 엔지니어 · 서울</span>
-   650|            <span class="nv-en">AI Engineer · Seoul</span>
-   651|          </div>
-   652|          <h1>NOIVAN</h1>
-   653|          <div class="hero-tagline">
-   654|            <span class="nv-ko">반복은 AI가, 당신은 본질에.</span>
-   655|            <span class="nv-en">Let AI handle the repetitive work.</span>
-   656|          </div>
-   657|        </div>
-   658|
-   659|        <div class="hero-sidebar reveal reveal-d2">
-   660|          <div class="hero-meta">
-   661|            <div class="meta-item">
-   662|              <div class="meta-key"><span class="nv-ko">직함</span><span class="nv-en">Title</span></div>
-   663|              <div class="meta-val"><span class="nv-ko">AI 엔지니어</span><span class="nv-en">AI Engineer</span></div>
-   664|            </div>
-   665|            <div class="meta-item">
-   666|              <div class="meta-key"><span class="nv-ko">위치</span><span class="nv-en">Location</span></div>
-   667|              <div class="meta-val">Seoul, Korea</div>
-   668|            </div>
-   669|            <div class="meta-item">
-   670|              <div class="meta-key">Email</div>
-   671|              <div class="meta-val">noivan000@gmail.com</div>
-   672|            </div>
-   673|          </div>
-   674|          <div class="hero-cta-block">
-   675|            <a href="mailto:noivan000@gmail.com?subject=Collaboration" class="btn btn-red">
-   676|              <span class="nv-ko">협업 문의하기</span>
-   677|              <span class="nv-en">Get in Touch</span>
-   678|            </a>
-   679|            <a href="mailto:noivan000@gmail.com?subject=Project" class="btn btn-outline">
-   680|              <span class="nv-ko">프로젝트 상담</span>
-   681|              <span class="nv-en">Project Inquiry</span>
-   682|            </a>
-   683|          </div>
-   684|        </div>
-   685|
-   686|      </div><!-- /hero-layout -->
-   687|    </div>
-   688|  </div>
-   689|</div>
-   690|
-   691|<!-- STATS -->
-   692|<div id="stats" class="stats-row">
-   693|  <div class="grid-12">
-   694|    <div class="section-header">
-   695|      <span class="section-num">01</span>
-   696|      <span class="section-title">
-   697|        <span class="nv-ko">핵심 수치</span><span class="nv-en">Key Metrics</span>
-   698|      </span>
-   699|      <div class="section-rule"></div>
-   700|    </div>
-   701|    <div class="stats-inner">
-   702|      <div class="stat-col reveal reveal-d1">
-   703|        <div class="stat-eyebrow"><span class="nv-ko">자동화 QA 모듈</span><span class="nv-en">Automated QA Modules</span></div>
-   704|        <div class="stat-number">578</div>
-   705|        <div class="stat-desc"><span class="nv-ko">보안 자동화 모듈</span><span class="nv-en">Security Automation Modules</span></div>
-   706|      </div>
-   707|      <div class="stat-col reveal reveal-d2">
-   708|        <div class="stat-eyebrow">OWASP</div>
-   709|        <div class="stat-number">40/40</div>
-   710|        <div class="stat-desc"><span class="nv-ko">완전 커버리지</span><span class="nv-en">Full Coverage</span></div>
-   711|      </div>
-   712|      <div class="stat-col reveal reveal-d3">
-   713|        <div class="stat-eyebrow"><span class="nv-ko">AI 발행 콘텐츠</span><span class="nv-en">AI-Published Contents</span></div>
-   714|        <div class="stat-number">200+</div>
-   715|        <div class="stat-desc"><span class="nv-ko">무인 발행 포스트</span><span class="nv-en">Zero Human Input Posts</span></div>
-   716|      </div>
-   717|      <div class="stat-col reveal reveal-d4">
-   718|        <div class="stat-eyebrow"><span class="nv-ko">무중단 에이전트</span><span class="nv-en">Always-On Agents</span></div>
-   719|        <div class="stat-number">24/7</div>
-   720|        <div class="stat-desc"><span class="nv-ko">자율 운영</span><span class="nv-en">Autonomous Operation</span></div>
-   721|      </div>
-   722|    </div>
-   723|  </div>
-   724|</div>
-   725|
-   726|<!-- PROJECTS -->
-   727|<div id="projects" class="projects-wrapper">
-   728|  <div class="grid-12">
-   729|    <div class="section-header">
-   730|      <span class="section-num">02</span>
-   731|      <span class="section-title">
-   732|        <span class="nv-ko">주요 프로젝트</span><span class="nv-en">Featured Projects</span>
-   733|      </span>
-   734|      <div class="section-rule"></div>
-   735|    </div>
-   736|    <div class="projects-inner">
-   737|
-   738|      <!-- 01 KRAYT -->
-   739|      <div class="project-row reveal">
-   740|        <div class="project-num">01.</div>
-   741|        <div class="project-body">
-   742|          <div class="project-name">KRAYT</div>
-   743|          <div class="project-oneliner">
-   744|            <span class="nv-ko">웹·API·LLM 보안 취약점을 AI가 자동 탐지·검증·리포팅합니다. OWASP 40개 카테고리, ISO 42001, GDPR, AI 공정성까지 단일 플랫폼.</span>
-   745|            <span class="nv-en">AI automatically detects, validates, and reports vulnerabilities across Web/API/LLM. OWASP 40 categories, ISO 42001, GDPR, AI Fairness — one platform.</span>
-   746|          </div>
-   747|          <div class="project-tags-row">
-   748|            <span class="tag tag-red">AI Security QA</span>
-   749|            <span class="tag">B2B Platform</span>
-   750|            <span class="tag">OWASP 40/40</span>
-   751|          </div>
-   752|        </div>
-   753|        <div class="project-metric-col">
-   754|          <div class="metric-val">578</div>
-   755|          <div class="metric-label"><span class="nv-ko">자동화 모듈</span><span class="nv-en">modules</span></div>
-   756|        </div>
-   757|        <div class="project-arrow">→</div>
-   758|      </div>
-   759|
-   760|      <!-- 02 Blog Automation -->
-   761|      <div class="project-row reveal reveal-d1">
-   762|        <div class="project-num">02.</div>
-   763|        <div class="project-body">
-   764|          <div class="project-name">
-   765|            <span class="nv-ko">블로그 자동화</span>
-   766|            <span class="nv-en">Blog Automation</span>
-   767|          </div>
-   768|          <div class="project-oneliner">
-   769|            <span class="nv-ko">Blogger, 네이버, 티스토리 3개 플랫폼 동시 자동화. AI 콘텐츠 생성 → SEO 최적화 → 자동 발행 → 크로스 포스팅 전 파이프라인.</span>
-   770|            <span class="nv-en">3-platform automation across Blogger, Naver, and Tistory. AI content → SEO → auto-publish → cross-posting, fully autonomous.</span>
-   771|          </div>
-   772|          <div class="project-tags-row">
-   773|            <span class="tag tag-red">Blogger</span>
-   774|            <span class="tag">네이버</span>
-   775|            <span class="tag">티스토리</span>
-   776|          </div>
-   777|        </div>
-   778|        <div class="project-metric-col">
-   779|          <div class="metric-val">200+</div>
-   780|          <div class="metric-label"><span class="nv-ko">발행 포스트</span><span class="nv-en">posts</span></div>
-   781|        </div>
-   782|        <div class="project-arrow">→</div>
-   783|      </div>
-   784|
-   785|      <!-- 03 Social Content Automation -->
-   786|      <div class="project-row reveal reveal-d2">
-   787|        <div class="project-num">03.</div>
-   788|        <div class="project-body">
-   789|          <div class="project-name">
-   790|            <span class="nv-ko">소셜 콘텐츠 자동화</span>
-   791|            <span class="nv-en">Social Content Automation</span>
-   792|          </div>
-   793|          <div class="project-oneliner">
-   794|            <span class="nv-ko">인스타그램, Threads, YouTube Shorts 멀티채널 콘텐츠 자동화. AI 콘텐츠 생성부터 스케줄 발행까지 전 파이프라인.</span>
-   795|            <span class="nv-en">Multi-channel content automation across Instagram, Threads, and YouTube Shorts. Full pipeline from AI content generation to scheduled publishing.</span>
-   796|          </div>
-   797|          <div class="project-tags-row">
-   798|            <span class="tag tag-red">Instagram</span>
-   799|            <span class="tag">Threads</span>
-   800|            <span class="tag">YouTube Shorts</span>
-   801|          </div>
-   802|        </div>
-   803|        <div class="project-metric-col">
-   804|          <div class="metric-val">Daily</div>
-   805|          <div class="metric-label"><span class="nv-ko">자동 발행</span><span class="nv-en">auto-publish</span></div>
-   806|        </div>
-   807|        <div class="project-arrow">→</div>
-   808|      </div>
-   809|
-   810|      <!-- 04 NOVA OSS -->
-   811|      <div class="project-row reveal reveal-d3">
-   812|        <div class="project-num">04.</div>
-   813|        <div class="project-body">
-   814|          <div class="project-name">NOVA OSS</div>
-   815|          <div class="project-oneliner">
-   816|            <span class="nv-ko">AI 에이전트 자율 운영 프레임워크. <a href="https://github.com/noivan0/NOVA" target="_blank" rel="noopener">오픈소스 공개 완료</a>. LLM·Publisher·Notifier 전체 추상화, 단일 에이전트로 연구부터 블로그 파이프라인까지.</span>
-   817|            <span class="nv-en">Autonomous AI operations framework. <a href="https://github.com/noivan0/NOVA" target="_blank" rel="noopener">Published open source</a> (MIT). Fully abstracted LLM/Publisher/Notifier providers — from research harnesses to blog pipelines.</span>
-   818|          </div>
-   819|          <div class="project-tags-row">
-   820|            <span class="tag tag-red">AI Framework</span>
-   821|            <span class="tag">Open Source</span>
-   822|            <span class="tag">GitHub</span>
-   823|          </div>
-   824|        </div>
-   825|        <div class="project-metric-col">
-   826|          <div class="metric-val">MIT</div>
-   827|          <div class="metric-label"><span class="nv-ko">오픈소스</span><span class="nv-en">license</span></div>
-   828|        </div>
-   829|        <div class="project-arrow">→</div>
-   830|      </div>
-   831|
-   832|    </div>
-   833|  </div>
-   834|</div>
-   835|
-   836|<!-- PROCESS -->
-   837|<div id="process" class="process-wrapper">
-   838|  <div class="grid-12">
-   839|    <div class="section-header">
-   840|      <span class="section-num">03</span>
-   841|      <span class="section-title">
-   842|        <span class="nv-ko">작업 방식</span><span class="nv-en">How I Work</span>
-   843|      </span>
-   844|      <div class="section-rule"></div>
-   845|    </div>
-   846|    <div class="process-inner">
-   847|
-   848|      <div class="process-step reveal">
-   849|        <div class="process-step-num">
-   850|          <span class="nv-ko">01 — 분석</span><span class="nv-en">01 — Analyze</span>
-   851|        </div>
-   852|        <div class="process-step-title">
-   853|          <span class="nv-ko">업무 구조 파악</span>
-   854|          <span class="nv-en">Map the workflow</span>
-   855|        </div>
-   856|        <div class="process-step-desc">
-   857|          <span class="nv-ko">자동화 가능한 반복 업무를 식별하고 병목점을 분석합니다. 측정 가능한 기준을 먼저 정의합니다.</span>
-   858|          <span class="nv-en">Identify automatable repetitive tasks and analyze bottlenecks. Define measurable success criteria first.</span>
-   859|        </div>
-   860|      </div>
-   861|
-   862|      <div class="process-step reveal reveal-d1">
-   863|        <div class="process-step-num">
-   864|          <span class="nv-ko">02 — 설계</span><span class="nv-en">02 — Design</span>
-   865|        </div>
-   866|        <div class="process-step-title">
-   867|          <span class="nv-ko">AI 에이전트 아키텍처</span>
-   868|          <span class="nv-en">AI agent architecture</span>
-   869|        </div>
-   870|        <div class="process-step-desc">
-   871|          <span class="nv-ko">2주 내 동작하는 프로토타입을 목표로 시스템을 설계합니다. 이중화와 에러 복구를 기본으로 설계합니다.</span>
-   872|          <span class="nv-en">Design systems targeting a working prototype in 2 weeks. Redundancy and error recovery built in from the start.</span>
-   873|        </div>
-   874|      </div>
-   875|
-   876|      <div class="process-step reveal reveal-d2">
-   877|        <div class="process-step-num">
-   878|          <span class="nv-ko">03 — 운영</span><span class="nv-en">03 — Operate</span>
-   879|        </div>
-   880|        <div class="process-step-title">
-   881|          <span class="nv-ko">24/7 자율 운영</span>
-   882|          <span class="nv-en">24/7 autonomous ops</span>
-   883|        </div>
-   884|        <div class="process-step-desc">
-   885|          <span class="nv-ko">배포 이후에도 지속 모니터링과 개선. 사람 없이 돌아가는 시스템을 목표로 합니다.</span>
-   886|          <span class="nv-en">Continuous monitoring and improvement post-deploy. The goal: systems that run without human intervention.</span>
-   887|        </div>
-   888|      </div>
-   889|
-   890|    </div>
-   891|  </div>
-   892|</div>
-   893|
-   894|<!-- CTA -->
-   895|<div class="cta-wrapper">
-   896|  <div class="grid-12">
-   897|    <div class="section-header">
-   898|      <span class="section-num">04</span>
-   899|      <span class="section-title">
-   900|        <span class="nv-ko">함께 일하기</span><span class="nv-en">Work Together</span>
-   901|      </span>
-   902|      <div class="section-rule"></div>
-   903|    </div>
-   904|    <div class="cta-inner">
-   905|      <div class="cta-left reveal">
-   906|        <div class="cta-editorial">
-   907|          <span class="nv-ko">반복은<br><em>AI가</em><br>처리한다.</span>
-   908|          <span class="nv-en">Let <em>AI</em><br>handle<br>the rest.</span>
-   909|        </div>
-   910|        <div class="cta-sub">
-   911|          <span class="nv-ko">AI 자동화를 통해 팀이 본질적인 업무에 집중할 수 있도록 돕습니다.</span>
-   912|          <span class="nv-en">Helping teams focus on what truly matters by automating the rest with AI.</span>
-   913|        </div>
-   914|      </div>
-   915|      <div class="cta-right">
-   916|        <div class="cta-col reveal">
-   917|          <div class="cta-eyebrow">
-   918|            <span class="nv-ko">파트너 · 협업</span><span class="nv-en">Partners · Collaboration</span>
-   919|          </div>
-   920|          <div class="cta-heading">KRAYT</div>
-   921|          <div class="cta-body">
-   922|            <span class="nv-ko">투자 및 프로젝트 문의</span>
-   923|            <span class="nv-en">Investment & Project Inquiries</span>
-   924|          </div>
-   925|          <button onclick="openPitch()" class="btn btn-red">
-   926|            <span class="nv-ko">KRAYT 알아보기 →</span>
-   927|            <span class="nv-en">Explore KRAYT →</span>
-   928|          </button>
-   929|        </div>
-   930|        <div class="cta-col reveal reveal-d1">
-   931|          <div class="cta-eyebrow">
-   932|            <span class="nv-ko">클라이언트 대상</span><span class="nv-en">For Clients</span>
-   933|          </div>
-   934|          <div class="cta-heading">
-   935|            <span class="nv-ko">프로젝트 문의</span>
-   936|            <span class="nv-en">Project Inquiry</span>
-   937|          </div>
-   938|          <div class="cta-body">
-   939|            <span class="nv-ko">AI 자동화 도입을 고민하고 계신가요? 비즈니스 요구사항을 함께 분석해 드립니다.</span>
-   940|            <span class="nv-en">Considering AI automation? Let's analyze your requirements and build something that works.</span>
-   941|          </div>
-   942|          <a href="mailto:noivan000@gmail.com?subject=Project" class="btn btn-outline">
-   943|            <span class="nv-ko">프로젝트 개발 문의</span>
-   944|            <span class="nv-en">프로젝트 개발 문의</span>
-   945|          </a>
-   946|        </div>
-   947|      </div>
-   948|    </div>
-   949|  </div>
-   950|</div>
-   951|
-   952|<!-- CONTACT -->
-   953|<div id="contact" class="contact-wrapper">
-   954|  <div class="grid-12">
-   955|    <div class="section-header">
-   956|      <span class="section-num">05</span>
-   957|      <span class="section-title">
-   958|        <span class="nv-ko">연락처</span><span class="nv-en">Contact</span>
-   959|      </span>
-   960|      <div class="section-rule"></div>
-   961|    </div>
-   962|    <div class="contact-inner">
-   963|      <div class="contact-heading-row">
-   964|        <div class="contact-heading-left">
-   965|          <div class="contact-heading-label">
-   966|            <span class="nv-ko">직접 연락하기</span><span class="nv-en">Get in touch</span>
-   967|          </div>
-   968|          <div class="contact-heading-title">
-   969|            <span class="nv-ko">직접<br>이야기해요.</span>
-   970|            <span class="nv-en">Let's talk<br>directly.</span>
-   971|          </div>
-   972|        </div>
-   973|        <div class="contact-heading-right">
-   974|          <span class="nv-ko">AI 자동화, 투자 문의, 협업 제안 모두 환영합니다. 보통 24시간 내에 답변드립니다.</span>
-   975|          <span class="nv-en">Automation, investment, collaboration — all welcome. Usually reply within 24 hours.</span>
-   976|        </div>
-   977|      </div>
-   978|      <div class="contact-list">
-   979|        <a href="mailto:noivan000@gmail.com" class="clink reveal">
-   980|          <div>
-   981|            <div class="ctype">Email</div>
-   982|            <div class="cval">noivan000@gmail.com</div>
-   983|          </div>
-   984|          <div class="carr">→</div>
-   985|        </a>
-   986|        <a href="https://x.com/noivan" target="_blank" rel="noopener" class="clink reveal reveal-d1">
-   987|          <div>
-   988|            <div class="ctype">X (Twitter)</div>
-   989|            <div class="cval">@noivan</div>
-   990|          </div>
-   991|          <div class="carr">→</div>
-   992|        </a>
-   993|        <a href="https://t.me/nothink_ivan" target="_blank" rel="noopener" class="clink reveal reveal-d2">
-   994|          <div>
-   995|            <div class="ctype">Telegram</div>
-   996|            <div class="cval">@nothink_ivan</div>
-   997|          </div>
-   998|          <div class="carr">→</div>
-   999|        </a>
-  1000|      </div>
-  1001|    </div>
-  1002|  </div>
-  1003|</div>
-  1004|
-  1005|<!-- FOOTER -->
-  1006|<div class="footer-wrapper">
-  1007|  <div class="grid-12">
-  1008|    <div class="footer-inner">
-  1009|      <span class="footer-logo">noivan © <span id="yr"></span></span>
-  1010|      <span class="footer-copy">
-  1011|        <span class="nv-ko">AI로 만들고, AI가 운영합니다.</span>
-  1012|        <span class="nv-en">Built with AI. Operated by AI.</span>
-  1013|      </span>
-  1014|      <a href="https://github.com/noivan0/NOVA" target="_blank" rel="noopener" class="footer-link">NOVA OSS ↗</a>
-  1015|    </div>
-  1016|  </div>
-  1017|</div>
-  1018|
-  1019|<!-- PITCH MODAL -->
-  1020|<div id="pitchModal" class="pitch-modal" style="display:none;">
-  1021|  <div class="pitch-modal-overlay" onclick="closePitch()"></div>
-  1022|  <div class="pitch-modal-box">
-  1023|    <div class="pitch-modal-topbar">
-  1024|      <span class="pitch-modal-title">KRAYT — Pitch Deck</span>
-  1025|      <button class="pitch-modal-close" onclick="closePitch()">✕ Close</button>
-  1026|    </div>
-  1027|    <iframe src="krayt-pitch.html" class="pitch-modal-iframe" title="KRAYT Pitch Deck"></iframe>
-  1028|  </div>
-  1029|</div>
-  1030|
-  1031|<script>
-  1032|/* ── LANG — DOM direct (no CSS class toggle, no layout breakage) ── */
-  1033|function setLang(l) {
-  1034|  var inlineTags = ['span','a','strong','em','b','i','label','time'];
-  1035|  document.querySelectorAll('.nv-ko, .nv-en').forEach(function(el) {
-  1036|    var show = l === 'ko' ? el.classList.contains('nv-ko') : el.classList.contains('nv-en');
-  1037|    if (show) {
-  1038|      el.style.display = inlineTags.indexOf(el.tagName.toLowerCase()) !== -1 ? 'inline' : 'block';
-  1039|    } else {
-  1040|      el.style.display = 'none';
-  1041|    }
-  1042|  });
-  1043|  document.getElementById('bko').classList.toggle('on', l === 'ko');
-  1044|  document.getElementById('ben').classList.toggle('on', l === 'en');
-  1045|  document.documentElement.lang = l;
-  1046|  try { localStorage.setItem('nv-lang', l); } catch(e) {}
-  1047|}
-  1048|(function() {
-  1049|  var saved = 'ko';
-  1050|  try { saved = localStorage.getItem('nv-lang') || 'ko'; } catch(e) {}
-  1051|  setLang(saved);
-  1052|})();
-  1053|
-  1054|/* ── THEME ── */
-  1055|function toggleTheme(){
-  1056|  var h=document.documentElement;
-  1057|  var isDark=h.getAttribute('data-theme')==='dark';
-  1058|  if(isDark){
-  1059|    h.removeAttribute('data-theme');
-  1060|    document.getElementById('btheme').textContent='☾';
-  1061|    try{localStorage.setItem('nv-theme','light');}catch(e){}
-  1062|  }else{
-  1063|    h.setAttribute('data-theme','dark');
-  1064|    document.getElementById('btheme').textContent='☀';
-  1065|    try{localStorage.setItem('nv-theme','dark');}catch(e){}
-  1066|  }
-  1067|}
-  1068|try{
-  1069|  if(localStorage.getItem('nv-theme')==='dark'){
-  1070|    document.documentElement.setAttribute('data-theme','dark');
-  1071|    document.getElementById('btheme').textContent='☀';
-  1072|  }
-  1073|}catch(e){}
-  1074|
-  1075|/* ── PITCH MODAL ── */
-  1076|function openPitch(){
-  1077|  document.getElementById('pitchModal').style.display='flex';
-  1078|  document.body.style.overflow='hidden';
-  1079|}
-  1080|function closePitch(){
-  1081|  document.getElementById('pitchModal').style.display='none';
-  1082|  document.body.style.overflow='';
-  1083|}
-  1084|document.addEventListener('keydown',function(e){if(e.key==='Escape')closePitch();});
-  1085|
-  1086|/* ── YEAR ── */
-  1087|document.getElementById('yr').textContent=new Date().getFullYear();
-  1088|
-  1089|/* ── REVEAL ── */
-  1090|var obs=new IntersectionObserver(function(entries){
-  1091|  entries.forEach(function(e){
-  1092|    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
-  1093|  });
-  1094|},{threshold:0.1});
-  1095|document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
-  1096|</script>
-  1097|</body>
-  1098|</html>
-  1099|
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>noivan — AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --red:#e63329;
+  --black:#0a0a0a;
+  --text:#0a0a0a;
+  --muted:#6b7280;
+  --light:#f5f5f5;
+  --border:#0a0a0a;
+  --bg:#ffffff;
+  --nav-bg:#ffffff;
+  --card-hover:#f5f5f5;
+}
+
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --text:#e8e4df;
+  --muted:#888880;
+  --light:#1a1a1a;
+  --border:#333333;
+  --bg:#0a0a0a;
+  --black:#e8e4df;
+  --nav-bg:#0a0a0a;
+  --card-hover:#111111;
+}
+[data-theme="dark"] nav{background:var(--nav-bg);border-bottom-color:#333;}
+[data-theme="dark"] .masthead{background:#111111;}
+[data-theme="dark"] body{background:#0a0a0a;color:#e8e4df;}
+[data-theme="dark"] .nav-links a{color:var(--text);border-left-color:#333;}
+[data-theme="dark"] .nav-links a:hover{background:var(--text);color:#0a0a0a;}
+[data-theme="dark"] .lang-sw{border-left-color:#333;}
+[data-theme="dark"] .lang-sw button{border-right-color:#333;color:var(--muted);}
+[data-theme="dark"] .lang-sw button.on{background:var(--red);color:#fff;}
+[data-theme="dark"] .lang-sw button:hover:not(.on){background:var(--text);color:#0a0a0a;}
+[data-theme="dark"] .theme-sw{border-left-color:#333;}
+[data-theme="dark"] .theme-sw button{color:var(--muted);}
+[data-theme="dark"] .theme-sw button:hover{background:var(--text);color:#0a0a0a;}
+[data-theme="dark"] .hero{border-bottom-color:#333;}
+[data-theme="dark"] .hero-inner{border-left-color:#333;}
+[data-theme="dark"] .hero-num{border-right-color:#333;}
+[data-theme="dark"] .hero-main{border-right-color:#333;}
+[data-theme="dark"] .hero-tagline{border-top-color:#333;}
+[data-theme="dark"] .meta-item{border-bottom-color:#333;}
+[data-theme="dark"] .meta-item:first-child{border-top-color:#333;}
+[data-theme="dark"] .btn-outline{background:#0a0a0a;color:var(--text);border-color:var(--text);}
+[data-theme="dark"] .btn-outline:hover{background:var(--text);color:#0a0a0a;}
+[data-theme="dark"] .section-header{border-bottom-color:#333;border-left-color:#333;}
+[data-theme="dark"] .stats-inner{border-left-color:#333;}
+[data-theme="dark"] .stat-col{border-right-color:#333;}
+[data-theme="dark"] .stat-col:hover{background:var(--card-hover);}
+[data-theme="dark"] .projects-inner{border-left-color:#333;}
+[data-theme="dark"] .project-row{border-bottom-color:#333;}
+[data-theme="dark"] .project-row:hover{background:var(--card-hover);}
+[data-theme="dark"] .project-num{border-right-color:#333;}
+[data-theme="dark"] .project-body{border-right-color:#333;}
+[data-theme="dark"] .tag{border-color:var(--text);color:var(--text);}
+[data-theme="dark"] .process-inner{border-left-color:#333;}
+[data-theme="dark"] .process-step{border-right-color:#333;}
+[data-theme="dark"] .cta-inner{border-left-color:#333;}
+[data-theme="dark"] .cta-left{border-right-color:#333;}
+[data-theme="dark"] .cta-col{border-bottom-color:#333;}
+[data-theme="dark"] .contact-inner{border-left-color:#333;}
+[data-theme="dark"] .contact-heading-left{border-right-color:#333;}
+[data-theme="dark"] .contact-heading-left,.contact-heading-row{border-bottom-color:#333;}
+[data-theme="dark"] .clink{border-bottom-color:#333;color:var(--text);}
+[data-theme="dark"] .clink:hover{background:var(--text);color:#0a0a0a;}
+[data-theme="dark"] .clink:hover .ctype{color:rgba(10,10,10,.5);}
+[data-theme="dark"] .footer-wrapper{border-top-color:#333;}
+[data-theme="dark"] .footer-inner{border-left-color:#333;}
+[data-theme="dark"] .pitch-modal-box{background:#0a0a0a;}
+
+/* ── LANG ── (JS-controlled: do NOT use CSS class toggling) */
+.nv-ko, .nv-en { }  /* no default hide — JS sets visibility on load */
+
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  transition:background .25s,color .25s;
+}
+
+/* ── 12-COL GRID SYSTEM ── */
+.grid-12{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  max-width:1440px;margin:0 auto;
+  position:relative;
+}
+
+/* ── NAV ── */
+nav{
+  border-bottom:2px solid var(--black);
+  position:sticky;top:0;z-index:200;
+  background:var(--nav-bg);
+  transition:background .25s,border-color .25s;
+}
+.nav-inner{
+  grid-column:1/-1;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;height:56px;
+}
+.nav-logo{
+  font-size:.78rem;font-weight:900;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--red);
+}
+.nav-links{display:flex;gap:0;align-items:stretch;}
+.nav-links a{
+  color:var(--black);font-size:.68rem;text-decoration:none;
+  font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:.5rem 1.2rem;border-left:1px solid var(--black);
+  display:flex;align-items:center;
+  transition:background .15s,color .15s;
+}
+.nav-links a:hover{background:var(--black);color:#fff;}
+.lang-sw{display:flex;border-left:1px solid var(--black);}
+.lang-sw button{
+  background:transparent;border:none;border-right:1px solid var(--black);
+  color:var(--muted);font-size:.68rem;font-weight:700;
+  padding:.5rem 1rem;cursor:pointer;height:56px;
+  transition:all .15s;font-family:'Inter',sans-serif;
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.lang-sw button:last-child{border-right:none;}
+.lang-sw button.on{background:var(--red);color:#fff;}
+.lang-sw button:hover:not(.on){background:var(--black);color:#fff;}
+/* Theme toggle */
+.theme-sw{display:flex;border-left:1px solid var(--black);}
+.theme-sw button{
+  background:transparent;border:none;
+  color:var(--muted);font-size:1rem;
+  padding:.5rem 1rem;cursor:pointer;height:56px;
+  transition:all .15s;font-family:'Inter',sans-serif;
+  display:flex;align-items:center;
+}
+.theme-sw button:hover{background:var(--black);color:#fff;}
+
+/* ── MASTHEAD / RUNNING HEADER ── */
+.masthead{
+  border-bottom:1px solid var(--black);
+  background:var(--light);
+  transition:background .25s;
+}
+.masthead-inner{
+  grid-column:1/-1;
+  display:flex;align-items:center;justify-content:center;
+  padding:.55rem 2rem;
+}
+.masthead-center{
+  font-size:.6rem;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--red);
+}
+
+/* ── HERO ── */
+.hero{border-bottom:2px solid var(--black);}
+.hero-inner{
+  grid-column:1/-1;
+  border-left:2px solid var(--black);
+}
+
+/* Red top rule */
+.hero-red-rule{
+  height:4px;background:var(--red);
+  margin:0;
+}
+
+.hero-layout{
+  display:grid;
+  grid-template-columns:2fr 5fr 5fr;
+}
+
+.hero-num{
+  padding:3rem 2rem;
+  border-right:1px solid var(--black);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  grid-column:1/2;
+}
+.hero-num-text{
+  font-size:7rem;font-weight:900;line-height:1;
+  color:var(--red);letter-spacing:-0.06em;
+}
+.hero-num-label{
+  font-size:.6rem;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted);
+  margin-top:.6rem;
+}
+
+.hero-main{
+  padding:3rem;border-right:1px solid var(--black);
+  grid-column:2/3;
+}
+.hero-eyebrow{
+  font-size:.62rem;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--red);
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;
+}
+.hero-eyebrow::before{content:'';width:28px;height:2px;background:var(--red);flex-shrink:0;}
+
+h1{
+  font-size:clamp(2.8rem,6.5vw,5.5rem);
+  font-weight:900;letter-spacing:-0.05em;
+  line-height:.93;color:var(--black);
+  text-transform:uppercase;
+  margin-bottom:2rem;
+}
+
+.hero-tagline{
+  font-size:clamp(.95rem,1.8vw,1.2rem);
+  font-weight:300;color:var(--muted);
+  line-height:1.55;
+  padding-top:1.5rem;
+  border-top:1px solid var(--black);
+}
+
+.hero-sidebar{
+  padding:3rem;
+  display:flex;flex-direction:column;justify-content:space-between;
+  grid-column:3/4;
+}
+.hero-meta{margin-bottom:2rem;}
+.meta-item{
+  padding:.9rem 0;
+  border-bottom:1px solid #e5e7eb;
+}
+.meta-item:first-child{border-top:1px solid #e5e7eb;}
+.meta-key{
+  font-size:.58rem;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;
+}
+.meta-val{font-size:.88rem;font-weight:500;}
+.hero-cta-block{display:flex;flex-direction:column;gap:.75rem;}
+
+/* ── BUTTONS ── */
+.btn{
+  display:block;text-align:center;
+  padding:.9rem 1.5rem;
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;
+  text-decoration:none;text-transform:uppercase;
+  transition:all .15s;cursor:pointer;
+  font-family:'Inter',sans-serif;
+  border:2px solid transparent;
+}
+.btn-red{background:var(--red);color:#fff;border-color:var(--red);}
+.btn-red:hover{background:#fff;color:var(--red);}
+.btn-outline{background:#fff;color:var(--black);border-color:var(--black);}
+.btn-outline:hover{background:var(--black);color:#fff;}
+
+/* ── SECTION HEADER ── */
+.section-header{
+  grid-column:1/-1;
+  display:flex;align-items:center;
+  padding:1.4rem 2rem;
+  border-bottom:1px solid var(--black);
+  border-left:2px solid var(--black);
+  gap:1.5rem;
+}
+.section-num{
+  font-size:.72rem;font-weight:900;color:var(--red);letter-spacing:.12em;
+}
+.section-title{
+  font-size:.72rem;font-weight:700;letter-spacing:.15em;
+  text-transform:uppercase;flex:1;
+}
+.section-rule{flex:1;height:1px;background:var(--black);}
+
+/* ── STATS / METRICS ── */
+.stats-row{border-bottom:2px solid var(--black);}
+.stats-inner{
+  grid-column:1/-1;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-left:2px solid var(--black);
+}
+.stat-col{
+  padding:2.5rem 2rem;
+  border-right:1px solid var(--black);
+  border-top:3px solid transparent;
+  transition:border-top-color .2s,background .2s;
+  cursor:default;
+}
+.stat-col:last-child{border-right:none;}
+.stat-col:hover{border-top-color:var(--red);background:var(--light);}
+.stat-eyebrow{
+  font-size:.58rem;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;
+}
+.stat-number{
+  font-size:clamp(2.5rem,4.5vw,4rem);
+  font-weight:800;color:var(--red);line-height:1;
+  letter-spacing:-0.04em;margin-bottom:.3rem;
+  transition:transform .2s;
+}
+.stat-col:hover .stat-number{transform:scale(1.04);}
+.stat-desc{
+  font-size:.78rem;font-weight:500;color:var(--black);
+}
+
+/* ── PROJECTS ── */
+.projects-wrapper{border-bottom:2px solid var(--black);}
+.projects-inner{
+  grid-column:1/-1;
+  border-left:2px solid var(--black);
+}
+
+.project-row{
+  display:grid;
+  grid-template-columns:80px 1fr auto;
+  border-bottom:1px solid var(--black);
+  transition:background .15s;
+  position:relative;
+}
+.project-row:last-child{border-bottom:none;}
+.project-row:hover{background:var(--light);}
+.project-row:hover .project-num{color:var(--red);}
+.project-row:hover .project-arrow{opacity:1;transform:translateX(0);}
+
+.project-num{
+  padding:2.5rem 2rem;
+  font-size:2rem;font-weight:900;font-style:italic;
+  color:var(--muted);letter-spacing:-0.05em;
+  border-right:1px solid var(--black);
+  display:flex;align-items:flex-start;justify-content:center;
+  transition:color .15s;
+  font-family:'Inter',sans-serif;
+}
+
+.project-body{
+  padding:2.5rem 2.5rem;
+  border-right:1px solid var(--black);
+}
+.project-name{
+  font-size:1.2rem;font-weight:800;letter-spacing:-0.03em;
+  text-transform:uppercase;margin-bottom:.5rem;
+}
+.project-oneliner{
+  font-size:.85rem;color:var(--muted);font-weight:400;
+  line-height:1.65;max-width:500px;margin-bottom:1rem;
+}
+.project-oneliner a{color:var(--red);text-decoration:none;}
+.project-oneliner a:hover{text-decoration:underline;}
+.project-tags-row{display:flex;gap:.5rem;flex-wrap:wrap;}
+.tag{
+  display:inline-block;
+  font-size:.6rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;padding:.22rem .6rem;
+  border:1px solid var(--black);
+}
+.tag-red{border-color:var(--red);color:var(--red);}
+
+.project-metric-col{
+  padding:2.5rem 2.5rem;
+  display:flex;flex-direction:column;align-items:flex-end;justify-content:center;
+  min-width:160px;
+}
+.metric-val{
+  font-size:2.2rem;font-weight:900;letter-spacing:-0.04em;
+  color:var(--black);line-height:1;text-align:right;
+}
+.metric-label{
+  font-size:.6rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);
+  margin-top:.3rem;text-align:right;
+}
+
+.project-arrow{
+  position:absolute;right:1.5rem;top:50%;
+  transform:translateX(-8px) translateY(-50%);
+  color:var(--red);font-size:1.3rem;
+  opacity:0;transition:opacity .15s,transform .15s;
+  pointer-events:none;
+}
+
+/* ── PROCESS SECTION ── */
+.process-wrapper{border-bottom:2px solid var(--black);}
+.process-inner{
+  grid-column:1/-1;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-left:2px solid var(--black);
+}
+.process-step{
+  padding:3rem 2.5rem;
+  border-right:1px solid var(--black);
+}
+.process-step:last-child{border-right:none;}
+.process-step-num{
+  font-size:.6rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;
+}
+.process-step-title{
+  font-size:1.1rem;font-weight:800;letter-spacing:-0.02em;
+  margin-bottom:.75rem;
+}
+.process-step-desc{
+  font-size:.83rem;font-weight:300;color:var(--muted);
+  line-height:1.7;
+}
+
+/* ── CTA ── */
+.cta-wrapper{border-bottom:2px solid var(--black);}
+.cta-inner{
+  grid-column:1/-1;
+  display:grid;grid-template-columns:1fr 1fr;
+  border-left:2px solid var(--black);
+}
+.cta-left{
+  padding:4rem 3rem;
+  border-right:1px solid var(--black);
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.cta-editorial{
+  font-size:clamp(1.8rem,3.5vw,3rem);
+  font-weight:900;letter-spacing:-0.05em;
+  line-height:.95;text-transform:uppercase;
+  margin-bottom:.75rem;
+}
+.cta-editorial em{
+  font-style:italic;font-weight:300;
+  letter-spacing:-0.03em;
+}
+.cta-sub{
+  font-size:.83rem;font-weight:300;color:var(--muted);
+  line-height:1.65;
+}
+
+.cta-right{
+  display:grid;grid-template-rows:1fr 1fr;
+}
+.cta-col{
+  padding:3rem;border-bottom:1px solid var(--black);
+}
+.cta-col:last-child{border-bottom:none;}
+.cta-eyebrow{
+  font-size:.6rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--red);margin-bottom:1rem;
+}
+.cta-heading{
+  font-size:1.4rem;font-weight:800;letter-spacing:-0.03em;
+  line-height:1.1;margin-bottom:1rem;text-transform:uppercase;
+}
+.cta-body{
+  font-size:.83rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;
+}
+
+/* ── CONTACT ── */
+.contact-wrapper{border-bottom:2px solid var(--black);}
+.contact-inner{
+  grid-column:1/-1;
+  border-left:2px solid var(--black);
+}
+.contact-heading-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--black);
+}
+.contact-heading-left{
+  padding:2.5rem 2.5rem;
+  border-right:1px solid var(--black);
+}
+.contact-heading-label{
+  font-size:.6rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;
+}
+.contact-heading-title{
+  font-size:clamp(1.6rem,3vw,2.5rem);
+  font-weight:900;letter-spacing:-0.04em;line-height:.95;
+  text-transform:uppercase;
+}
+.contact-heading-right{
+  padding:2.5rem 2.5rem;
+  font-size:.85rem;font-weight:300;color:var(--muted);line-height:1.65;
+  display:flex;align-items:center;
+}
+.contact-list{}
+.clink{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 2.5rem;
+  border-bottom:1px solid var(--black);
+  text-decoration:none;color:var(--text);
+  transition:background .15s,color .15s;
+}
+.clink:last-child{border-bottom:none;}
+.clink:hover{background:var(--black);color:#fff;}
+.clink:hover .ctype{color:rgba(255,255,255,.5);}
+.clink:hover .carr{color:var(--red);}
+.ctype{
+  font-size:.58rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;
+  transition:color .15s;
+}
+.cval{font-size:.92rem;font-weight:700;}
+.carr{color:var(--muted);transition:color .15s;font-size:.9rem;}
+
+/* ── FOOTER ── */
+.footer-wrapper{
+  border-top:2px solid var(--black);
+}
+.footer-inner{
+  grid-column:1/-1;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 2rem;
+  border-left:2px solid var(--black);
+}
+.footer-logo{
+  font-size:.72rem;font-weight:900;letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.footer-copy{
+  font-size:.72rem;font-weight:300;color:var(--muted);
+}
+.footer-link{
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--red);text-decoration:none;
+  transition:opacity .15s;
+}
+.footer-link:hover{opacity:.7;}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-d1{transition-delay:.06s;}
+.reveal-d2{transition-delay:.13s;}
+.reveal-d3{transition-delay:.2s;}
+.reveal-d4{transition-delay:.28s;}
+
+/* ── PITCH MODAL ── */
+.pitch-modal{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+}
+.pitch-modal-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,.88);
+  backdrop-filter:blur(3px);
+}
+.pitch-modal-box{
+  position:relative;width:92vw;height:90vh;max-width:1280px;
+  background:#fff;
+  border:2px solid var(--red);
+  display:flex;flex-direction:column;
+  animation:pitchIn .2s ease;
+}
+@keyframes pitchIn{from{transform:scale(.96);opacity:0;}to{transform:scale(1);opacity:1;}}
+.pitch-modal-topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.6rem 1rem;background:var(--red);flex-shrink:0;
+}
+.pitch-modal-title{
+  font-size:.68rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:#fff;
+}
+.pitch-modal-close{
+  background:transparent;border:2px solid rgba(255,255,255,.6);color:#fff;
+  padding:.3rem .9rem;font-size:.68rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  font-family:'Inter',sans-serif;transition:background .15s;
+}
+.pitch-modal-close:hover{background:rgba(255,255,255,.2);}
+.pitch-modal-iframe{
+  flex:1;border:none;width:100%;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-layout{grid-template-columns:1fr;}
+  .hero-num{display:none;}
+  .hero-main,.hero-sidebar{border-right:none;border-bottom:1px solid var(--black);}
+  .hero-main{grid-column:1/-1;}
+  .hero-sidebar{grid-column:1/-1;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  .stat-col:nth-child(even){border-right:none;}
+  .stat-col:nth-child(n+3){border-top:1px solid var(--black);}
+  .project-row{grid-template-columns:60px 1fr;}
+  .project-metric-col{display:none;}
+  .project-arrow{display:none;}
+  .cta-inner{grid-template-columns:1fr;}
+  .cta-left{border-right:none;border-bottom:1px solid var(--black);}
+  .cta-right{grid-template-rows:auto auto;}
+  .contact-heading-row{grid-template-columns:1fr;}
+  .contact-heading-left{border-right:none;border-bottom:1px solid var(--black);}
+  .process-inner{grid-template-columns:1fr;}
+  .process-step{border-right:none;border-bottom:1px solid var(--black);}
+  .process-step:last-child{border-bottom:none;}
+  .nav-links a[href="#stats"],.nav-links a[href="#process"]{display:none;}
+  h1{font-size:clamp(2.4rem,10vw,3.5rem);}
+  .pitch-modal-box{width:98vw;height:96vh;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="grid-12">
+    <div class="nav-inner">
+      <span class="nav-logo">noivan</span>
+      <div class="nav-links">
+        <a href="#stats"><span class="nv-ko">성과</span><span class="nv-en">Stats</span></a>
+        <a href="#projects"><span class="nv-ko">프로젝트</span><span class="nv-en">Projects</span></a>
+        <a href="#process"><span class="nv-ko">프로세스</span><span class="nv-en">Process</span></a>
+        <a href="#contact"><span class="nv-ko">연락처</span><span class="nv-en">Contact</span></a>
+        <div class="lang-sw">
+          <button id="bko" class="on" onclick="setLang('ko')">KO</button>
+          <button id="ben" onclick="setLang('en')">EN</button>
+        </div>
+        <div class="theme-sw">
+          <button id="btheme" onclick="toggleTheme()" title="라이트/다크 전환">☾</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="grid-12">
+    <div class="masthead-inner">
+      <span class="masthead-center">
+        <span class="nv-ko">AI 엔지니어 · Portfolio</span>
+        <span class="nv-en">AI Engineer · Portfolio</span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="grid-12">
+    <div class="hero-inner">
+      <div class="hero-red-rule"></div>
+      <div class="hero-layout">
+
+        <div class="hero-num reveal">
+          <div class="hero-num-text">01</div>
+          <div class="hero-num-label">
+            <span class="nv-ko">포트폴리오</span>
+            <span class="nv-en">Portfolio</span>
+          </div>
+        </div>
+
+        <div class="hero-main reveal reveal-d1">
+          <div class="hero-eyebrow">
+            <span class="nv-ko">AI 엔지니어 · 서울</span>
+            <span class="nv-en">AI Engineer · Seoul</span>
+          </div>
+          <h1>NOIVAN</h1>
+          <div class="hero-tagline">
+            <span class="nv-ko">반복은 AI가, 당신은 본질에.</span>
+            <span class="nv-en">Let AI handle the repetitive work.</span>
+          </div>
+        </div>
+
+        <div class="hero-sidebar reveal reveal-d2">
+          <div class="hero-meta">
+            <div class="meta-item">
+              <div class="meta-key"><span class="nv-ko">직함</span><span class="nv-en">Title</span></div>
+              <div class="meta-val"><span class="nv-ko">AI 엔지니어</span><span class="nv-en">AI Engineer</span></div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-key"><span class="nv-ko">위치</span><span class="nv-en">Location</span></div>
+              <div class="meta-val">Seoul, Korea</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-key">Email</div>
+              <div class="meta-val">noivan000@gmail.com</div>
+            </div>
+          </div>
+          <div class="hero-cta-block">
+            <a href="mailto:noivan000@gmail.com?subject=Collaboration" class="btn btn-red">
+              <span class="nv-ko">협업 문의하기</span>
+              <span class="nv-en">Get in Touch</span>
+            </a>
+            <a href="mailto:noivan000@gmail.com?subject=Project" class="btn btn-outline">
+              <span class="nv-ko">프로젝트 상담</span>
+              <span class="nv-en">Project Inquiry</span>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /hero-layout -->
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div id="stats" class="stats-row">
+  <div class="grid-12">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">
+        <span class="nv-ko">핵심 수치</span><span class="nv-en">Key Metrics</span>
+      </span>
+      <div class="section-rule"></div>
+    </div>
+    <div class="stats-inner">
+      <div class="stat-col reveal reveal-d1">
+        <div class="stat-eyebrow"><span class="nv-ko">자동화 QA 모듈</span><span class="nv-en">Automated QA Modules</span></div>
+        <div class="stat-number">578</div>
+        <div class="stat-desc"><span class="nv-ko">보안 자동화 모듈</span><span class="nv-en">Security Automation Modules</span></div>
+      </div>
+      <div class="stat-col reveal reveal-d2">
+        <div class="stat-eyebrow">OWASP</div>
+        <div class="stat-number">40/40</div>
+        <div class="stat-desc"><span class="nv-ko">완전 커버리지</span><span class="nv-en">Full Coverage</span></div>
+      </div>
+      <div class="stat-col reveal reveal-d3">
+        <div class="stat-eyebrow"><span class="nv-ko">AI 발행 콘텐츠</span><span class="nv-en">AI-Published Contents</span></div>
+        <div class="stat-number">200+</div>
+        <div class="stat-desc"><span class="nv-ko">무인 발행 포스트</span><span class="nv-en">Zero Human Input Posts</span></div>
+      </div>
+      <div class="stat-col reveal reveal-d4">
+        <div class="stat-eyebrow"><span class="nv-ko">무중단 에이전트</span><span class="nv-en">Always-On Agents</span></div>
+        <div class="stat-number">24/7</div>
+        <div class="stat-desc"><span class="nv-ko">자율 운영</span><span class="nv-en">Autonomous Operation</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="projects" class="projects-wrapper">
+  <div class="grid-12">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">
+        <span class="nv-ko">주요 프로젝트</span><span class="nv-en">Featured Projects</span>
+      </span>
+      <div class="section-rule"></div>
+    </div>
+    <div class="projects-inner">
+
+      <!-- 01 KRAYT -->
+      <div class="project-row reveal">
+        <div class="project-num">01.</div>
+        <div class="project-body">
+          <div class="project-name">KRAYT</div>
+          <div class="project-oneliner">
+            <span class="nv-ko">웹·API·LLM 보안 취약점을 AI가 자동 탐지·검증·리포팅합니다. OWASP 40개 카테고리, ISO 42001, GDPR, AI 공정성까지 단일 플랫폼.</span>
+            <span class="nv-en">AI automatically detects, validates, and reports vulnerabilities across Web/API/LLM. OWASP 40 categories, ISO 42001, GDPR, AI Fairness — one platform.</span>
+          </div>
+          <div class="project-tags-row">
+            <span class="tag tag-red">AI Security QA</span>
+            <span class="tag">B2B Platform</span>
+            <span class="tag">OWASP 40/40</span>
+          </div>
+        </div>
+        <div class="project-metric-col">
+          <div class="metric-val">578</div>
+          <div class="metric-label"><span class="nv-ko">자동화 모듈</span><span class="nv-en">modules</span></div>
+        </div>
+        <div class="project-arrow">→</div>
+      </div>
+
+      <!-- 02 Blog Automation -->
+      <div class="project-row reveal reveal-d1">
+        <div class="project-num">02.</div>
+        <div class="project-body">
+          <div class="project-name">
+            <span class="nv-ko">블로그 자동화</span>
+            <span class="nv-en">Blog Automation</span>
+          </div>
+          <div class="project-oneliner">
+            <span class="nv-ko">Blogger, 네이버, 티스토리 3개 플랫폼 동시 자동화. AI 콘텐츠 생성 → SEO 최적화 → 자동 발행 → 크로스 포스팅 전 파이프라인.</span>
+            <span class="nv-en">3-platform automation across Blogger, Naver, and Tistory. AI content → SEO → auto-publish → cross-posting, fully autonomous.</span>
+          </div>
+          <div class="project-tags-row">
+            <span class="tag tag-red">Blogger</span>
+            <span class="tag">네이버</span>
+            <span class="tag">티스토리</span>
+          </div>
+        </div>
+        <div class="project-metric-col">
+          <div class="metric-val">200+</div>
+          <div class="metric-label"><span class="nv-ko">발행 포스트</span><span class="nv-en">posts</span></div>
+        </div>
+        <div class="project-arrow">→</div>
+      </div>
+
+      <!-- 03 Social Content Automation -->
+      <div class="project-row reveal reveal-d2">
+        <div class="project-num">03.</div>
+        <div class="project-body">
+          <div class="project-name">
+            <span class="nv-ko">소셜 콘텐츠 자동화</span>
+            <span class="nv-en">Social Content Automation</span>
+          </div>
+          <div class="project-oneliner">
+            <span class="nv-ko">인스타그램, Threads, YouTube Shorts 멀티채널 콘텐츠 자동화. AI 콘텐츠 생성부터 스케줄 발행까지 전 파이프라인.</span>
+            <span class="nv-en">Multi-channel content automation across Instagram, Threads, and YouTube Shorts. Full pipeline from AI content generation to scheduled publishing.</span>
+          </div>
+          <div class="project-tags-row">
+            <span class="tag tag-red">Instagram</span>
+            <span class="tag">Threads</span>
+            <span class="tag">YouTube Shorts</span>
+          </div>
+        </div>
+        <div class="project-metric-col">
+          <div class="metric-val">Daily</div>
+          <div class="metric-label"><span class="nv-ko">자동 발행</span><span class="nv-en">auto-publish</span></div>
+        </div>
+        <div class="project-arrow">→</div>
+      </div>
+
+      <!-- 04 NOVA OSS -->
+      <div class="project-row reveal reveal-d3">
+        <div class="project-num">04.</div>
+        <div class="project-body">
+          <div class="project-name">NOVA OSS</div>
+          <div class="project-oneliner">
+            <span class="nv-ko">AI 에이전트 자율 운영 프레임워크. <a href="https://github.com/noivan0/NOVA" target="_blank" rel="noopener">오픈소스 공개 완료</a>. LLM·Publisher·Notifier 전체 추상화, 단일 에이전트로 연구부터 블로그 파이프라인까지.</span>
+            <span class="nv-en">Autonomous AI operations framework. <a href="https://github.com/noivan0/NOVA" target="_blank" rel="noopener">Published open source</a> (MIT). Fully abstracted LLM/Publisher/Notifier providers — from research harnesses to blog pipelines.</span>
+          </div>
+          <div class="project-tags-row">
+            <span class="tag tag-red">AI Framework</span>
+            <span class="tag">Open Source</span>
+            <span class="tag">GitHub</span>
+          </div>
+        </div>
+        <div class="project-metric-col">
+          <div class="metric-val">MIT</div>
+          <div class="metric-label"><span class="nv-ko">오픈소스</span><span class="nv-en">license</span></div>
+        </div>
+        <div class="project-arrow">→</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div id="process" class="process-wrapper">
+  <div class="grid-12">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">
+        <span class="nv-ko">작업 방식</span><span class="nv-en">How I Work</span>
+      </span>
+      <div class="section-rule"></div>
+    </div>
+    <div class="process-inner">
+
+      <div class="process-step reveal">
+        <div class="process-step-num">
+          <span class="nv-ko">01 — 분석</span><span class="nv-en">01 — Analyze</span>
+        </div>
+        <div class="process-step-title">
+          <span class="nv-ko">업무 구조 파악</span>
+          <span class="nv-en">Map the workflow</span>
+        </div>
+        <div class="process-step-desc">
+          <span class="nv-ko">자동화 가능한 반복 업무를 식별하고 병목점을 분석합니다. 측정 가능한 기준을 먼저 정의합니다.</span>
+          <span class="nv-en">Identify automatable repetitive tasks and analyze bottlenecks. Define measurable success criteria first.</span>
+        </div>
+      </div>
+
+      <div class="process-step reveal reveal-d1">
+        <div class="process-step-num">
+          <span class="nv-ko">02 — 설계</span><span class="nv-en">02 — Design</span>
+        </div>
+        <div class="process-step-title">
+          <span class="nv-ko">AI 에이전트 아키텍처</span>
+          <span class="nv-en">AI agent architecture</span>
+        </div>
+        <div class="process-step-desc">
+          <span class="nv-ko">2주 내 동작하는 프로토타입을 목표로 시스템을 설계합니다. 이중화와 에러 복구를 기본으로 설계합니다.</span>
+          <span class="nv-en">Design systems targeting a working prototype in 2 weeks. Redundancy and error recovery built in from the start.</span>
+        </div>
+      </div>
+
+      <div class="process-step reveal reveal-d2">
+        <div class="process-step-num">
+          <span class="nv-ko">03 — 운영</span><span class="nv-en">03 — Operate</span>
+        </div>
+        <div class="process-step-title">
+          <span class="nv-ko">24/7 자율 운영</span>
+          <span class="nv-en">24/7 autonomous ops</span>
+        </div>
+        <div class="process-step-desc">
+          <span class="nv-ko">배포 이후에도 지속 모니터링과 개선. 사람 없이 돌아가는 시스템을 목표로 합니다.</span>
+          <span class="nv-en">Continuous monitoring and improvement post-deploy. The goal: systems that run without human intervention.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-wrapper">
+  <div class="grid-12">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">
+        <span class="nv-ko">함께 일하기</span><span class="nv-en">Work Together</span>
+      </span>
+      <div class="section-rule"></div>
+    </div>
+    <div class="cta-inner">
+      <div class="cta-left reveal">
+        <div class="cta-editorial">
+          <span class="nv-ko">반복은<br><em>AI가</em><br>처리한다.</span>
+          <span class="nv-en">Let <em>AI</em><br>handle<br>the rest.</span>
+        </div>
+        <div class="cta-sub">
+          <span class="nv-ko">AI 자동화를 통해 팀이 본질적인 업무에 집중할 수 있도록 돕습니다.</span>
+          <span class="nv-en">Helping teams focus on what truly matters by automating the rest with AI.</span>
+        </div>
+      </div>
+      <div class="cta-right">
+        <div class="cta-col reveal">
+          <div class="cta-eyebrow">
+            <span class="nv-ko">파트너 · 협업</span><span class="nv-en">Partners · Collaboration</span>
+          </div>
+          <div class="cta-heading">KRAYT</div>
+          <div class="cta-body">
+            <span class="nv-ko">투자 및 프로젝트 문의</span>
+            <span class="nv-en">Investment & Project Inquiries</span>
+          </div>
+          <button onclick="openPitch()" class="btn btn-red">
+            <span class="nv-ko">KRAYT 알아보기 →</span>
+            <span class="nv-en">Explore KRAYT →</span>
+          </button>
+        </div>
+        <div class="cta-col reveal reveal-d1">
+          <div class="cta-eyebrow">
+            <span class="nv-ko">클라이언트 대상</span><span class="nv-en">For Clients</span>
+          </div>
+          <div class="cta-heading">
+            <span class="nv-ko">프로젝트 문의</span>
+            <span class="nv-en">Project Inquiry</span>
+          </div>
+          <div class="cta-body">
+            <span class="nv-ko">AI 자동화 도입을 고민하고 계신가요? 비즈니스 요구사항을 함께 분석해 드립니다.</span>
+            <span class="nv-en">Considering AI automation? Let's analyze your requirements and build something that works.</span>
+          </div>
+          <a href="mailto:noivan000@gmail.com?subject=Project" class="btn btn-outline">
+            <span class="nv-ko">프로젝트 개발 문의</span>
+            <span class="nv-en">프로젝트 개발 문의</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="contact-wrapper">
+  <div class="grid-12">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">
+        <span class="nv-ko">연락처</span><span class="nv-en">Contact</span>
+      </span>
+      <div class="section-rule"></div>
+    </div>
+    <div class="contact-inner">
+      <div class="contact-heading-row">
+        <div class="contact-heading-left">
+          <div class="contact-heading-label">
+            <span class="nv-ko">직접 연락하기</span><span class="nv-en">Get in touch</span>
+          </div>
+          <div class="contact-heading-title">
+            <span class="nv-ko">직접<br>이야기해요.</span>
+            <span class="nv-en">Let's talk<br>directly.</span>
+          </div>
+        </div>
+        <div class="contact-heading-right">
+          <span class="nv-ko">AI 자동화, 투자 문의, 협업 제안 모두 환영합니다. 보통 24시간 내에 답변드립니다.</span>
+          <span class="nv-en">Automation, investment, collaboration — all welcome. Usually reply within 24 hours.</span>
+        </div>
+      </div>
+      <div class="contact-list">
+        <a href="mailto:noivan000@gmail.com" class="clink reveal">
+          <div>
+            <div class="ctype">Email</div>
+            <div class="cval">noivan000@gmail.com</div>
+          </div>
+          <div class="carr">→</div>
+        </a>
+        <a href="https://x.com/noivan" target="_blank" rel="noopener" class="clink reveal reveal-d1">
+          <div>
+            <div class="ctype">X (Twitter)</div>
+            <div class="cval">@noivan</div>
+          </div>
+          <div class="carr">→</div>
+        </a>
+        <a href="https://t.me/nothink_ivan" target="_blank" rel="noopener" class="clink reveal reveal-d2">
+          <div>
+            <div class="ctype">Telegram</div>
+            <div class="cval">@nothink_ivan</div>
+          </div>
+          <div class="carr">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-wrapper">
+  <div class="grid-12">
+    <div class="footer-inner">
+      <span class="footer-logo">noivan © <span id="yr"></span></span>
+      <span class="footer-copy">
+        <span class="nv-ko">AI로 만들고, AI가 운영합니다.</span>
+        <span class="nv-en">Built with AI. Operated by AI.</span>
+      </span>
+      <a href="https://github.com/noivan0/NOVA" target="_blank" rel="noopener" class="footer-link">NOVA OSS ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- PITCH MODAL -->
+<div id="pitchModal" class="pitch-modal" style="display:none;">
+  <div class="pitch-modal-overlay" onclick="closePitch()"></div>
+  <div class="pitch-modal-box">
+    <div class="pitch-modal-topbar">
+      <span class="pitch-modal-title">KRAYT — Pitch Deck</span>
+      <button class="pitch-modal-close" onclick="closePitch()">✕ Close</button>
+    </div>
+    <iframe src="krayt-pitch.html" class="pitch-modal-iframe" title="KRAYT Pitch Deck"></iframe>
+  </div>
+</div>
+
+<script>
+/* ── LANG — DOM direct (no CSS class toggle, no layout breakage) ── */
+function setLang(l) {
+  var inlineTags = ['span','a','strong','em','b','i','label','time'];
+  document.querySelectorAll('.nv-ko, .nv-en').forEach(function(el) {
+    var show = l === 'ko' ? el.classList.contains('nv-ko') : el.classList.contains('nv-en');
+    if (show) {
+      el.style.display = inlineTags.indexOf(el.tagName.toLowerCase()) !== -1 ? 'inline' : 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  document.getElementById('bko').classList.toggle('on', l === 'ko');
+  document.getElementById('ben').classList.toggle('on', l === 'en');
+  document.documentElement.lang = l;
+  try { localStorage.setItem('nv-lang', l); } catch(e) {}
+}
+(function() {
+  var saved = 'ko';
+  try { saved = localStorage.getItem('nv-lang') || 'ko'; } catch(e) {}
+  setLang(saved);
+})();
+
+/* ── THEME ── */
+function toggleTheme(){
+  var h=document.documentElement;
+  var isDark=h.getAttribute('data-theme')==='dark';
+  if(isDark){
+    h.removeAttribute('data-theme');
+    document.getElementById('btheme').textContent='☾';
+    try{localStorage.setItem('nv-theme','light');}catch(e){}
+  }else{
+    h.setAttribute('data-theme','dark');
+    document.getElementById('btheme').textContent='☀';
+    try{localStorage.setItem('nv-theme','dark');}catch(e){}
+  }
+}
+try{
+  if(localStorage.getItem('nv-theme')==='dark'){
+    document.documentElement.setAttribute('data-theme','dark');
+    document.getElementById('btheme').textContent='☀';
+  }
+}catch(e){}
+
+/* ── PITCH MODAL ── */
+function openPitch(){
+  document.getElementById('pitchModal').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closePitch(){
+  document.getElementById('pitchModal').style.display='none';
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePitch();});
+
+/* ── YEAR ── */
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* ── REVEAL ── */
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+</script>
+</body>
+</html>
