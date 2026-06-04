@@ -589,24 +589,74 @@
     <div class="section">
       <div class="section-label">05 — Service Tiers</div>
       <div class="section-title">Flexible pricing for every scale.</div>
+
+      <!-- One-time packages -->
+      <div style="margin-bottom:18px;">
+        <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--subtle);letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;">Project-based (One-time Packages)</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+          <div style="border:1px solid var(--hr2);border-radius:8px;padding:16px 14px;">
+            <div style="font-size:10px;font-weight:700;color:var(--subtle);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Launch QA</div>
+            <div style="font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-1px;">$1,100</div>
+            <div style="font-size:11px;color:var(--subtle);margin-bottom:10px;">Basic security check</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>OWASP LLM 10/10</li>
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>PDF report</li>
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>48h delivery</li>
+            </ul>
+          </div>
+          <div style="border:1px solid var(--hr2);border-radius:8px;padding:16px 14px;">
+            <div style="font-size:10px;font-weight:700;color:var(--subtle);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Web Security</div>
+            <div style="font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-1px;">$1,500</div>
+            <div style="font-size:11px;color:var(--subtle);margin-bottom:10px;">API + web vulnerabilities</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>OWASP API Top 10</li>
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>PoC reproduction</li>
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>CVSS scoring</li>
+            </ul>
+          </div>
+          <div style="border:1px solid rgba(0,196,168,.3);background:var(--cy2);border-radius:8px;padding:16px 14px;">
+            <div style="font-size:10px;font-weight:700;color:var(--cy);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">AI Safety</div>
+            <div style="font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-1px;">$2,200</div>
+            <div style="font-size:11px;color:var(--subtle);margin-bottom:10px;">Full LLM audit</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>1,498 QA modules</li>
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>Compliance mapping</li>
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>Regulatory docs</li>
+            </ul>
+          </div>
+          <div style="border:1px solid var(--hr2);border-radius:8px;padding:16px 14px;">
+            <div style="font-size:10px;font-weight:700;color:var(--subtle);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px;">Agent RedTeam</div>
+            <div style="font-size:20px;font-weight:800;color:var(--ink);letter-spacing:-1px;">$3,700</div>
+            <div style="font-size:11px;color:var(--subtle);margin-bottom:10px;">Agent security</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--muted);">
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>Real attack scenarios</li>
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>MCP/LangChain coverage</li>
+              <li style="display:flex;gap:5px;"><span style="color:var(--cy);">✓</span>Source code analysis</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:var(--subtle);font-family:var(--mono);">BB Add-on +$150/report · Retainer $1,100/month (monthly re-scan included)</div>
+      </div>
+
+      <!-- SaaS subscription -->
+      <div style="font-family:var(--mono);font-size:10px;font-weight:700;color:var(--subtle);letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;">SaaS Subscription (Continuous Monitoring)</div>
       <div class="price-grid">
         <div class="price-card">
           <div class="price-tier">Free Scan</div>
           <div class="price-amount">$0</div>
           <div class="price-per">First target · No card required</div>
-          <div class="price-desc">Full 5-Gate scan of one AI endpoint. Delivered as a PDF report within 24h.</div>
+          <div class="price-desc">Full 5-Gate scan of one AI endpoint. PDF report within 48h.</div>
           <ul class="price-features">
             <li>1 target URL</li>
             <li>OWASP LLM Top 10 check</li>
             <li>Executive summary report</li>
-            <li>48h turnaround</li>
           </ul>
         </div>
         <div class="price-card featured">
           <div class="price-tier cy">Starter SaaS</div>
           <div class="price-amount">$499</div>
           <div class="price-per">/ month · up to 5 targets</div>
-          <div class="price-desc">Continuous monitoring + monthly compliance reports. Ideal for AI startups and scale-ups.</div>
+          <div class="price-desc">Continuous monitoring + monthly compliance reports. Ideal for AI startups.</div>
           <ul class="price-features">
             <li>5 target URLs / month</li>
             <li>Full OWASP + compliance scan</li>
@@ -618,12 +668,12 @@
         <div class="price-card">
           <div class="price-tier">Pro / Enterprise</div>
           <div class="price-amount">Custom</div>
-          <div class="price-per">Unlimited targets · SLA</div>
-          <div class="price-desc">Full platform access, dedicated QA agents, SOC 2 audit packages, and on-prem deployment.</div>
+          <div class="price-per">10+ targets · SLA guaranteed</div>
+          <div class="price-desc">Dedicated QA agents, SOC 2 audit packages, on-prem deployment.</div>
           <ul class="price-features">
-            <li>Unlimited targets</li>
+            <li>10+ targets</li>
             <li>Dedicated agent cluster</li>
-            <li>SOC 2 / ISO 42001 package</li>
+            <li>SOC 2 / ISO 42001</li>
             <li>On-prem or private cloud</li>
             <li>99.9% SLA</li>
           </ul>
