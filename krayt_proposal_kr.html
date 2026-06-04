@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KRAYT — AI QA 플랫폼 | 서비스 제안서 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --ink: #0a0b0f;
+    --muted: #5a6180;
+    --subtle: #8892b0;
+    --cy: #00c4a8;
+    --cy2: rgba(0,196,168,.08);
+    --pu: #7b5cfa;
+    --rd: #ff4d6d;
+    --am: #f59e0b;
+    --gn: #10b981;
+    --hr: #e8ebf4;
+    --hr2: #d0d5e8;
+    --s1: #f8f9fd;
+    --s2: #f0f2f9;
+    --sans: 'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: #f0f2f9;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+    padding: 40px 20px;
+  }
+
+  .doc {
+    max-width: 794px;
+    margin: 0 auto;
+    background: var(--bg);
+    box-shadow: 0 4px 40px rgba(0,0,0,.12);
+  }
+
+  /* ── HEADER ── */
+  .doc-header {
+    background: #07080C;
+    padding: 56px 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: -40px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,196,168,.15), transparent 70%);
+    pointer-events: none;
+  }
+  .doc-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -40px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(123,92,250,.12), transparent 70%);
+    pointer-events: none;
+  }
+  .logo-mark {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cy);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 2px;
+    background: var(--cy);
+  }
+  .doc-title {
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1px;
+    line-height: 1.12;
+    margin-bottom: 8px;
+    word-break: keep-all;
+  }
+  .doc-title span { color: var(--cy); }
+  .doc-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,.5);
+    font-weight: 400;
+    margin-top: 12px;
+    margin-bottom: 32px;
+  }
+  .doc-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .doc-meta-item {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,.35);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  .doc-meta-item span {
+    color: rgba(255,255,255,.7);
+    font-weight: 600;
+  }
+
+  /* ── BODY ── */
+  .doc-body { padding: 0 60px 60px; }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 44px 0 0;
+    border-bottom: 1px solid var(--hr);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--cy);
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--cy2);
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -.4px;
+    margin-bottom: 16px;
+    word-break: keep-all;
+  }
+  .section-body {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 24px;
+    word-break: keep-all;
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--hr);
+    border: 1px solid var(--hr);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0 28px;
+  }
+  .stat-item {
+    background: var(--bg);
+    padding: 18px 16px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-lbl {
+    font-size: 10px;
+    color: var(--subtle);
+    font-weight: 500;
+    word-break: keep-all;
+  }
+
+  /* ── LIST ── */
+  .prop-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .prop-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    align-items: flex-start;
+    word-break: keep-all;
+  }
+  .prop-list li::before {
+    content: '▸';
+    color: var(--cy);
+    font-size: 12px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .prop-list li strong { color: var(--ink); font-weight: 600; }
+
+  /* ── GATE TABLE ── */
+  .gate-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--hr);
+    border: 1px solid var(--hr);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .gate-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 80px;
+    background: var(--bg);
+    padding: 14px 18px;
+    align-items: center;
+    gap: 16px;
+  }
+  .gate-row.header {
+    background: var(--s1);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--subtle);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .gate-id {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cy);
+  }
+  .gate-name { font-size: 13px; font-weight: 600; color: var(--ink); word-break: keep-all; }
+  .gate-desc { font-size: 12px; color: var(--muted); margin-top: 2px; word-break: keep-all; }
+  .gate-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--cy);
+    background: var(--cy2);
+    border: 1px solid rgba(0,196,168,.2);
+    border-radius: 4px;
+    padding: 3px 8px;
+    text-align: center;
+  }
+
+  /* ── PRICING ── */
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0 28px;
+  }
+  .price-card {
+    border: 1px solid var(--hr2);
+    border-radius: 10px;
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .price-card.featured {
+    border-color: var(--cy);
+    background: var(--cy2);
+  }
+  .price-tier {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--subtle);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .price-tier.cy { color: var(--cy); }
+  .price-amount {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .price-per { font-size: 11px; color: var(--subtle); margin-top: 2px; }
+  .price-desc { font-size: 12px; color: var(--muted); line-height: 1.6; word-break: keep-all; }
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 6px;
+  }
+  .price-features li {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+    word-break: keep-all;
+  }
+  .price-features li::before { content: '✓'; color: var(--cy); font-weight: 700; flex-shrink: 0; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 20px 0 28px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: var(--hr2);
+  }
+  .tl-item {
+    display: flex;
+    gap: 20px;
+    padding: 16px 0;
+    position: relative;
+  }
+  .tl-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--s1);
+    border: 2px solid var(--hr2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--subtle);
+    z-index: 1;
+  }
+  .tl-dot.active {
+    background: #07080C;
+    border-color: var(--cy);
+    color: var(--cy);
+  }
+  .tl-content { flex: 1; padding-top: 8px; }
+  .tl-phase {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--cy);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .tl-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .tl-desc { font-size: 12px; color: var(--muted); line-height: 1.7; word-break: keep-all; }
+
+  /* ── COMPLIANCE ── */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0 28px;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 4px;
+    background: var(--s1);
+    border: 1px solid var(--hr2);
+    color: var(--subtle);
+  }
+  .tag.cy { background: var(--cy2); border-color: rgba(0,196,168,.25); color: var(--cy); }
+  .tag.pu { background: rgba(123,92,250,.08); border-color: rgba(123,92,250,.2); color: var(--pu); }
+
+  /* ── CTA ── */
+  .cta-box {
+    background: #07080C;
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin: 40px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .cta-text { color: rgba(255,255,255,.9); }
+  .cta-title { font-size: 19px; font-weight: 700; margin-bottom: 6px; word-break: keep-all; }
+  .cta-sub { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.7; word-break: keep-all; }
+  .cta-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .cta-contact {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cy);
+    white-space: nowrap;
+  }
+  .cta-contact span { color: rgba(255,255,255,.35); margin-right: 6px; font-weight: 400; }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    border-top: 1px solid var(--hr);
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: .08em;
+  }
+  .footer-brand span { color: var(--cy); }
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--subtle);
+    letter-spacing: .06em;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .doc { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="logo-mark">KRAYT · AI QA Platform</div>
+    <div class="doc-title">기업 AI를 위한<br>자율 보안 검증 &amp;<br><span>품질 보증 플랫폼.</span></div>
+    <div class="doc-subtitle">서비스 제안서 · 2026</div>
+    <div class="doc-meta">
+      <div class="doc-meta-item">버전 <span>v13</span></div>
+      <div class="doc-meta-item">작성자 <span>Noivan · demo@krayt.ai</span></div>
+      <div class="doc-meta-item">대외비</div>
+    </div>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- 01 개요 -->
+    <div class="section">
+      <div class="section-label">01 — 제안 개요</div>
+      <div class="section-title">AI 배포 전에 완전히 검증합니다.</div>
+      <div class="section-body">
+        KRAYT는 AI 서비스의 취약점·컴플라이언스 결함·품질 오류를 프로덕션 도달 전에 탐지하는 자율 AI QA·보안 검증 플랫폼입니다. 31개 전문 QA 에이전트와 5-Gate 검증 파이프라인으로 포괄적인 보안 리포트를 수 주가 아닌 수 시간 만에 제공합니다.
+      </div>
+      <div class="stat-row">
+        <div class="stat-item">
+          <div class="stat-num" style="color:#00c4a8;">1,498</div>
+          <div class="stat-lbl">QA · 보안 모듈</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" style="color:#7b5cfa;">31</div>
+          <div class="stat-lbl">자율 QA 에이전트</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" style="color:#10b981;">281×</div>
+          <div class="stat-lbl">수동 검토 대비 속도</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" style="color:#f59e0b;">100%</div>
+          <div class="stat-lbl">OWASP LLM Top 10 커버리지</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 문제 -->
+    <div class="section">
+      <div class="section-label">02 — 문제 정의</div>
+      <div class="section-title">AI 배포는 망가져 있습니다.</div>
+      <div class="section-body">
+        기업들은 보안 검증보다 빠르게 AI를 배포하고 있습니다. 기존 QA 도구는 전통적인 소프트웨어 기준으로 설계되어 LLM 특화 공격 벡터·환각 패턴·진화하는 컴플라이언스 요건을 놓칩니다.
+      </div>
+      <ul class="prop-list">
+        <li><strong>체계적 LLM QA 부재:</strong> 수동 테스트는 프롬프트 인젝션·간접 인젝션·모델 역산 공격을 탐지하지 못합니다</li>
+        <li><strong>컴플라이언스 사각지대:</strong> OWASP LLM Top 10·EU AI Act·한국 AI 기본법 등 규제 프레임워크가 개발 파이프라인과 단절돼 있습니다</li>
+        <li><strong>재현 불가능한 버그 바운티:</strong> 발견은 일회성이며 반복 가능한 검증 프레임워크가 없습니다</li>
+        <li><strong>프로덕션 리스크:</strong> 기업 AI 사고의 78%가 배포 후 발견됩니다 (Gartner, 2025)</li>
+      </ul>
+    </div>
+
+    <!-- 03 솔루션 -->
+    <div class="section">
+      <div class="section-label">03 — 솔루션</div>
+      <div class="section-title">엔드투엔드 자율 AI QA.</div>
+      <div class="section-body">
+        KRAYT의 5-Gate 파이프라인은 AI 스택의 모든 레이어를 체계적으로 검증합니다. API 표면부터 모델 동작까지 — 오탐 없이 실행 가능한 보안 리포트를 제공합니다.
+      </div>
+      <div class="gate-grid">
+        <div class="gate-row header">
+          <div>게이트</div>
+          <div>단계</div>
+          <div>방식</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-1</div>
+          <div>
+            <div class="gate-name">정찰 및 공격 표면 매핑</div>
+            <div class="gate-desc">API 탐지, 엔드포인트 열거, 인증 경계 탐지</div>
+          </div>
+          <div class="gate-badge">자동</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-2</div>
+          <div>
+            <div class="gate-name">취약점 탐지</div>
+            <div class="gate-desc">OWASP LLM 10/10, CVSS 3.1 점수, 환각 탐지</div>
+          </div>
+          <div class="gate-badge">자동</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-3</div>
+          <div>
+            <div class="gate-name">익스플로잇 및 검증</div>
+            <div class="gate-desc">PoC 재현, SOCKS5 우회, XSS/인젝션 검증</div>
+          </div>
+          <div class="gate-badge">자동</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-4</div>
+          <div>
+            <div class="gate-name">컴플라이언스 검증</div>
+            <div class="gate-desc">EU AI Act, 한국 AI 기본법, GDPR, ISO 42001 교차 검토</div>
+          </div>
+          <div class="gate-badge">자동</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-5</div>
+          <div>
+            <div class="gate-name">리포트 및 대응 가이드</div>
+            <div class="gate-desc">경영진 요약 + 개발자용 수정 권고사항</div>
+          </div>
+          <div class="gate-badge">자동</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 컴플라이언스 -->
+    <div class="section">
+      <div class="section-label">04 — 컴플라이언스 커버리지</div>
+      <div class="section-title">주요 AI 규제 전부. 단일 플랫폼으로.</div>
+      <div class="section-body">
+        KRAYT는 발견 사항을 규제 프레임워크에 직접 매핑하여, 감사자와 규제기관을 위한 컴플라이언스 문서를 즉시 제공합니다.
+      </div>
+      <div class="tag-cloud">
+        <div class="tag cy">OWASP LLM Top 10</div>
+        <div class="tag cy">OWASP API Top 10</div>
+        <div class="tag pu">EU AI Act 2024</div>
+        <div class="tag pu">한국 AI 기본법</div>
+        <div class="tag pu">GDPR 제22조</div>
+        <div class="tag">ISO/IEC 42001</div>
+        <div class="tag">CVSS 3.1</div>
+        <div class="tag">NIST AI RMF</div>
+        <div class="tag">SOC 2 Type II</div>
+        <div class="tag">Web3 · 스마트 컨트랙트</div>
+      </div>
+    </div>
+
+    <!-- 05 요금제 -->
+    <div class="section">
+      <div class="section-label">05 — 서비스 요금제</div>
+      <div class="section-title">모든 규모에 맞는 유연한 요금.</div>
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="price-tier">무료 스캔</div>
+          <div class="price-amount">$0</div>
+          <div class="price-per">첫 타겟 · 카드 불필요</div>
+          <div class="price-desc">AI 엔드포인트 1개 전체 5-Gate 스캔. 24시간 내 PDF 리포트 제공.</div>
+          <ul class="price-features">
+            <li>타겟 URL 1개</li>
+            <li>OWASP LLM Top 10 검사</li>
+            <li>경영진 요약 리포트</li>
+            <li>48시간 내 제공</li>
+          </ul>
+        </div>
+        <div class="price-card featured">
+          <div class="price-tier cy">스타터 SaaS</div>
+          <div class="price-amount">$499</div>
+          <div class="price-per">/ 월 · 타겟 5개까지</div>
+          <div class="price-desc">지속적 모니터링 + 월간 컴플라이언스 리포트. AI 스타트업·스케일업에 최적.</div>
+          <ul class="price-features">
+            <li>월 5개 타겟 URL</li>
+            <li>전체 OWASP + 컴플라이언스 스캔</li>
+            <li>월간 보안 대시보드</li>
+            <li>Slack/이메일 알림</li>
+            <li>수정 가이드 제공</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <div class="price-tier">프로 / 엔터프라이즈</div>
+          <div class="price-amount">협의</div>
+          <div class="price-per">타겟 무제한 · SLA 보장</div>
+          <div class="price-desc">전체 플랫폼 접근, 전담 QA 에이전트, SOC 2 감사 패키지, 온프레미스 배포.</div>
+          <ul class="price-features">
+            <li>타겟 무제한</li>
+            <li>전담 에이전트 클러스터</li>
+            <li>SOC 2 / ISO 42001 패키지</li>
+            <li>온프레미스 또는 프라이빗 클라우드</li>
+            <li>99.9% SLA</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 진행 일정 -->
+    <div class="section">
+      <div class="section-label">06 — 도입 절차</div>
+      <div class="section-title">첫 스캔부터 지속 보호까지.</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot active">D1</div>
+          <div class="tl-content">
+            <div class="tl-phase">1주차</div>
+            <div class="tl-title">무료 스캔 &amp; 킥오프</div>
+            <div class="tl-desc">주요 AI 엔드포인트 전체 5-Gate 스캔. 보안 리포트 제공. 온보딩 미팅 진행.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">D2</div>
+          <div class="tl-content">
+            <div class="tl-phase">2~3주차</div>
+            <div class="tl-title">대응 조치 &amp; 재검증</div>
+            <div class="tl-desc">개발팀이 발견 사항 수정. KRAYT가 수정 내용 재검증. 컴플라이언스 갭 리포트 생성.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">D3</div>
+          <div class="tl-content">
+            <div class="tl-phase">2개월차~</div>
+            <div class="tl-title">지속적 모니터링</div>
+            <div class="tl-desc">등록된 전체 타겟 월간 자동 스캔. 회귀 알림. 컴플라이언스 대시보드 갱신.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">D4</div>
+          <div class="tl-content">
+            <div class="tl-phase">상시</div>
+            <div class="tl-title">감사 대비 문서 제공</div>
+            <div class="tl-desc">SOC 2, EU AI Act, 한국 AI 기본법 컴플라이언스 산출물을 규제기관·투자자 요청 시 즉시 제공.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 차별화 -->
+    <div class="section">
+      <div class="section-label">07 — 왜 KRAYT인가</div>
+      <div class="section-title">자체 테스트하는 유일한 플랫폼.</div>
+      <div class="section-body">
+        KRAYT는 AI 에이전트가 만들고, 모든 릴리스를 AI 에이전트가 검증합니다. 이 재귀적 QA 루프 — QA First, Security as Method — 는 수동 프로세스나 단일 솔루션이 따라올 수 없는 깊이와 일관성을 만들어냅니다.
+      </div>
+      <ul class="prop-list">
+        <li><strong>LLM 네이티브 탐지:</strong> 레거시 DAST/SAST 도구를 AI용으로 변형한 것이 아닌, 생성형 AI 공격 벡터 전용 설계</li>
+        <li><strong>오탐 제로:</strong> 모든 발견 사항에 머신 검증 PoC 포함. 노이즈 없음, 알림 피로 없음</li>
+        <li><strong>컴플라이언스 매핑 출력:</strong> 리포트가 OWASP·EU AI Act·한국 AI 기본법 조항에 발견 사항을 직접 연결</li>
+        <li><strong>실세계 검증:</strong> 20개 이상 외부 AI 타겟 테스트 완료. 버그 바운티 프로그램에서 크리티컬 발견 확인</li>
+        <li><strong>속도:</strong> 전체 스캔 + 리포트 4시간 미만 vs. 수동 펜테스트 2~3주</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-text">
+        <div class="cta-title">오늘 무료 스캔으로 시작하세요.</div>
+        <div class="cta-sub">AI 엔드포인트를 제출하시면 48시간 내 전체 보안 리포트를 제공합니다. 별도 계약 불필요.</div>
+      </div>
+      <div class="cta-contacts">
+        <div class="cta-contact"><span>이메일</span>demo@krayt.ai</div>
+        <div class="cta-contact"><span>텔레그램</span>@nothink_ivan</div>
+        <div class="cta-contact"><span>웹사이트</span>krayt.ai</div>
+      </div>
+    </div>
+
+  </div><!-- /doc-body -->
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="footer-brand">KR<span>A</span>YT — AI QA 플랫폼</div>
+    <div class="footer-meta">대외비 · 2026 · v13 · demo@krayt.ai</div>
+  </div>
+
+</div><!-- /doc -->
+</body>
+</html>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KRAYT — AI QA Platform | Service Proposal 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #ffffff;
+    --ink: #0a0b0f;
+    --muted: #5a6180;
+    --subtle: #8892b0;
+    --cy: #00c4a8;
+    --cy2: rgba(0,196,168,.08);
+    --pu: #7b5cfa;
+    --rd: #ff4d6d;
+    --am: #f59e0b;
+    --gn: #10b981;
+    --hr: #e8ebf4;
+    --hr2: #d0d5e8;
+    --s1: #f8f9fd;
+    --s2: #f0f2f9;
+    --accent: #0a0b0f;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'JetBrains Mono', 'Courier New', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: #f0f2f9;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 20px;
+  }
+
+  .doc {
+    max-width: 794px;
+    margin: 0 auto;
+    background: var(--bg);
+    box-shadow: 0 4px 40px rgba(0,0,0,.12);
+  }
+
+  /* ── HEADER ── */
+  .doc-header {
+    background: #07080C;
+    padding: 56px 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .doc-header::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: -40px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(0,196,168,.15), transparent 70%);
+    pointer-events: none;
+  }
+  .doc-header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; right: -40px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(123,92,250,.12), transparent 70%);
+    pointer-events: none;
+  }
+  .logo-mark {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cy);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 2px;
+    background: var(--cy);
+  }
+  .doc-title {
+    font-size: 42px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -1.5px;
+    line-height: 1.08;
+    margin-bottom: 8px;
+  }
+  .doc-title span { color: var(--cy); }
+  .doc-subtitle {
+    font-size: 17px;
+    color: rgba(255,255,255,.5);
+    font-weight: 400;
+    margin-top: 12px;
+    margin-bottom: 32px;
+  }
+  .doc-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .doc-meta-item {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,.35);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .doc-meta-item span {
+    color: rgba(255,255,255,.7);
+    font-weight: 600;
+  }
+
+  /* ── BODY ── */
+  .doc-body { padding: 0 60px 60px; }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 44px 0 0;
+    border-bottom: 1px solid var(--hr);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--cy);
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--cy2);
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -.5px;
+    margin-bottom: 16px;
+  }
+  .section-body {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--hr);
+    border: 1px solid var(--hr);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0 28px;
+  }
+  .stat-item {
+    background: var(--bg);
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-lbl {
+    font-size: 11px;
+    color: var(--subtle);
+    font-weight: 500;
+  }
+
+  /* ── LIST ── */
+  .prop-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .prop-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    align-items: flex-start;
+  }
+  .prop-list li::before {
+    content: '▸';
+    color: var(--cy);
+    font-size: 12px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .prop-list li strong { color: var(--ink); font-weight: 600; }
+
+  /* ── GATE TABLE ── */
+  .gate-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--hr);
+    border: 1px solid var(--hr);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .gate-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 120px;
+    background: var(--bg);
+    padding: 14px 18px;
+    align-items: center;
+    gap: 16px;
+  }
+  .gate-row.header {
+    background: var(--s1);
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--subtle);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .gate-id {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cy);
+  }
+  .gate-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .gate-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .gate-badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--cy);
+    background: var(--cy2);
+    border: 1px solid rgba(0,196,168,.2);
+    border-radius: 4px;
+    padding: 3px 8px;
+    text-align: center;
+  }
+
+  /* ── PRICING ── */
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0 28px;
+  }
+  .price-card {
+    border: 1px solid var(--hr2);
+    border-radius: 10px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .price-card.featured {
+    border-color: var(--cy);
+    background: var(--cy2);
+  }
+  .price-tier {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--subtle);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  .price-tier.cy { color: var(--cy); }
+  .price-amount {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .price-per { font-size: 12px; color: var(--subtle); margin-top: 2px; }
+  .price-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 6px;
+  }
+  .price-features li {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+  }
+  .price-features li::before { content: '✓'; color: var(--cy); font-weight: 700; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 20px 0 28px;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 20px;
+    bottom: 20px;
+    width: 2px;
+    background: var(--hr2);
+  }
+  .tl-item {
+    display: flex;
+    gap: 20px;
+    padding: 16px 0;
+    position: relative;
+  }
+  .tl-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--s1);
+    border: 2px solid var(--hr2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--subtle);
+    z-index: 1;
+  }
+  .tl-dot.active {
+    background: #07080C;
+    border-color: var(--cy);
+    color: var(--cy);
+  }
+  .tl-content { flex: 1; padding-top: 8px; }
+  .tl-phase {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--cy);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .tl-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .tl-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* ── COMPLIANCE ── */
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0 28px;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 4px;
+    background: var(--s1);
+    border: 1px solid var(--hr2);
+    color: var(--subtle);
+  }
+  .tag.cy { background: var(--cy2); border-color: rgba(0,196,168,.25); color: var(--cy); }
+  .tag.pu { background: rgba(123,92,250,.08); border-color: rgba(123,92,250,.2); color: var(--pu); }
+
+  /* ── CTA ── */
+  .cta-box {
+    background: #07080C;
+    border-radius: 12px;
+    padding: 36px 40px;
+    margin: 40px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .cta-text { color: rgba(255,255,255,.9); }
+  .cta-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .cta-sub { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.6; }
+  .cta-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .cta-contact {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cy);
+    white-space: nowrap;
+  }
+  .cta-contact span { color: rgba(255,255,255,.35); margin-right: 6px; font-weight: 400; }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    border-top: 1px solid var(--hr);
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-brand {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: .08em;
+  }
+  .footer-brand span { color: var(--cy); }
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--subtle);
+    letter-spacing: .08em;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; padding: 0; }
+    .doc { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="logo-mark">KRAYT · AI QA Platform</div>
+    <div class="doc-title">Autonomous AI Security<br>&amp; Quality Assurance<br><span>for Enterprise AI.</span></div>
+    <div class="doc-subtitle">Service Proposal · 2026</div>
+    <div class="doc-meta">
+      <div class="doc-meta-item">Version <span>v13</span></div>
+      <div class="doc-meta-item">Prepared by <span>Noivan · demo@krayt.ai</span></div>
+      <div class="doc-meta-item">Confidential</div>
+    </div>
+  </div>
+
+  <div class="doc-body">
+
+    <!-- 01 EXECUTIVE SUMMARY -->
+    <div class="section">
+      <div class="section-label">01 — Executive Summary</div>
+      <div class="section-title">Fully validate AI before deployment.</div>
+      <div class="section-body">
+        KRAYT is an autonomous AI QA and security validation platform that detects vulnerabilities, compliance gaps, and quality failures in AI services — before they reach production. Using 31 specialized QA agents and a 5-Gate validation pipeline, KRAYT delivers comprehensive security reports in minutes, not weeks.
+      </div>
+      <div class="stat-row">
+        <div class="stat-item">
+          <div class="stat-num" style="color:#00c4a8;">1,498</div>
+          <div class="stat-lbl">QA &amp; Security Modules</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" style="color:#7b5cfa;">31</div>
+          <div class="stat-lbl">Autonomous QA Agents</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" style="color:#10b981;">281×</div>
+          <div class="stat-lbl">Faster than Manual Review</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" style="color:#f59e0b;">100%</div>
+          <div class="stat-lbl">OWASP LLM Top 10 Coverage</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 PROBLEM -->
+    <div class="section">
+      <div class="section-label">02 — The Problem</div>
+      <div class="section-title">AI deployment is broken.</div>
+      <div class="section-body">
+        Enterprises are deploying AI faster than they can secure it. Existing QA tools were built for traditional software — they miss LLM-specific attack vectors, hallucination patterns, and evolving compliance requirements.
+      </div>
+      <ul class="prop-list">
+        <li><strong>No systematic LLM QA:</strong> Manual testing misses prompt injection, indirect injection, and model inversion attacks</li>
+        <li><strong>Compliance blindspot:</strong> OWASP LLM Top 10, EU AI Act, Korea AI Basic Act — frameworks not integrated into dev pipelines</li>
+        <li><strong>Zero reproducibility:</strong> Bug bounty findings are ad-hoc; no repeatable validation framework exists</li>
+        <li><strong>Production risk:</strong> 78% of enterprise AI incidents are discovered post-deployment (Gartner, 2025)</li>
+      </ul>
+    </div>
+
+    <!-- 03 SOLUTION -->
+    <div class="section">
+      <div class="section-label">03 — Our Solution</div>
+      <div class="section-title">Autonomous AI QA, end-to-end.</div>
+      <div class="section-body">
+        KRAYT's 5-Gate pipeline systematically validates every layer of your AI stack — from API surface to model behavior — delivering actionable security reports with zero false positives.
+      </div>
+      <div class="gate-grid">
+        <div class="gate-row header">
+          <div>Gate</div>
+          <div>Phase</div>
+          <div>Coverage</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-1</div>
+          <div>
+            <div class="gate-name">Recon &amp; Attack Surface Mapping</div>
+            <div class="gate-desc">API discovery, endpoint enumeration, auth boundary detection</div>
+          </div>
+          <div class="gate-badge">AUTO</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-2</div>
+          <div>
+            <div class="gate-name">Vulnerability Discovery</div>
+            <div class="gate-desc">OWASP LLM 10/10, CVSS 3.1 scoring, hallucination detection</div>
+          </div>
+          <div class="gate-badge">AUTO</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-3</div>
+          <div>
+            <div class="gate-name">Exploit &amp; Verification</div>
+            <div class="gate-desc">PoC reproduction, SOCKS5 bypass, XSS/injection validation</div>
+          </div>
+          <div class="gate-badge">AUTO</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-4</div>
+          <div>
+            <div class="gate-name">Compliance Validation</div>
+            <div class="gate-desc">EU AI Act, Korea AI Basic Act, GDPR, ISO 42001 cross-check</div>
+          </div>
+          <div class="gate-badge">AUTO</div>
+        </div>
+        <div class="gate-row">
+          <div class="gate-id">G-5</div>
+          <div>
+            <div class="gate-name">Report &amp; Remediation</div>
+            <div class="gate-desc">Executive summary + developer-ready fix recommendations</div>
+          </div>
+          <div class="gate-badge">AUTO</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 COMPLIANCE -->
+    <div class="section">
+      <div class="section-label">04 — Compliance Coverage</div>
+      <div class="section-title">Every major AI regulation. One platform.</div>
+      <div class="section-body">
+        KRAYT maps findings directly to regulatory frameworks, delivering compliance-ready documentation for auditors and regulators.
+      </div>
+      <div class="tag-cloud">
+        <div class="tag cy">OWASP LLM Top 10</div>
+        <div class="tag cy">OWASP API Top 10</div>
+        <div class="tag pu">EU AI Act 2024</div>
+        <div class="tag pu">Korea AI Basic Act</div>
+        <div class="tag pu">GDPR Article 22</div>
+        <div class="tag">ISO/IEC 42001</div>
+        <div class="tag">CVSS 3.1</div>
+        <div class="tag">NIST AI RMF</div>
+        <div class="tag">SOC 2 Type II</div>
+        <div class="tag">Web3 · Smart Contract</div>
+      </div>
+    </div>
+
+    <!-- 05 PRICING -->
+    <div class="section">
+      <div class="section-label">05 — Service Tiers</div>
+      <div class="section-title">Flexible pricing for every scale.</div>
+      <div class="price-grid">
+        <div class="price-card">
+          <div class="price-tier">Free Scan</div>
+          <div class="price-amount">$0</div>
+          <div class="price-per">First target · No card required</div>
+          <div class="price-desc">Full 5-Gate scan of one AI endpoint. Delivered as a PDF report within 24h.</div>
+          <ul class="price-features">
+            <li>1 target URL</li>
+            <li>OWASP LLM Top 10 check</li>
+            <li>Executive summary report</li>
+            <li>48h turnaround</li>
+          </ul>
+        </div>
+        <div class="price-card featured">
+          <div class="price-tier cy">Starter SaaS</div>
+          <div class="price-amount">$499</div>
+          <div class="price-per">/ month · up to 5 targets</div>
+          <div class="price-desc">Continuous monitoring + monthly compliance reports. Ideal for AI startups and scale-ups.</div>
+          <ul class="price-features">
+            <li>5 target URLs / month</li>
+            <li>Full OWASP + compliance scan</li>
+            <li>Monthly security dashboard</li>
+            <li>Slack/email alerts</li>
+            <li>Remediation guidance</li>
+          </ul>
+        </div>
+        <div class="price-card">
+          <div class="price-tier">Pro / Enterprise</div>
+          <div class="price-amount">Custom</div>
+          <div class="price-per">Unlimited targets · SLA</div>
+          <div class="price-desc">Full platform access, dedicated QA agents, SOC 2 audit packages, and on-prem deployment.</div>
+          <ul class="price-features">
+            <li>Unlimited targets</li>
+            <li>Dedicated agent cluster</li>
+            <li>SOC 2 / ISO 42001 package</li>
+            <li>On-prem or private cloud</li>
+            <li>99.9% SLA</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 ROADMAP -->
+    <div class="section">
+      <div class="section-label">06 — Engagement Timeline</div>
+      <div class="section-title">From first scan to continuous protection.</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot active">D1</div>
+          <div class="tl-content">
+            <div class="tl-phase">Week 1</div>
+            <div class="tl-title">Free Scan &amp; Kickoff</div>
+            <div class="tl-desc">Full 5-Gate scan of your primary AI endpoint. Security report delivered. Onboarding call scheduled.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">D2</div>
+          <div class="tl-content">
+            <div class="tl-phase">Week 2–3</div>
+            <div class="tl-title">Remediation &amp; Re-validation</div>
+            <div class="tl-desc">Developer team addresses findings. KRAYT re-validates fixes. Compliance gap report generated.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">D3</div>
+          <div class="tl-content">
+            <div class="tl-phase">Month 2+</div>
+            <div class="tl-title">Continuous Monitoring</div>
+            <div class="tl-desc">Automated monthly scans across all registered targets. Regression alerts. Compliance dashboard updated.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">D4</div>
+          <div class="tl-content">
+            <div class="tl-phase">Ongoing</div>
+            <div class="tl-title">Audit-Ready Documentation</div>
+            <div class="tl-desc">SOC 2, EU AI Act, Korea AI Basic Act compliance artifacts generated on demand for regulators and investors.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 WHY KRAYT -->
+    <div class="section">
+      <div class="section-label">07 — Why KRAYT</div>
+      <div class="section-title">The only platform that tests itself.</div>
+      <div class="section-body">
+        KRAYT was built by AI agents, and every release is validated by AI agents. This recursive QA loop — QA First, Security as Method — produces a level of depth and consistency that manual processes or point solutions cannot match.
+      </div>
+      <ul class="prop-list">
+        <li><strong>LLM-native detection:</strong> Purpose-built for generative AI attack vectors — not adapted from legacy DAST/SAST tools</li>
+        <li><strong>Zero false positives:</strong> Every finding includes a machine-verified PoC. No noise, no alert fatigue</li>
+        <li><strong>Compliance-mapped output:</strong> Reports link findings directly to OWASP, EU AI Act, and Korea AI Basic Act articles</li>
+        <li><strong>Real-world validated:</strong> 20+ external AI targets tested; critical findings confirmed via Bug Bounty programs</li>
+        <li><strong>Speed:</strong> Full scan + report in &lt;4 hours vs. 2–3 weeks for manual pen-testing</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box">
+      <div class="cta-text">
+        <div class="cta-title">Start with a free scan today.</div>
+        <div class="cta-sub">Submit your AI endpoint. Receive a full security report within 48 hours. No commitment required.</div>
+      </div>
+      <div class="cta-contacts">
+        <div class="cta-contact"><span>Email</span>demo@krayt.ai</div>
+        <div class="cta-contact"><span>Telegram</span>@nothink_ivan</div>
+        <div class="cta-contact"><span>Web</span>krayt.ai</div>
+      </div>
+    </div>
+
+  </div><!-- /doc-body -->
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="footer-brand">KR<span>A</span>YT — AI QA Platform</div>
+    <div class="footer-meta">Confidential · 2026 · v13 · demo@krayt.ai</div>
+  </div>
+
+</div><!-- /doc -->
+</body>
+</html>
