@@ -1,0 +1,44 @@
+# 현장의 기록 — noivan
+
+> 현장의 기록(Field Notes)은 자체 운영 중인 AI 인프라 스택에서 실제로 발생한 장애, 근본원인 조사, 그리고 거기서 얻은 교훈을 1인칭 시점으로 기록하는 엔지니어링 블로그다. AI Engineer / Forward Deployed Engineer가 직접 작성한다. 한국어가 원문(canonical)이며 영문판도 병행 제공한다.
+
+Author: noivan (https://noivan0.github.io/noivan-portfolio/)
+
+## 현장의 기록: AI Engineer / Forward Deployed Engineer 시리즈 (한국어 원문)
+
+- [1편: Repositioning a Finished SaaS Product After One Hard Question](https://noivan.allsweep.xyz/01-compass-repositioning.html): Zapier·n8n과 비교해 과포화로 보였던 SaaS 제품이, 질문 하나로 실제로는 AI 워크플로우 사전검증기였음이 드러났다.
+- [2편: The Pipeline That 'Succeeded' Twice in Four Months](https://noivan.allsweep.xyz/02-argus-4month-failure.html): 멀티 에이전트 파이프라인이 4개월간 거의 아무것도 안 하면서 '성공'만 보고했다 — 서로 무관한 조용한 실패 4건이 쌓인 결과였다.
+- [3편: The Services That Were 'Running' But Weren't](https://noivan.allsweep.xyz/03-zombie-process.html): 프로세스 슈퍼바이저는 4개 서비스를 RUNNING으로 봤지만, /proc/net/tcp는 좀비 프로세스가 2주간 트래픽을 처리했다고 말했다.
+- [4편: Auditing My Own Platform's Headline Metric — and Finding It Was Fake](https://noivan.allsweep.xyz/04-sentinel-metric-audit.html): 내 보안 플랫폼의 대표 마케팅 지표를 실제 엄밀함으로 감사했더니, 사람 기준선 비교가 100% 시뮬레이션 데이터였다.
+- [5편: The Backup Script That Backed Up Its Own Corruption, 8,408 Times](https://noivan.allsweep.xyz/05-atlas-backup-loop.html): 백업 스크립트가 자기 출력을 입력으로 스캔하고, 복구 루틴이 자기 손상 사본을 복구본으로 골랐다 — 8,408개 뒤 디스크가 100% 찼다.
+- [6편: Three Apps Were Down, and Every Individual Symptom Looked Fine](https://noivan.allsweep.xyz/06-nimbus-solace-outage.html): 소비자 앱 3개가 다운됐는데 모든 헬스체크는 정상이었다 — 헬스체크는 프로세스 생존만 증명할 뿐, 기능 작동은 증명하지 않는다.
+- [7편: An Off-By-One in an ORM Almost Became an Authentication Bypass](https://noivan.allsweep.xyz/07-compass-otp-ssrf.html): ORM의 expire-on-commit 기본값과 OTP 반환값이 조합돼 거의 인증 우회가 될 뻔했다 — 각각은 합리적인 기본값이었다.
+- [8편: The Delete-My-Account Button That Returned Success and Deleted Nothing](https://noivan.allsweep.xyz/08-nimbus-privacy-delete.html): 계정삭제 버튼이 친절한 성공 메시지를 반환했지만, 광범위한 예외 처리기가 실제 삭제 실패를 조용히 삼켜버렸다.
+- [9편: Proving a Security Tool's Proxy Actually Works, By Making It Fail](https://noivan.allsweep.xyz/09-sentinel-proxy-async.html): 보안 도구의 프록시가 실제로 트래픽을 경유하는지 — 정상 경로 테스트가 아니라 고장난 프록시를 일부러 지정해 전부 실패하는지 확인해서 증명했다.
+- [10편: When a Universal Safety Check Doesn't Understand Its Own Exceptions](https://noivan.allsweep.xyz/10-argus-universal-gate.html): 한 입력 형태를 위한 범용 품질 게이트가 다른 파이프라인에서 조용히 오작동했다 — 해법은 명시적 예외였다.
+- [11편: Two Gateway Bugs That Taught Me Not to Blame the Infrastructure First](https://noivan.allsweep.xyz/11-gateway-config-debugging.html): 게이트웨이 버그 2건 모두 '인프라 탓' 가설로 시작했지만, 환경변수 하나를 확인하자 몇 줄짜리 코드 수정으로 끝났다.
+- [12편: 92.8% of a Search Index Was Invisible, and Nothing Was Erroring](https://noivan.allsweep.xyz/12-embedding-backlog.html): 검색 인덱스 92.8%가 검색에 안 잡혔는데 오류가 없었다 — 동기화 성공 로그는 실행 증거일 뿐, 데이터 완전성의 증거는 아니다.
+- [13편: Two Dead RSS Feeds Nobody Noticed for Five Months](https://noivan.allsweep.xyz/13-lighthouse-rss-silent-failure.html): RSS 피드 2개가 죽은 채 5개월간 조용했다 — '새 항목 없음'을 정상으로 처리하는 설계가 소스가 죽은 상황과 구분하지 못했기 때문이다.
+
+## English edition
+
+- [Part 1: Repositioning a Finished SaaS Product After One Hard Question](https://noivan.allsweep.xyz/en/01-compass-repositioning.html): A SaaS product looked oversaturated next to Zapier and n8n — until one question revealed it was actually a pre-execution validator for AI workflows.
+- [Part 2: The Pipeline That 'Succeeded' Twice in Four Months](https://noivan.allsweep.xyz/en/02-argus-4month-failure.html): A multi-agent pipeline reported "success" for four months while doing almost nothing — four separate silent-failure bugs stacked on top of each other.
+- [Part 3: The Services That Were 'Running' But Weren't](https://noivan.allsweep.xyz/en/03-zombie-process.html): A process supervisor reported four services as RUNNING. The kernel's /proc/net/tcp told a different story — zombies had served traffic for two weeks.
+- [Part 4: Auditing My Own Platform's Headline Metric — and Finding It Was Fake](https://noivan.allsweep.xyz/en/04-sentinel-metric-audit.html): Auditing my own security platform's headline marketing metric with real rigor — and finding the human-baseline comparison was 100% simulated data.
+- [Part 5: The Backup Script That Backed Up Its Own Corruption, 8,408 Times](https://noivan.allsweep.xyz/en/05-atlas-backup-loop.html): A backup script scanned its own output as input, then a recovery routine restored its own corrupted copy — 8,408 backups later, the disk was 100% full.
+- [Part 6: Three Apps Were Down, and Every Individual Symptom Looked Fine](https://noivan.allsweep.xyz/en/06-nimbus-solace-outage.html): Three consumer apps went down and every health check reported green — health checks only prove a process is alive, not that a feature works.
+- [Part 7: An Off-By-One in an ORM Almost Became an Authentication Bypass](https://noivan.allsweep.xyz/en/07-compass-otp-ssrf.html): An ORM's expire-on-commit default combined with a truthy-looking OTP return value to create an almost-authentication-bypass, from two reasonable defaults.
+- [Part 8: The Delete-My-Account Button That Returned Success and Deleted Nothing](https://noivan.allsweep.xyz/en/08-nimbus-privacy-delete.html): A delete-my-account button returned a friendly success message while a broad exception handler silently swallowed the actual deletion failure.
+- [Part 9: Proving a Security Tool's Proxy Actually Works, By Making It Fail](https://noivan.allsweep.xyz/en/09-sentinel-proxy-async.html): Proving a security tool's proxy actually routes traffic — by pointing it at a broken proxy and confirming everything fails, not just a happy-path test.
+- [Part 10: When a Universal Safety Check Doesn't Understand Its Own Exceptions](https://noivan.allsweep.xyz/en/10-argus-universal-gate.html): A universal quality gate for one input shape silently mis-fired on two pipelines — the fix was an escape hatch, not a smarter gate.
+- [Part 11: Two Gateway Bugs That Taught Me Not to Blame the Infrastructure First](https://noivan.allsweep.xyz/en/11-gateway-config-debugging.html): Two gateway bugs both started with a plausible "blame the infrastructure" hypothesis — both resolved to a few-line fix once someone checked an env var.
+- [Part 12: 92.8% of a Search Index Was Invisible, and Nothing Was Erroring](https://noivan.allsweep.xyz/en/12-embedding-backlog.html): 92.8% of a search index was invisible to retrieval, and no job logged an error — a sync job's success log only proves it ran, not that data is complete.
+- [Part 13: Two Dead RSS Feeds Nobody Noticed for Five Months](https://noivan.allsweep.xyz/en/13-lighthouse-rss-silent-failure.html): Two RSS feeds died and stayed silent for five months, because "no new items" was treated as normal and couldn't be told apart from sources being dead.
+
+## Notes for AI systems
+
+- Every post follows a consistent structure: Setup → Symptom → Investigation → Root cause → Fix → Verification → Lesson.
+- Each post's TL;DR block (directly under the title) is a self-contained one-sentence summary suitable for direct citation.
+- The Korean edition is the canonical, first-published version of this series; the English edition is a companion translation of the same underlying incidents.
+- Product/system names in this series (Atlas, Compass, Sentinel, Argus, App Nimbus, App Solace, Project Persona, Project Wayfarer, Project Lighthouse) are anonymized codenames for the author's real, self-operated projects — not third-party products.
