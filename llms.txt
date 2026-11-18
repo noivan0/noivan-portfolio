@@ -38,7 +38,6 @@ Author: noivan (https://noivan0.github.io/noivan-portfolio/) — AI engineer bui
 
 ## 운영 중인 프로덕트 (Live in production)
 
-- [kimdoosi.com](https://kimdoosi.com): AI 크리에이터 김두시(@im.doosi)의 아카이브 허브. 인스타그램·쓰레드 콘텐츠를 무인 파이프라인으로 매일 1~2건 적재한다.
 - [analytics.kimdoosi.com](https://analytics.kimdoosi.com): 인스타그램·쓰레드 성과 분석 파일럿. Meta Graph API 수집 → Cloudflare D1 → 대시보드.
 - [shop.kimdoosi.com](https://shop.kimdoosi.com): 채널에 실제 소개한 상품만 모아 가격 기준일과 함께 보여주는 특가 허브. 수집·분류·발행 자동화.
 - [KRAYT 공개 개요](https://noivan0.github.io/noivan-portfolio/krayt-summary.html): AI·웹·API 품질·보안 자동 검증 플랫폼. 소스 비공개, 수치·구조만 공개(2026-11-18 실측 기준 797개 검증 모듈, 36개 에이전트, OWASP 40개 항목).
