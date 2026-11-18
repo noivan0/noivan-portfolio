@@ -2,7 +2,7 @@
 
 > 현장의 기록(Field Notes)은 자체 운영 중인 AI 인프라 스택에서 실제로 발생한 장애, 근본원인 조사, 그리고 거기서 얻은 교훈을 1인칭 시점으로 기록하는 엔지니어링 블로그다. AI Engineer / Forward Deployed Engineer가 직접 작성한다. 한국어가 원문(canonical)이며 영문판도 병행 제공한다.
 
-Author: noivan (https://noivan0.github.io/noivan-portfolio/)
+Author: noivan (https://noivan0.github.io/noivan-portfolio/) — AI engineer building workflow automation, autonomous agent operations, and the KRAYT QA/security platform.
 
 ## 현장의 기록: AI Engineer / Forward Deployed Engineer 시리즈 (한국어 원문)
 
@@ -35,6 +35,14 @@ Author: noivan (https://noivan0.github.io/noivan-portfolio/)
 - [Part 11: Two Gateway Bugs That Taught Me Not to Blame the Infrastructure First](https://noivan.allsweep.xyz/en/11-gateway-config-debugging.html): Two gateway bugs both started with a plausible "blame the infrastructure" hypothesis — both resolved to a few-line fix once someone checked an env var.
 - [Part 12: 92.8% of a Search Index Was Invisible, and Nothing Was Erroring](https://noivan.allsweep.xyz/en/12-embedding-backlog.html): 92.8% of a search index was invisible to retrieval, and no job logged an error — a sync job's success log only proves it ran, not that data is complete.
 - [Part 13: Two Dead RSS Feeds Nobody Noticed for Five Months](https://noivan.allsweep.xyz/en/13-lighthouse-rss-silent-failure.html): Two RSS feeds died and stayed silent for five months, because "no new items" was treated as normal and couldn't be told apart from sources being dead.
+
+## 운영 중인 프로덕트 (Live in production)
+
+- [kimdoosi.com](https://kimdoosi.com): AI 크리에이터 김두시(@im.doosi)의 아카이브 허브. 인스타그램·쓰레드 콘텐츠를 무인 파이프라인으로 매일 1~2건 적재한다.
+- [analytics.kimdoosi.com](https://analytics.kimdoosi.com): 인스타그램·쓰레드 성과 분석 파일럿. Meta Graph API 수집 → Cloudflare D1 → 대시보드.
+- [shop.kimdoosi.com](https://shop.kimdoosi.com): 채널에 실제 소개한 상품만 모아 가격 기준일과 함께 보여주는 특가 허브. 수집·분류·발행 자동화.
+- [KRAYT 공개 개요](https://noivan0.github.io/noivan-portfolio/krayt-summary.html): AI·웹·API 품질·보안 자동 검증 플랫폼. 소스 비공개, 수치·구조만 공개(2026-11-18 실측 기준 797개 검증 모듈, 36개 에이전트, OWASP 40개 항목).
+- [NOVA](https://github.com/noivan0/NOVA): 이벤트 기반 자율 AI 에이전트 오케스트레이션 프레임워크(MIT).
 
 ## Notes for AI systems
 

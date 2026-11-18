@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>KRAYT — AI QA &amp; Security Automation Platform | noivan</title>
+<meta name="description" content="KRAYT는 AI 서비스·웹·API의 품질과 보안을 배포 전에 자동 검증하는 플랫폼입니다. 2026-11-18 소스 실측 기준 797개 검증 모듈, 36개 에이전트, OWASP 4개 프레임워크 40개 항목. 코드는 비공개, 구조와 수치는 공개합니다."/>
+<link rel="canonical" href="https://noivan0.github.io/noivan-portfolio/krayt-summary.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:site_name" content="noivan"/>
+<meta property="og:locale" content="ko_KR"/>
+<meta property="og:url" content="https://noivan0.github.io/noivan-portfolio/krayt-summary.html"/>
+<meta property="og:title" content="KRAYT — AI QA &amp; Security Automation Platform"/>
+<meta property="og:description" content="797개 검증 모듈 · 36개 에이전트 · OWASP 40개 항목. 배포 전 자동 QA·보안 검증 플랫폼의 공개 개요."/>
+<meta property="og:image" content="https://noivan0.github.io/noivan-portfolio/assets/blog/og-default-card.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="KRAYT — AI QA &amp; Security Automation Platform"/>
+<meta name="twitter:description" content="797 verification modules · 36 agents · OWASP 40 items. Public overview of a private codebase."/>
+<meta name="twitter:image" content="https://noivan0.github.io/noivan-portfolio/assets/blog/og-default-card.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0a0a0a;--muted:#6b7280;--line:#e5e7eb;--red:#e63329;--bg:#fff;--soft:#f6f6f6}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding:0 24px 96px}
+.top{border-bottom:2px solid var(--ink);padding:18px 0;display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.top a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink)}
+.mark{font-family:'JetBrains Mono',monospace;letter-spacing:.16em;font-size:12px;color:var(--red)}
+header{padding:56px 0 32px;border-bottom:1px solid var(--line)}
+h1{font-size:clamp(2.2rem,7vw,4rem);font-weight:900;letter-spacing:-.03em;line-height:1}
+.sub{margin-top:14px;font-size:clamp(1rem,2.4vw,1.25rem);color:var(--muted);max-width:640px}
+.badge{display:inline-block;margin-top:22px;border:1px solid var(--ink);border-radius:999px;padding:6px 14px;font-size:12px;font-family:'JetBrains Mono',monospace}
+.badge b{color:var(--red)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);border-left:1px solid var(--line);margin:0 0 8px}
+.cell{padding:26px 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.num{font-size:clamp(1.8rem,4.5vw,2.6rem);font-weight:900;letter-spacing:-.02em}
+.num small{font-size:.5em;font-weight:600;color:var(--muted)}
+.lbl{font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:.02em}
+.note{font-size:12px;color:var(--muted);padding:10px 0 0}
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+h2{font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:20px}
+h3{font-size:1.05rem;margin:22px 0 8px}
+p{font-size:.95rem;color:#1f2937;margin-bottom:14px}
+ul{margin:0 0 14px 18px}li{font-size:.95rem;color:#1f2937;margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin:8px 0 6px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.n{font-family:'JetBrains Mono',monospace}
+.pipe{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 6px}
+.step{font-family:'JetBrains Mono',monospace;font-size:12px;border:1px solid var(--line);padding:8px 12px;border-radius:4px;background:var(--soft)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.box{border:1px solid var(--line);border-radius:6px;padding:20px}
+.box.open{border-color:var(--ink)}
+.box h4{font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;margin-bottom:10px}
+.box li{font-size:.9rem;margin-bottom:6px}
+.en{direction:ltr}
+.ft{padding-top:32px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.ft a{color:var(--ink)}
+@media(max-width:720px){.grid{grid-template-columns:1fr 1fr}.split{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="index.html">← noivan</a>
+    <span class="mark">KRAYT / OVERVIEW</span>
+  </div>
+
+  <header>
+    <h1>KRAYT</h1>
+    <div class="sub">AI 서비스·웹·API의 품질과 보안을 배포 전에 자동으로 검증하는 플랫폼. 에이전트가 취약점을 탐지하고, 실제로 재현해 PoC로 증명한 뒤, 게이트를 통과한 것만 리포트로 남깁니다.</div>
+    <div class="badge">코드 <b>비공개</b> · 개요·수치 <b>공개</b> · 수치 기준일 2026-11-18</div>
+  </header>
+
+  <div class="grid">
+    <div class="cell"><div class="num">797</div><div class="lbl">검증 모듈 (<code>_run_</code> 메서드, src 전수 실측)</div></div>
+    <div class="cell"><div class="num">36</div><div class="lbl">자율 에이전트 클래스</div></div>
+    <div class="cell"><div class="num">40<small>/40</small></div><div class="lbl">OWASP 항목 커버 (Web·API·LLM·Mobile)</div></div>
+    <div class="cell"><div class="num">5</div><div class="lbl">단계 QA 게이트</div></div>
+  </div>
+  <div class="note">수치는 공개 저장소가 아닌 <b>비공개 소스코드 자체를 2026-11-18에 파싱해 센 값</b>입니다. 에이전트 36개 파일의 <code>_run_</code> 메서드 795개 + 오케스트레이션·파이프라인 실행 메서드 2개 = 797개.</div>
+
+  <section>
+    <h2>01 — 무엇을 하는가</h2>
+    <p>서비스 하나를 배포하기 전에 사람이 손으로 하던 점검을 에이전트가 대신 수행합니다. 각 에이전트는 특정 영역(웹 침투, API 계약, LLM 취약점, 모바일, 클라우드, 공급망, 개인정보, 접근성 등)을 맡고, 같은 입력에 대해 서로 다른 각도로 검사합니다.</p>
+    <ul>
+      <li><b>탐지</b> — OWASP 4개 프레임워크(Web 2021 · API 2023 · LLM 2025 · Mobile 2024) 40개 항목에 매핑된 검사 수행.</li>
+      <li><b>검증</b> — 발견을 그대로 보고하지 않고 재현 시도로 확인합니다. 재현되지 않으면 findings에서 빠집니다.</li>
+      <li><b>증거</b> — PoC·요청/응답·스크린샷을 증거로 붙이고, 심각도·신뢰도를 함께 남깁니다.</li>
+      <li><b>리포트</b> — 조치 방법과 함께 사람이 읽을 수 있는 형태로 정리합니다.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>02 — 검증 파이프라인</h2>
+    <div class="pipe">
+      <span class="step">1. 수집 · 범위 확인</span><span class="step">2. 에이전트 병렬 탐지</span><span class="step">3. 재현 · PoC</span><span class="step">4. 게이트 채점</span><span class="step">5. 리포트 · 조치안</span>
+    </div>
+    <p>게이트는 앞 단계의 산출물이 기준을 못 넘으면 다음 단계로 넘기지 않습니다. 점수만 높고 재현되지 않는 보고서, 증거가 없는 findings, 중복 발견은 여기서 걸러집니다.</p>
+  </section>
+
+  <section>
+    <h2>03 — 커버리지</h2>
+    <table>
+      <thead><tr><th>프레임워크</th><th>항목</th><th>완전 구현</th><th>부분 구현</th></tr></thead>
+      <tbody>
+        <tr><td>OWASP LLM Top 10 (2025)</td><td class="n">10</td><td class="n">10</td><td class="n">0</td></tr>
+        <tr><td>OWASP Web Top 10 (2021)</td><td class="n">10</td><td class="n">6</td><td class="n">4</td></tr>
+        <tr><td>OWASP API Security (2023)</td><td class="n">10</td><td class="n">10</td><td class="n">0</td></tr>
+        <tr><td>OWASP Mobile Top 10 (2024)</td><td class="n">10</td><td class="n">7</td><td class="n">3</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:.85rem;color:var(--muted)">40개 항목 전부에 검사가 매핑되어 있고, 그중 33개는 전용 모듈로 완전 구현, 7개는 부분 구현입니다. “40/40”은 항목 누락이 없다는 뜻이며, 7개 항목의 깊이는 아직 얕습니다.</p>
+  </section>
+
+  <section>
+    <h2>04 — 공개 범위</h2>
+    <div class="split">
+      <div class="box open">
+        <h4>공개</h4>
+        <ul>
+          <li>구조·커버리지·모듈 수(이 페이지, 실측 기준일 명시)</li>
+          <li>운영 중인 자체 사이트에 대한 상시 점검 결과 요약</li>
+          <li>요청 시 데모(스크린 공유)와 샘플 리포트</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h4>비공개</h4>
+        <ul>
+          <li>소스코드 전체(비공개 저장소)</li>
+          <li>탐지 규칙·페이로드·프롬프트</li>
+          <li>고객/대상 정보와 제출 내역 (공개 불가 약정 포함)</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:18px;font-size:.9rem;color:var(--muted)">버그바운티·모의해킹 관련 내용은 프로그램 정책상 공개하지 않습니다. 코드가 필요하시면 저장소 접근 권한을 드리는 방식으로 진행합니다.</p>
+  </section>
+
+  <section class="en" lang="en">
+    <h2>Summary (EN)</h2>
+    <p>KRAYT is an automated QA and security verification platform for AI services, web, and APIs. Agents detect issues, verify them by reproduction, attach proof-of-concept evidence, and gate the report before it reaches a human.</p>
+    <ul>
+      <li><b>797</b> verification modules — <code>_run_</code> methods parsed from the private source on 2026-11-18 (795 agent modules across 36 agent classes + 2 pipeline runners).</li>
+      <li><b>36</b> autonomous agent classes across web pentest, API contract, LLM security, mobile, cloud, supply chain, privacy, accessibility, and evidence/reporting.</li>
+      <li><b>40 OWASP items</b> mapped (Web 2021 · API 2023 · LLM 2025 · Mobile 2024): 33 fully implemented, 7 partial. “40/40” means no category is missing — not that every category runs at equal depth.</li>
+      <li><b>5-stage pipeline</b>: scope → parallel detection → reproduction/PoC → gated scoring → report.</li>
+    </ul>
+    <p>The codebase is private; this page is the public overview. A demo or a sample report is available on request — <a href="mailto:noivan000@gmail.com?subject=KRAYT%20demo">noivan000@gmail.com</a>.</p>
+  </section>
+
+  <div class="ft">
+    <span>noivan © 2026 · KRAYT overview</span>
+    <span><a href="index.html">포트폴리오</a> · <a href="mailto:noivan000@gmail.com">noivan000@gmail.com</a></span>
+  </div>
+</div>
+</body>
+</html>
