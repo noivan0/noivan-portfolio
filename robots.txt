@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://noivan0.github.io/noivan-portfolio/sitemap.xml
